@@ -1,10 +1,7 @@
 <script setup lang="ts">
 import WelcomeItem from './WelcomeItem.vue'
 import DocumentationIcon from './icons/IconDocumentation.vue'
-import ToolingIcon from './icons/IconTooling.vue'
-import EcosystemIcon from './icons/IconEcosystem.vue'
 import CommunityIcon from './icons/IconCommunity.vue'
-import SupportIcon from './icons/IconSupport.vue'
 </script>
 
 <template>
@@ -41,7 +38,7 @@ import SupportIcon from './icons/IconSupport.vue'
         style="padding: 8px; margin-top: 10px; margin-bottom: 10px; width: 100%;"
       />
       <div style="margin-top: 10px;">
-        <a href="#" style="color: white; text-decoration: underline;">
+        <a href="../views/CreateView.vue" style="color: white; text-decoration: underline;">
           アカウント新規作成
         </a>
       </div>
