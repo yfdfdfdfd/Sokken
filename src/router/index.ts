@@ -23,7 +23,13 @@ const router = createRouter({
       path: '/forget',
       name: 'forget',
       component: () => import('../views/ForgetView.vue')
-    }
+    },
+    {
+      path: '/problem',
+      name: 'problem',
+      component: () => import('../views/ProblemView.vue')
+    },
+
   ]
 })
 

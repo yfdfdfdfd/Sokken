@@ -9,7 +9,7 @@ import CommunityIcon from './icons/IconCommunity.vue'
     <template #icon>
       <DocumentationIcon />
     </template>
-    <template #heading>アカウント新規作成</template>
+    <template #heading>アカウント作成</template>
     <template #default>
       <div>
         <label for="email">メールアドレス:</label>
@@ -56,7 +56,7 @@ import CommunityIcon from './icons/IconCommunity.vue'
             cursor: pointer;
           "
         >
-          アカウント新規作成
+          アカウント作成
         </button>
       </div>
     </template>

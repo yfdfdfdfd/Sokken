@@ -47,20 +47,22 @@ import CommunityIcon from './icons/IconCommunity.vue'
             パスワードを忘れた
           </router-link>
         </div>
-        <button
-          style="
-            margin-top: 20px;
-            padding: 10px 20px;
-            width: 100%;
-            background-color: #4caf50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-          "
-        >
-          ログイン
-        </button>
+        <router-link to="/problem">
+          <button
+            style="
+              margin-top: 20px;
+              padding: 10px 20px;
+              width: 100%;
+              background-color: #4caf50;
+              color: white;
+              border: none;
+              border-radius: 5px;
+              cursor: pointer;
+            "
+          >
+            ログイン
+          </button>
+        </router-link>
       </div>
     </template>
   </WelcomeItem>
