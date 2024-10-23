@@ -43,7 +43,9 @@ import CommunityIcon from './icons/IconCommunity.vue'
           </router-link>
         </div>
         <div style="margin-top: 10px">
-          <a href="#" style="color: white; text-decoration: underline"> パスワードを忘れた </a>
+          <router-link to="/forget" style="color: white; text-decoration: underline">
+            パスワードを忘れた
+          </router-link>
         </div>
         <button
           style="

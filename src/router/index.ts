@@ -18,6 +18,11 @@ const router = createRouter({
       path: '/create',
       name: 'create',
       component: () => import('../views/CreateView.vue')
+    },
+    {
+      path: '/forget',
+      name: 'forget',
+      component: () => import('../views/ForgetView.vue')
     }
   ]
 })
