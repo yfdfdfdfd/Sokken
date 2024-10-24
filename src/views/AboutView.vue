@@ -1,7 +1,14 @@
+<script setup lang="ts">
+import AppHeader from '@/components/AppHeader.vue'
+</script>
+
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+  <AppHeader />
+  <main>
+    <div class="about">
+      <h1>サイト説明</h1>
+    </div>
+  </main>
 </template>
 
 <style>
