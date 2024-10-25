@@ -13,6 +13,7 @@ function selectOption(index: number) {
 
 <template>
   <div class="question-container">
+    <h1>問題</h1>
     <h1>{{ question }}</h1>
     <ul>
       <li v-for="(option, index) in options" :key="index">
