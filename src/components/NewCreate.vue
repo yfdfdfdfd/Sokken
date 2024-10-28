@@ -9,7 +9,7 @@ import CommunityIcon from './icons/IconCommunity.vue'
     <template #icon>
       <DocumentationIcon />
     </template>
-    <template #heading>ログイン</template>
+    <template #heading>アカウント作成</template>
     <template #default>
       <div>
         <label for="email">メールアドレス:</label>
@@ -37,32 +37,27 @@ import CommunityIcon from './icons/IconCommunity.vue'
           placeholder="パスワードを入力"
           style="padding: 8px; margin-top: 10px; margin-bottom: 10px; width: 100%"
         />
-        <div style="margin-top: 10px">
-          <router-link to="/create" style="color: white; text-decoration: underline">
-            アカウント新規作成
-          </router-link>
-        </div>
-        <div style="margin-top: 10px">
-          <router-link to="/forget" style="color: white; text-decoration: underline">
-            パスワードを忘れた
-          </router-link>
-        </div>
-        <router-link to="/problem">
-          <button
-            style="
-              margin-top: 20px;
-              padding: 10px 20px;
-              width: 100%;
-              background-color: #4caf50;
-              color: white;
-              border: none;
-              border-radius: 5px;
-              cursor: pointer;
-            "
-          >
-            ログイン
-          </button>
-        </router-link>
+        <label for="password">パスワード再入力</label>
+        <input
+          type="password"
+          id="password"
+          placeholder="パスワードを再入力"
+          style="padding: 8px; margin-top: 10px; margin-bottom: 10px; width: 100%"
+        />
+        <button
+          style="
+            margin-top: 20px;
+            padding: 10px 20px;
+            width: 100%;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+          "
+        >
+          アカウント作成
+        </button>
       </div>
     </template>
   </WelcomeItem>
