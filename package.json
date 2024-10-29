@@ -11,7 +11,8 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --build --force",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
-    "format": "prettier --write src/"
+    "format": "prettier --write src/",
+    "generate": "openapi-generator-cli generate -i http://127.0.0.1:8000/openapi.json -g typescript-fetch -o src/generated --additional-properties=\"legacyDiscriminatorBehavior=true\""
   },
   "dependencies": {
     "pinia": "^2.1.7",
