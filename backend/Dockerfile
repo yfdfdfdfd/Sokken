@@ -1,4 +1,4 @@
-# PyTorch公式イメージをベースにする
+# GPU対応のPyTorchイメージをベースにする
 FROM pytorch/pytorch:2.5.0-cuda12.4-cudnn9-runtime
 
 # 必要なライブラリをインストール
