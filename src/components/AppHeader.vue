@@ -10,9 +10,11 @@ import HelloWorld from './HelloWorld.vue'
     <div class="wrapper">
       <HelloWorld msg="AI検定" />
 
-      <nav>
+      <nav class="navbar">
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/quize">Quize</RouterLink>
+        <RouterLink to="/history">History</RouterLink>
       </nav>
     </div>
   </header>
@@ -79,5 +81,17 @@ nav a:first-of-type {
     padding: 1rem 0;
     margin-top: 1rem;
   }
+}
+</style>
+
+<style scoped>
+.navbar {
+  position: fixed;
+  top: 0;
+  width: auto;
+  background-color: auto;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
 }
 </style>

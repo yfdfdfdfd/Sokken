@@ -31,6 +31,11 @@ async function createUser() {
     })
     console.log('User created:', response) // デバッグログ
     errorMessage.value = ''
+    alert('アカウント作成が完了しました')
+    name.value = ''
+    email.value = ''
+    password.value = ''
+    confirmPassword.value = ''
   } catch (error) {
     console.error('Error creating user:', error) // デバッグログ
     errorMessage.value = 'アカウント作成に失敗しました'
@@ -65,6 +70,7 @@ async function createUser() {
           style="padding: 8px; margin-top: 10px; width: 100%"
         />
       </div>
+      
       <div>
         <label for="password">パスワード:</label>
         <input

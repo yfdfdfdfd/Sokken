@@ -38,12 +38,12 @@ import CommunityIcon from './icons/IconCommunity.vue'
           style="padding: 8px; margin-top: 10px; margin-bottom: 10px; width: 100%"
         />
         <div style="margin-top: 10px">
-          <router-link to="/create" style="color: #0000ee; text-decoration: underline">
+          <router-link to="/create" style="color: auto; text-decoration: underline">
             アカウント新規作成
           </router-link>
         </div>
         <div style="margin-top: 10px">
-          <router-link to="/forget" style="color: #0000ee; text-decoration: underline">
+          <router-link to="/forget" style="color: auto; text-decoration: underline">
             パスワードを忘れた
           </router-link>
         </div>

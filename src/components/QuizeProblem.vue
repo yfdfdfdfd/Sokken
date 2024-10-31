@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const question = ref('What is the capital of France?')
-const options = ref(['Berlin', 'Madrid', 'Paris', 'Rome'])
+const options = ref([
+  'ア',
+  'イ',
+  'ウ',
+  'エ'
+])
 const selectedOption = ref<number | null>(null)
 
 function selectOption(index: number) {
@@ -13,8 +17,6 @@ function selectOption(index: number) {
 
 <template>
   <div class="question-container">
-    <h1>問題</h1>
-    <h1>{{ question }}</h1>
     <ul>
       <li v-for="(option, index) in options" :key="index">
         <button @click="selectOption(index)" :class="{ selected: selectedOption === index }">
@@ -27,8 +29,8 @@ function selectOption(index: number) {
 
 <style scoped>
 .question-container {
-  text-align: center;
-  margin-top: 20px;
+  margin-top: 100px;
+  margin-left: 40px;
   font-size: 24px;
 }
 
@@ -42,13 +44,14 @@ li {
 }
 
 button {
-  padding: 10px 50px;
+  padding: 30px 40px;
   font-size: 16px;
   cursor: pointer;
-  width: 100%;
+  width: 90%;
   box-sizing: border-box;
   display: block;
   margin: 0 auto;
+  background-color: auto;
 }
 
 button.selected {
