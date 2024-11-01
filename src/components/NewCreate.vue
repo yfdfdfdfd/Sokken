@@ -70,7 +70,7 @@ async function createUser() {
           style="padding: 8px; margin-top: 10px; width: 100%"
         />
       </div>
-      
+
       <div>
         <label for="password">パスワード:</label>
         <input

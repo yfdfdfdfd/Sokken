@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import QuizProblem from '@/components/QuizeProblem.vue'
 import ProblemList from '@/components/ProblemList.vue';
+import NavHeader from '@/components/NavHeader.vue';
 </script>
 
 <template>
-  <ProblemList />
+  <NavHeader />
+  <QuizProblem />
   <main>
-    <QuizProblem />
+    <ProblemList />
   </main>
 </template>

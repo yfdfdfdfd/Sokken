@@ -29,9 +29,12 @@ function selectOption(index: number) {
 
 <style scoped>
 .question-container {
-  margin-top: 100px;
-  margin-left: 40px;
+  margin-top: 150px;
+  margin-left: 10px;
   font-size: 24px;
+  text-align: center;
+
+  
 }
 
 ul {
@@ -44,7 +47,7 @@ li {
 }
 
 button {
-  padding: 30px 40px;
+  padding: 15px 10px;
   font-size: 16px;
   cursor: pointer;
   width: 90%;

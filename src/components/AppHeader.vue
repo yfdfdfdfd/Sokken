@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
 import HelloWorld from './HelloWorld.vue'
 </script>
 
@@ -9,13 +8,6 @@ import HelloWorld from './HelloWorld.vue'
 
     <div class="wrapper">
       <HelloWorld msg="AI検定" />
-
-      <nav class="navbar">
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-        <RouterLink to="/quize">Quize</RouterLink>
-        <RouterLink to="/history">History</RouterLink>
-      </nav>
     </div>
   </header>
 </template>
@@ -29,31 +21,6 @@ header {
 .logo {
   display: block;
   margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
 }
 
 @media (min-width: 1024px) {
@@ -81,17 +48,5 @@ nav a:first-of-type {
     padding: 1rem 0;
     margin-top: 1rem;
   }
-}
-</style>
-
-<style scoped>
-.navbar {
-  position: fixed;
-  top: 0;
-  width: auto;
-  background-color: auto;
-  padding: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
 }
 </style>
