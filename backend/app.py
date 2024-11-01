@@ -8,8 +8,12 @@ CORS(app)  # CORSを有効にする
 
 # モデルの初期化
 model_name = "gpt2"
-model = GPT2LMHeadModel.from_pretrained(model_name)
+model = GPT2LMHeadModel.from_pretrained(model_name).to("cuda")  # モデルをGPUに移動
 tokenizer = GPT2Tokenizer.from_pretrained(model_name)
+
+@app.route('/')
+def home():
+    return jsonify(message="Welcome to the AI question generator!")
 
 @app.route('/generate', methods=['POST'])
 def generate_question():
