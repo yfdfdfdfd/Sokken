@@ -1,12 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const options = ref([
-  'ア',
-  'イ',
-  'ウ',
-  'エ'
-])
+const options = ref(['ア', 'イ', 'ウ', 'エ'])
 const selectedOption = ref<number | null>(null)
 
 function selectOption(index: number) {
@@ -29,20 +24,18 @@ function selectOption(index: number) {
 
 <style scoped>
 .question-container {
-  margin-top: 150px;
-  margin-left: 10px;
   font-size: 24px;
-  text-align: center;
-
-  
+  width: 100%;
 }
 
 ul {
+  width: 100%;
   list-style-type: none;
   padding: 0;
 }
 
 li {
+  width: 100%;
   margin: 10px 0;
 }
 
