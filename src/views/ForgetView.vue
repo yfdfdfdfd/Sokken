@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import AppHeader from '@/components/AppHeader.vue'
-import PassForget from '@/components/PassForget.vue'
+import PassForget from '@/components/PwforgotPage.vue'
 </script>
 
 <template>

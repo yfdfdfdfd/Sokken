@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import NewCreate from '../components/NewCreate.vue'
+import NewCreate from '../components/CreatePage.vue'
 import AppHeader from '@/components/AppHeader.vue'
 </script>
 

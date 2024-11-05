@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import QuizProblem from '@/components/QuizeProblem.vue'
+import QuizProblem from '@/components/ProblemOption.vue'
 import ProblemList from '@/components/ProblemList.vue'
 import NavHeader from '@/components/NavHeader.vue'
 </script>
