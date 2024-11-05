@@ -3,20 +3,27 @@ import AppHeader from '@/components/AppHeader.vue'
 </script>
 
 <template>
-  <AppHeader />
-  <main>
-    <div class="about">
-      <h1>サイト説明</h1>
+  <div class="center">
+    <div class="grid">
+      <AppHeader />
+      <main>
+        <div class="about">
+          <h1>サイト説明</h1>
+        </div>
+      </main>
     </div>
-  </main>
+  </div>
 </template>
 
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
+<style scoped>
+.center {
+  display: flex;
+  place-items: center;
+  height: 100vh;
+}
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 0 2rem;
 }
 </style>
