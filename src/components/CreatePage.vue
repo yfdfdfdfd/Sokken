@@ -9,6 +9,7 @@ const email = ref('')
 const password = ref('')
 const confirmPassword = ref('')
 const errorMessage = ref('')
+const dialogVisible = ref(false)
 
 async function createUser() {
   console.log('createUser function called') // デバッグログ
@@ -31,11 +32,11 @@ async function createUser() {
     })
     console.log('User created:', response) // デバッグログ
     errorMessage.value = ''
-    alert('アカウント作成が完了しました')
     name.value = ''
     email.value = ''
     password.value = ''
     confirmPassword.value = ''
+    dialogVisible.value = true
   } catch (error) {
     console.error('Error creating user:', error) // デバッグログ
     errorMessage.value = 'アカウント作成に失敗しました'
@@ -106,7 +107,48 @@ async function createUser() {
       >
         アカウント作成
       </button>
-      <p v-if="errorMessage" style="color: red">{{ errorMessage }}</p>
+      <p v-if="errorMessage" style="color: #ff4b00">{{ errorMessage }}</p>
+
+      <!-- Dialog for success message -->
+      <div
+        v-if="dialogVisible"
+        style="
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: rgba(0, 0, 0, 0.5);
+        "
+      >
+        <div
+          style="
+            background: white;
+            color: #000;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+          "
+        >
+          <p>アカウント作成が完了しました</p>
+          <button
+            @click="dialogVisible = false"
+            style="
+              margin-top: 10px;
+              padding: 8px 16px;
+              background-color: #4caf50;
+              border: none;
+              border-radius: 5px;
+              cursor: pointer;
+            "
+          >
+            OK
+          </button>
+        </div>
+      </div>
     </template>
   </WelcomeItem>
 </template>
