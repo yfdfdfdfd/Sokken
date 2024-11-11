@@ -5,11 +5,12 @@ import { RouterLink } from 'vue-router'
     <header>
         <div class="wrapper">
             <nav class="navbar">
-                <RouterLink to="/">Home</RouterLink>
+                <RouterLink to="/welcome">Home</RouterLink>
                 <RouterLink to="/about">About</RouterLink>
-                <RouterLink to="/about">Create</RouterLink>
+                <RouterLink to="/generate">Generate</RouterLink>
                 <RouterLink to="/quize">Quize</RouterLink>
                 <RouterLink to="/history">History</RouterLink>
+                <RouterLink to="/logout">Logout</RouterLink>
             </nav>
         </div>
     </header>
@@ -74,6 +75,7 @@ nav a:first-of-type {
 
         padding: 1rem 0;
         margin-top: 1rem;
+        /* margin-left: 180px; */
     }
 }
 </style>

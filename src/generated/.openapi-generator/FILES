@@ -4,6 +4,7 @@ index.ts
 models/HTTPValidationError.ts
 models/User.ts
 models/UserCreate.ts
+models/UserLogin.ts
 models/ValidationError.ts
 models/ValidationErrorLocInner.ts
 models/index.ts

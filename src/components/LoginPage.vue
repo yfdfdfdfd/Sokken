@@ -2,6 +2,37 @@
 import WelcomeItem from './WelcomeItem.vue'
 import DocumentationIcon from './icons/IconDocumentation.vue'
 import CommunityIcon from './icons/IconCommunity.vue'
+import { DefaultApi, Configuration } from '../generated'
+import { ref } from 'vue'
+import { RouterLink } from 'vue-router'
+import router from './../router/index'
+
+const email = ref('')
+const password = ref('')
+const errorMessage = ref('')
+
+async function loginUser() {
+  console.log('login function called') // デバッグログ
+
+  try {
+    const config = new Configuration({
+      basePath: 'http://localhost:8000'
+    })
+    const response = await new DefaultApi(config).loginUserLoginPost({
+      userLogin: {
+        email: email.value,
+        password: password.value
+      }
+    })
+    console.log('User Logged in:', response) // デバッグログ
+    errorMessage.value = ''
+
+    router.replace('/problem')
+  } catch (error) {
+    console.error('Error logging in:', error) // デバッグログ
+    errorMessage.value = 'ログインに失敗しました'
+  }
+}
 </script>
 
 <template>
@@ -18,6 +49,7 @@ import CommunityIcon from './icons/IconCommunity.vue'
           id="email"
           placeholder="メールアドレスを入力"
           style="padding: 8px; margin-top: 10px; width: 100%"
+          v-model="email"
         />
       </div>
     </template>
@@ -35,6 +67,7 @@ import CommunityIcon from './icons/IconCommunity.vue'
           type="password"
           id="password"
           placeholder="パスワードを入力"
+          v-model="password"
           style="padding: 8px; margin-top: 10px; margin-bottom: 10px; width: 100%"
         />
         <div style="margin-top: 10px">
@@ -47,22 +80,21 @@ import CommunityIcon from './icons/IconCommunity.vue'
             パスワードを忘れた
           </router-link>
         </div>
-        <router-link to="/problem">
-          <button
-            style="
-              margin-top: 20px;
-              padding: 10px 20px;
-              width: 100%;
-              background-color: #4caf50;
-              color: white;
-              border: none;
-              border-radius: 5px;
-              cursor: pointer;
-            "
-          >
-            ログイン
-          </button>
-        </router-link>
+        <button
+          @click="loginUser"
+          style="
+            margin-top: 20px;
+            padding: 10px 20px;
+            width: 100%;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+          "
+        >
+          ログイン
+        </button>
       </div>
     </template>
   </WelcomeItem>

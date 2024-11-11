@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import AppHeader from '@/components/AppHeader.vue'
+import NavHeader from '@/components/NavHeader.vue'
 </script>
 
 <template>
+  <NavHeader />
   <div class="center">
     <div class="grid">
       <AppHeader />

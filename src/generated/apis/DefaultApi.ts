@@ -18,6 +18,7 @@ import type {
   HTTPValidationError,
   User,
   UserCreate,
+  UserLogin,
 } from '../models/index';
 import {
     HTTPValidationErrorFromJSON,
@@ -26,6 +27,8 @@ import {
     UserToJSON,
     UserCreateFromJSON,
     UserCreateToJSON,
+    UserLoginFromJSON,
+    UserLoginToJSON,
 } from '../models/index';
 
 export interface CreateUserUsersPostRequest {
@@ -36,8 +39,8 @@ export interface DeleteUserUsersUserIdDeleteRequest {
     userId: number;
 }
 
-export interface LoginUserUsersPostRequest {
-    userCreate: UserCreate;
+export interface LoginUserLoginPostRequest {
+    userLogin: UserLogin;
 }
 
 export interface ReadUserUsersUserIdGetRequest {
@@ -49,7 +52,7 @@ export interface ReadUsersUsersGetRequest {
     limit?: number;
 }
 
-export interface ResetPasswordUsersUserIdResetPasswordPostRequest {
+export interface ResetPasswordLoginUserIdResetPasswordPostRequest {
     userId: number;
     newPassword: string;
 }
@@ -63,7 +66,7 @@ export interface UpdateUserUsersUserIdPutRequest {
  * 
  */
 export class DefaultApi extends runtime.BaseAPI {
-    
+
     /**
      * Create User
      */
@@ -135,11 +138,11 @@ export class DefaultApi extends runtime.BaseAPI {
     /**
      * Login User
      */
-    async loginUserUsersPostRaw(requestParameters: LoginUserUsersPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters['userCreate'] == null) {
+    async loginUserLoginPostRaw(requestParameters: LoginUserLoginPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters['userLogin'] == null) {
             throw new runtime.RequiredError(
-                'userCreate',
-                'Required parameter "userCreate" was null or undefined when calling loginUserUsersPost().'
+                'userLogin',
+                'Required parameter "userLogin" was null or undefined when calling loginUserLoginPost().'
             );
         }
 
@@ -150,11 +153,11 @@ export class DefaultApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/users/`,
+            path: `/login/`,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: UserCreateToJSON(requestParameters['userCreate']),
+            body: UserLoginToJSON(requestParameters['userLogin']),
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -167,8 +170,8 @@ export class DefaultApi extends runtime.BaseAPI {
     /**
      * Login User
      */
-    async loginUserUsersPost(requestParameters: LoginUserUsersPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
-        const response = await this.loginUserUsersPostRaw(requestParameters, initOverrides);
+    async loginUserLoginPost(requestParameters: LoginUserLoginPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.loginUserLoginPostRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -242,18 +245,18 @@ export class DefaultApi extends runtime.BaseAPI {
     /**
      * Reset Password
      */
-    async resetPasswordUsersUserIdResetPasswordPostRaw(requestParameters: ResetPasswordUsersUserIdResetPasswordPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async resetPasswordLoginUserIdResetPasswordPostRaw(requestParameters: ResetPasswordLoginUserIdResetPasswordPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
         if (requestParameters['userId'] == null) {
             throw new runtime.RequiredError(
                 'userId',
-                'Required parameter "userId" was null or undefined when calling resetPasswordUsersUserIdResetPasswordPost().'
+                'Required parameter "userId" was null or undefined when calling resetPasswordLoginUserIdResetPasswordPost().'
             );
         }
 
         if (requestParameters['newPassword'] == null) {
             throw new runtime.RequiredError(
                 'newPassword',
-                'Required parameter "newPassword" was null or undefined when calling resetPasswordUsersUserIdResetPasswordPost().'
+                'Required parameter "newPassword" was null or undefined when calling resetPasswordLoginUserIdResetPasswordPost().'
             );
         }
 
@@ -266,7 +269,7 @@ export class DefaultApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/users/{user_id}/reset_password`.replace(`{${"user_id"}}`, encodeURIComponent(String(requestParameters['userId']))),
+            path: `/login/{user_id}/reset_password`.replace(`{${"user_id"}}`, encodeURIComponent(String(requestParameters['userId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -282,8 +285,8 @@ export class DefaultApi extends runtime.BaseAPI {
     /**
      * Reset Password
      */
-    async resetPasswordUsersUserIdResetPasswordPost(requestParameters: ResetPasswordUsersUserIdResetPasswordPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
-        const response = await this.resetPasswordUsersUserIdResetPasswordPostRaw(requestParameters, initOverrides);
+    async resetPasswordLoginUserIdResetPasswordPost(requestParameters: ResetPasswordLoginUserIdResetPasswordPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.resetPasswordLoginUserIdResetPasswordPostRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
