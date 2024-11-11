@@ -14,6 +14,11 @@ const errorMessage = ref('')
 async function loginUser() {
   console.log('login function called') // デバッグログ
 
+  if (password.value === '' || email.value === '') {
+    errorMessage.value = 'メールアドレスとパスワードを入力してください'
+    return
+  }
+
   try {
     const config = new Configuration({
       basePath: 'http://localhost:8000'
@@ -95,6 +100,7 @@ async function loginUser() {
         >
           ログイン
         </button>
+        <p v-if="errorMessage" style="color: #ff4b00">{{ errorMessage }}</p>
       </div>
     </template>
   </WelcomeItem>
