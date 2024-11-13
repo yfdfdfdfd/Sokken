@@ -1,5 +1,15 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
+import router from './../router/index'
+
+
+const confirmLogout = (event: Event) => {
+    if (!confirm('ログアウトしますか?')) {
+        router.replace('/problem')
+    } else {
+        event.preventDefault();
+    }
+}
 </script>
 <template>
     <header>
@@ -10,7 +20,7 @@ import { RouterLink } from 'vue-router'
                 <RouterLink to="/generate">Generate</RouterLink>
                 <RouterLink to="/quize">Quize</RouterLink>
                 <RouterLink to="/history">History</RouterLink>
-                <RouterLink to="/">Logout</RouterLink>
+                <RouterLink to="/" @click.prevent="confirmLogout">Logout</RouterLink>
             </nav>
         </div>
     </header>
