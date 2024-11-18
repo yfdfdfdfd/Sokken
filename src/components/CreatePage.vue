@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import WelcomeItem from './WelcomeItem.vue'
 import DocumentationIcon from './icons/IconDocumentation.vue'
 import { DefaultApi, Configuration } from '../generated'
+import router from './../router/index'
 
 const name = ref('')
 const email = ref('')
@@ -16,6 +17,11 @@ async function createUser() {
 
   if (password.value !== confirmPassword.value) {
     errorMessage.value = 'パスワードが一致しません'
+    return
+  }
+
+  if (password.value === '' || email.value === '' || name.value === '') {
+    errorMessage.value = '名前、メールアドレス、パスワードを入力してください'
     return
   }
 
@@ -37,6 +43,12 @@ async function createUser() {
     password.value = ''
     confirmPassword.value = ''
     dialogVisible.value = true
+
+    if (dialogVisible.value) {
+      setTimeout(() => {
+        router.replace('/')
+      }, 1500)
+    }
   } catch (error) {
     console.error('Error creating user:', error) // デバッグログ
     errorMessage.value = 'アカウント作成に失敗しました'
@@ -107,7 +119,7 @@ async function createUser() {
       >
         アカウント作成
       </button>
-      <p v-if="errorMessage" style="color: #ff4b00">{{ errorMessage }}</p>
+      <p v-if="errorMessage" style="color: #f6aa00">{{ errorMessage }}</p>
 
       <!-- Dialog for success message -->
       <div
@@ -134,7 +146,7 @@ async function createUser() {
           "
         >
           <p>アカウント作成が完了しました</p>
-          <button
+          <!-- <button
             @click="dialogVisible = false"
             style="
               margin-top: 10px;
@@ -146,7 +158,7 @@ async function createUser() {
             "
           >
             OK
-          </button>
+          </button> -->
         </div>
       </div>
     </template>

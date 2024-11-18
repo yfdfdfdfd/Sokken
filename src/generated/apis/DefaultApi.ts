@@ -16,6 +16,7 @@
 import * as runtime from '../runtime';
 import type {
   HTTPValidationError,
+  Question,
   User,
   UserCreate,
   UserLogin,
@@ -23,6 +24,8 @@ import type {
 import {
     HTTPValidationErrorFromJSON,
     HTTPValidationErrorToJSON,
+    QuestionFromJSON,
+    QuestionToJSON,
     UserFromJSON,
     UserToJSON,
     UserCreateFromJSON,
@@ -41,6 +44,10 @@ export interface DeleteUserUsersUserIdDeleteRequest {
 
 export interface LoginUserLoginPostRequest {
     userLogin: UserLogin;
+}
+
+export interface ReadQuestionsQuestionsQuestionIdGetRequest {
+    questionId: number;
 }
 
 export interface ReadUserUsersUserIdGetRequest {
@@ -172,6 +179,39 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async loginUserLoginPost(requestParameters: LoginUserLoginPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
         const response = await this.loginUserLoginPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Read Questions
+     */
+    async readQuestionsQuestionsQuestionIdGetRaw(requestParameters: ReadQuestionsQuestionsQuestionIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Question>> {
+        if (requestParameters['questionId'] == null) {
+            throw new runtime.RequiredError(
+                'questionId',
+                'Required parameter "questionId" was null or undefined when calling readQuestionsQuestionsQuestionIdGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/questions/{question_id}`.replace(`{${"question_id"}}`, encodeURIComponent(String(requestParameters['questionId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => QuestionFromJSON(jsonValue));
+    }
+
+    /**
+     * Read Questions
+     */
+    async readQuestionsQuestionsQuestionIdGet(requestParameters: ReadQuestionsQuestionsQuestionIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Question> {
+        const response = await this.readQuestionsQuestionsQuestionIdGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

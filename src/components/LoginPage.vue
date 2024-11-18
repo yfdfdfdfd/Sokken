@@ -32,7 +32,7 @@ async function loginUser() {
     console.log('User Logged in:', response) // デバッグログ
     errorMessage.value = ''
 
-    router.replace('/problem')
+    router.replace('/quize/0')
   } catch (error) {
     console.error('Error logging in:', error) // デバッグログ
     errorMessage.value = 'ログインに失敗しました'
@@ -100,7 +100,7 @@ async function loginUser() {
         >
           ログイン
         </button>
-        <p v-if="errorMessage" style="color: #ff4b00">{{ errorMessage }}</p>
+        <p v-if="errorMessage" style="color: #f6aa00; margin-top: 5px">{{ errorMessage }}</p>
       </div>
     </template>
   </WelcomeItem>

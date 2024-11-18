@@ -2,6 +2,7 @@ apis/DefaultApi.ts
 apis/index.ts
 index.ts
 models/HTTPValidationError.ts
+models/Question.ts
 models/User.ts
 models/UserCreate.ts
 models/UserLogin.ts

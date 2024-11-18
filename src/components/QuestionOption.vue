@@ -1,20 +1,30 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import router from './../router/index'
 
-const options = ref(['ア', 'イ', 'ウ', 'エ'])
-const selectedOption = ref<number | null>(null)
+const props = defineProps<{
+  list: string[]
+  answer: string
+  id: number
+}>()
 
-function selectOption(index: number) {
-  selectedOption.value = index
-  alert(`You selected: ${options.value[index]}`)
+
+function selectOption(option: string) {
+  if (option === props.answer) {
+    alert('正解です！')
+    router.push(`/quize/${props.id + 1}`)
+    
+  } else {
+    alert('不正解です！')
+  }
 }
 </script>
 
 <template>
   <div class="question-container">
+    <p>問題番号: {{ id + 1 }}</p>
     <ul>
-      <li v-for="(option, index) in options" :key="index">
-        <button @click="selectOption(index)" :class="{ selected: selectedOption === index }">
+      <li v-for="(option, index) in props.list" :key="index">
+        <button @click="selectOption(option)">
           {{ option }}
         </button>
       </li>

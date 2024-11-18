@@ -25,8 +25,8 @@ const router = createRouter({
       component: () => import('../views/ForgetView.vue')
     },
     {
-      path: '/problem',
-      name: 'problem',
+      path: '/quize/:id',
+      name: 'quize',
       component: () => import('../views/QuizeView.vue')
     },
 
