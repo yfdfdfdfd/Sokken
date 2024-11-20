@@ -1,12 +1,16 @@
 <script setup lang="ts">
-import router from '../router/index'
+import { ref } from 'vue';
+import router from '../router/index';
+
+const time = ref(50);
 
 async function transition() {
-    router.replace('/quize/0')
+    router.replace('/quize/0');
 }
 
 function updateTime(event: Event) {
     const input = event.target as HTMLInputElement;
+    time.value = parseInt(input.value);
     console.log(`New time: ${input.value}`);
 }
 </script>
@@ -33,25 +37,22 @@ function updateTime(event: Event) {
                 <div class="settingLabel">制限時間</div>
                 <div class="settingComponent">
                     <div>
-                        <div>5分</div>
-                        <div data-progress="5">
-                            <!-- <i class="imageLabel scale">(1~5分)</i> -->
-                            <input type="range" min="1" max="20" value="20" class="slider" style="width: 100%;" @input="updateTime">
+                        <div style="text-align: right;">{{ time }}分</div>
+                            <input type="range" min="1" max="50" value="50" class="slider" style="width: 100%;" @input="updateTime">
                         </div>
                     </div>
                 </div>
             </div>
             <div class="description">
                 <ul>
-                    <li>検定カテゴリー合格基準と同じ時間に設定する場合は「５分」で設定してください。</li>
-                    <li>お名前など個人を特定するデータ及びタイピングの成績は弊社システム上に保存されません。</li>
+                    <li>検定カテゴリー合格基準と同じ時間に設定する場合は「５０分」で設定してください。</li>
+                    <li>お名前など個人を特定するデータ及び成績は弊社システム上に保存されません。</li>
                 </ul>
             </div>
             <div class="nav">
                 <button class="typingButton" @click="transition">解答を開始する</button>
             </div>
         </div>
-    </div>
 </template>
 
 <style scoped>
@@ -93,7 +94,6 @@ function updateTime(event: Event) {
     align-items: center;
 }
 
-/* ラジオボタン */
 .radioButton {
     display: flex;
     align-items: center;
@@ -118,7 +118,6 @@ function updateTime(event: Event) {
     font-size: 16px;
 }
 
-/* スライダー */
 [data-progress] {
     position: relative;
     width: 100%;
@@ -156,7 +155,6 @@ function updateTime(event: Event) {
     line-height: 1.5;
 }
 
-/* ナビゲーションボタン */
 .nav {
     margin-top: 20px;
     text-align: center;
@@ -180,8 +178,6 @@ function updateTime(event: Event) {
 .typingButton:active {
     background-color: #3e8e41;
 }
-
-/* 補助要素のラベル */
 .imageLabel {
     font-size: 14px;
     color: #888;

@@ -16,7 +16,7 @@ const confirmLogout = (event: Event) => {
     <header>
         <div class="wrapper">
             <nav class="navbar">
-                <RouterLink to="/">Home</RouterLink>
+                <RouterLink to="/welcome">Home</RouterLink>
                 <RouterLink to="/about">About</RouterLink>
                 <RouterLink to="/feedback">Feedback</RouterLink>
                 <RouterLink to="/quize/0">Quize</RouterLink>
