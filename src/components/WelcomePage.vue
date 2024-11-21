@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import router from '../router/index';
 
-const time = ref(50);
+const timer = ref(50);
 
 async function transition() {
     router.replace('/quize/0');
@@ -10,7 +10,7 @@ async function transition() {
 
 function updateTime(event: Event) {
     const input = event.target as HTMLInputElement;
-    time.value = parseInt(input.value);
+    timer.value = parseInt(input.value);
     console.log(`New time: ${input.value}`);
 }
 </script>
@@ -37,7 +37,7 @@ function updateTime(event: Event) {
                 <div class="settingLabel">制限時間</div>
                 <div class="settingComponent">
                     <div>
-                        <div style="text-align: right;">{{ time }}分</div>
+                        <div style="text-align: right;">{{ timer }}分</div>
                             <input type="range" min="1" max="50" value="50" class="slider" style="width: 100%;" @input="updateTime">
                         </div>
                     </div>
