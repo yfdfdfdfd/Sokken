@@ -1,15 +1,27 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+const confirmLogout = (event: Event) => {
+    event.preventDefault(); // 最初にデフォルトの動作を防ぐ
+    if (confirm('ログアウトしますか?')) {
+        localStorage.removeItem('token');
+        router.replace('/');
+    }
+};
 </script>
+
 <template>
     <header>
         <div class="wrapper">
             <nav class="navbar">
-                <RouterLink to="/">Home</RouterLink>
+                <RouterLink to="/welcome">Home</RouterLink>
                 <RouterLink to="/about">About</RouterLink>
-                <RouterLink to="/about">Create</RouterLink>
-                <RouterLink to="/quize">Quize</RouterLink>
+                <RouterLink to="/feedback">Feedback</RouterLink>
+                <RouterLink to="/quize/0">Quize</RouterLink>
                 <RouterLink to="/history">History</RouterLink>
+                <a href="#" @click="confirmLogout">Logout</a>
             </nav>
         </div>
     </header>
@@ -71,7 +83,6 @@ nav a:first-of-type {
         text-align: left;
         margin-left: -1rem;
         font-size: 1rem;
-
         padding: 1rem 0;
         margin-top: 1rem;
     }

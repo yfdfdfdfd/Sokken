@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import AppHeader from '@/components/AppHeader.vue'
+import NavHeader from '@/components/NavHeader.vue'
 </script>
 
 <template>
+  <NavHeader />
   <div class="center">
     <div class="grid">
       <AppHeader />
       <main>
-        <div class="about">
+        <div class="title">
           <h1>サイト説明</h1>
 
           <section>
@@ -66,5 +68,9 @@ import AppHeader from '@/components/AppHeader.vue'
   display: grid;
   grid-template-columns: 1fr 1fr;
   padding: 0 2rem;
+}
+.about {
+  font-size: 15px;
+  margin-top: 20px;
 }
 </style>
