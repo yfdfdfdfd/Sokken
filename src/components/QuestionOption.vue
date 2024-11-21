@@ -1,11 +1,15 @@
 <script setup lang="ts">
 import router from './../router/index'
+import Welcomepage from './WelcomePage.vue';
+
 
 const props = defineProps<{
   list: string[]
   answer: string
   id: number
 }>()
+
+
 
 
 function selectOption(option: string) {

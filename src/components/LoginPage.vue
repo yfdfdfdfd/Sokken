@@ -32,7 +32,7 @@ async function loginUser() {
     console.log('User Logged in:', response) // デバッグログ
     errorMessage.value = ''
 
-    router.replace('/quize/0')
+    router.replace('/welcome')
   } catch (error) {
     console.error('Error logging in:', error) // デバッグログ
     errorMessage.value = 'ログインに失敗しました'
