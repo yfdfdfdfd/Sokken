@@ -16,16 +16,22 @@
 import * as runtime from '../runtime';
 import type {
   HTTPValidationError,
+  Question,
   User,
   UserCreate,
+  UserLogin,
 } from '../models/index';
 import {
     HTTPValidationErrorFromJSON,
     HTTPValidationErrorToJSON,
+    QuestionFromJSON,
+    QuestionToJSON,
     UserFromJSON,
     UserToJSON,
     UserCreateFromJSON,
     UserCreateToJSON,
+    UserLoginFromJSON,
+    UserLoginToJSON,
 } from '../models/index';
 
 export interface CreateUserUsersPostRequest {
@@ -36,6 +42,14 @@ export interface DeleteUserUsersUserIdDeleteRequest {
     userId: number;
 }
 
+export interface LoginUserLoginPostRequest {
+    userLogin: UserLogin;
+}
+
+export interface ReadQuestionsQuestionsQuestionIdGetRequest {
+    questionId: number;
+}
+
 export interface ReadUserUsersUserIdGetRequest {
     userId: number;
 }
@@ -43,6 +57,11 @@ export interface ReadUserUsersUserIdGetRequest {
 export interface ReadUsersUsersGetRequest {
     skip?: number;
     limit?: number;
+}
+
+export interface ResetPasswordLoginUserIdResetPasswordPostRequest {
+    userId: number;
+    newPassword: string;
 }
 
 export interface UpdateUserUsersUserIdPutRequest {
@@ -124,6 +143,79 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
+     * Login User
+     */
+    async loginUserLoginPostRaw(requestParameters: LoginUserLoginPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters['userLogin'] == null) {
+            throw new runtime.RequiredError(
+                'userLogin',
+                'Required parameter "userLogin" was null or undefined when calling loginUserLoginPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/login/`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UserLoginToJSON(requestParameters['userLogin']),
+        }, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Login User
+     */
+    async loginUserLoginPost(requestParameters: LoginUserLoginPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.loginUserLoginPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Read Questions
+     */
+    async readQuestionsQuestionsQuestionIdGetRaw(requestParameters: ReadQuestionsQuestionsQuestionIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Question>> {
+        if (requestParameters['questionId'] == null) {
+            throw new runtime.RequiredError(
+                'questionId',
+                'Required parameter "questionId" was null or undefined when calling readQuestionsQuestionsQuestionIdGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/questions/{question_id}`.replace(`{${"question_id"}}`, encodeURIComponent(String(requestParameters['questionId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => QuestionFromJSON(jsonValue));
+    }
+
+    /**
+     * Read Questions
+     */
+    async readQuestionsQuestionsQuestionIdGet(requestParameters: ReadQuestionsQuestionsQuestionIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Question> {
+        const response = await this.readQuestionsQuestionsQuestionIdGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Read User
      */
     async readUserUsersUserIdGetRaw(requestParameters: ReadUserUsersUserIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<User>> {
@@ -187,6 +279,54 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async readUsersUsersGet(requestParameters: ReadUsersUsersGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<User>> {
         const response = await this.readUsersUsersGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Reset Password
+     */
+    async resetPasswordLoginUserIdResetPasswordPostRaw(requestParameters: ResetPasswordLoginUserIdResetPasswordPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters['userId'] == null) {
+            throw new runtime.RequiredError(
+                'userId',
+                'Required parameter "userId" was null or undefined when calling resetPasswordLoginUserIdResetPasswordPost().'
+            );
+        }
+
+        if (requestParameters['newPassword'] == null) {
+            throw new runtime.RequiredError(
+                'newPassword',
+                'Required parameter "newPassword" was null or undefined when calling resetPasswordLoginUserIdResetPasswordPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['newPassword'] != null) {
+            queryParameters['new_password'] = requestParameters['newPassword'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/login/{user_id}/reset_password`.replace(`{${"user_id"}}`, encodeURIComponent(String(requestParameters['userId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Reset Password
+     */
+    async resetPasswordLoginUserIdResetPasswordPost(requestParameters: ResetPasswordLoginUserIdResetPasswordPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.resetPasswordLoginUserIdResetPasswordPostRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
