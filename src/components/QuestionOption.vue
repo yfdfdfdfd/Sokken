@@ -1,22 +1,18 @@
 <script setup lang="ts">
 import router from './../router/index'
-import Welcomepage from './WelcomePage.vue';
-
+import { defineProps } from 'vue'
 
 const props = defineProps<{
   list: string[]
   answer: string
   id: number
+  timer: number
 }>()
-
-
-
 
 function selectOption(option: string) {
   if (option === props.answer) {
     alert('正解です！')
     router.push(`/quize/${props.id + 1}`)
-    
   } else {
     alert('不正解です！')
   }
@@ -25,7 +21,10 @@ function selectOption(option: string) {
 
 <template>
   <div class="question-container">
-    <p>問題番号: {{ id + 1 }}</p>
+    <p style="margin-bottom: 10px; text-align: right; border-radius: 10px">
+      残り時間: {{ props.timer }}秒
+    </p>
+    <p>問題番号: {{ props.id + 1 }}</p>
     <ul>
       <li v-for="(option, index) in props.list" :key="index">
         <button @click="selectOption(option)">

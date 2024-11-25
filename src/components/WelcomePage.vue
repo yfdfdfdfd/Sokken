@@ -1,19 +1,26 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import router from '../router/index';
+import { useTimerStore } from '@/stores/timer';
+import { ref } from 'vue';
 
-const timer = ref(50);
+// タイマーストアを使用
+const timerStore = useTimerStore();
+const useTimer = ref<number>(50); // 初期値は50秒
 
+// ビュー遷移
 async function transition() {
-    router.replace('/quize/0');
+    timerStore.setTimer(useTimer.value);
+    router.replace('/quize/0'); // クイズ画面へ遷移
 }
 
+// 時間スライダーの更新
 function updateTime(event: Event) {
     const input = event.target as HTMLInputElement;
-    timer.value = parseInt(input.value);
-    console.log(`New time: ${input.value}`);
+    useTimer.value = parseInt(input.value, 10) || 1; // 入力値を整数として取得
+    console.log(`New time: ${useTimer.value} 秒`);
 }
 </script>
+
 
 <template>
     <div>
@@ -21,39 +28,53 @@ function updateTime(event: Event) {
             <i class="imageLabel setting">設定</i>
         </div>
         <div class="contents">
+            <!-- 設定項目: 解答方式 -->
             <div class="settingItem">
                 <div class="settingLabel">解答方式</div>
                 <div class="settingComponent">
                     <label>
                         <span class="radioButton">
                             <input type="radio" name="inputMode" value="roman" checked>
-                            
                         </span>
                         <span class="radioLabel">選択式</span>
                     </label>
                 </div>
             </div>
+
+            <!-- 設定項目: 制限時間 -->
             <div class="settingItem">
                 <div class="settingLabel">制限時間</div>
                 <div class="settingComponent">
                     <div>
-                        <div style="text-align: right;">{{ timer }}分</div>
-                            <input type="range" min="1" max="50" value="50" class="slider" style="width: 100%;" @input="updateTime">
-                        </div>
+                        <div style="text-align: right;">{{ useTimer }}秒</div>
+                        <input 
+                            type="range" 
+                            min="1" 
+                            max="50" 
+                            :value="useTimer" 
+                            class="slider" 
+                            style="width: 100%;" 
+                            @input="updateTime">
                     </div>
                 </div>
             </div>
-            <div class="description">
-                <ul>
-                    <li>検定カテゴリー合格基準と同じ時間に設定する場合は「５０分」で設定してください。</li>
-                    <li>お名前など個人を特定するデータ及び成績は弊社システム上に保存されません。</li>
-                </ul>
-            </div>
-            <div class="nav">
-                <button class="typingButton" @click="transition">解答を開始する</button>
-            </div>
         </div>
+
+        <!-- 説明文 -->
+        <div class="description">
+            <ul>
+                <li>検定カテゴリー合格基準と同じ時間に設定する場合は「50分」で設定してください。</li>
+                <li>お名前など個人を特定するデータ及び成績はシステム上に保存されません。</li>
+            </ul>
+        </div>
+
+        <!-- ナビゲーションボタン -->
+        <div class="nav">
+            <button class="typingButton" @click="transition">解答を開始する</button>
+        </div>
+    </div>
 </template>
+
 
 <style scoped>
 
@@ -62,7 +83,7 @@ function updateTime(event: Event) {
     font-size: 24px;
     font-weight: bold;
     margin: 20px 0;
-}
+    }
 
 .contents {
     margin: 0 auto;
