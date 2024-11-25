@@ -31,3 +31,5 @@ coverage
 
 test-results/
 playwright-report/
+# 仮想環境を無視する
+venv/
