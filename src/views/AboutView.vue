@@ -10,19 +10,40 @@ import NavHeader from '@/components/NavHeader.vue'
       <AppHeader />
       <main>
         <div class="title">
-          <h1>サイト説明</h1>
+          <h2 style="margin-top: 70px; margin-bottom: 20px;">サイト説明</h2>
 
-          <p class="about">
-            このサイトは、AI検定に関するクイズを出題するWebサイトです。
-            <br />
-            AI検定に関する知識を問う問題を解いて、自分の理解度を確認することができます。
-            <br /><br />
-            学習者の理解度に応じて適切なフィードバックを返信します
-            <br />
-            初心者から上級者までのニーズに対応できるよう、柔軟なアルゴリズムを採用しています。
-            そして、過去の学習履歴を分析し、学習者個人に最適化された解決案を提案します。
-            苦手分野を集中的に学習できるよう、きめ細かいサポートを行います
-          </p>
+          <section>
+            <h3>Home</h3>
+            <h4>
+              Homeページでは、問題の出題数の変更、時間設定ができます。
+              <br>
+              出題開始ボタンを押すことで始まります。
+            </h4>
+          </section>
+          <br>
+
+          <section>
+            <h3>About</h3>
+            <h4>
+              Aboutページでは、このサイトの説明を見ることができます。
+            </h4>
+          </section>
+          <br>
+
+          <section>
+            <h3>Feedback</h3>
+            <h4>
+              Feedbackページでは、問題のジャンル、問題文、選択肢、正解を入力して問題を作成できます。
+            </h4>
+          </section>
+          <br>
+          <section>
+            <h3>History</h3>
+            <h4>
+              Historyページでは、過去に解いた問題を閲覧できます。
+            </h4>
+          </section>
+          <br>
         </div>
       </main>
     </div>
@@ -40,8 +61,6 @@ import NavHeader from '@/components/NavHeader.vue'
   grid-template-columns: 1fr 1fr;
   padding: 0 2rem;
 }
-.about {
-  font-size: 15px;
-  margin-top: 20px;
-}
+
+
 </style>

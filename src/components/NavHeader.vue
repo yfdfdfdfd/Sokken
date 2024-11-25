@@ -19,7 +19,6 @@ const confirmLogout = (event: Event) => {
                 <RouterLink to="/welcome">Home</RouterLink>
                 <RouterLink to="/about">About</RouterLink>
                 <RouterLink to="/feedback">Feedback</RouterLink>
-                <RouterLink to="/quize/0">Quize</RouterLink>
                 <RouterLink to="/history">History</RouterLink>
                 <a href="#" @click="confirmLogout">Logout</a>
             </nav>
