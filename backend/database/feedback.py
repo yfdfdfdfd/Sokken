@@ -1,28 +1,9 @@
-from typing import List
-import random
+from sqlalchemy.orm import Session
+from models import FeedbackTemplateModel
 
-def generate_feedback(user_answers: List[dict], feedback_templates: List[dict]) -> str:
-    """
-    ユーザーの解答履歴を基にフィードバックを生成する関数
+def generate_feedback(tag: str, db: Session):
+    feedback_template = db.query(FeedbackTemplateModel).filter(FeedbackTemplateModel.tag == tag).first()
 
-    Args:
-        user_answers (List[dict]): ユーザーの回答履歴
-        feedback_templates (List[dict]): フィードバックテンプレート
-
-    Returns:
-        str: フィードバックメッセージ
-    """
-    incorrect_tags = [
-        answer["tag"] for answer in user_answers if not answer["is_correct"]
-    ]
-    if not incorrect_tags:
-        return "すべて正解です！素晴らしいです！"
-
-    feedback = []
-    for tag in set(incorrect_tags):
-        template = random.choice(
-            [ft["feedback"] for ft in feedback_templates if ft["tag"] == tag]
-        )
-        feedback.append(template)
-
-    return " ".join(feedback)
+    if feedback_template:
+        return feedback_template.feedback
+    return f"We recommend reviewing topics related to '{tag}' for improvement."

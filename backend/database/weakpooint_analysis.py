@@ -1,17 +1,27 @@
-from typing import List
+#過去の解答データを分析し、ユーザーの弱点を特定
 
-def analyze_weakpoints(user_answers: List[dict]) -> List[int]:
-    """
-    ユーザーの回答履歴を基に苦手分野を分析し、再出題する問題IDを決定する関数
+from sqlalchemy.orm import Session
+from models import UserAnswerModel, QuestionModel
 
-    Args:
-        user_answers (List[dict]): ユーザーの回答履歴
+def analyze_weak_points(user_id: int, db: Session):
+    # ユーザーが回答した質問データを取得
+    user_answers = db.query(UserAnswerModel).filter(UserAnswerModel.user_id == user_id).all()
 
-    Returns:
-        List[int]: 再出題する質問IDのリスト
-    """
-    incorrect_questions = [
-        answer["question_id"] for answer in user_answers if not answer["is_correct"]
+    if not user_answers:
+        return {"message": "No answers available for analysis"}
+
+    incorrect_answers = [
+        answer for answer in user_answers if not answer.is_correct
     ]
-    # 再出題する質問をランダムに選択
-    return incorrect_questions[:5]
+
+    # タグごとの不正解数を集計
+    weak_points = {}
+    for answer in incorrect_answers:
+        question = db.query(QuestionModel).filter(QuestionModel.id == answer.question_id).first()
+        if question and question.tag:
+            weak_points[question.tag] = weak_points.get(question.tag, 0) + 1
+
+    # 不正解が多いタグを返す
+    sorted_weak_points = sorted(weak_points.items(), key=lambda x: x[1], reverse=True)
+    return {"weak_points": sorted_weak_points}
+

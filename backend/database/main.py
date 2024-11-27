@@ -4,8 +4,12 @@ from typing import Any, Generator, List
 from app import models, schemas
 from app.database import SessionLocal, engine
 from fastapi.middleware.cors import CORSMiddleware
+from routers import user, question
 
 app = FastAPI()  # FastAPIインスタンスを作成
+# APIルータを登録
+app.include_router(user.router, prefix="/users", tags=["users"])
+app.include_router(question.router, prefix="/questions", tags=["questions"])
 
 origins = [
     "http://localhost:5173",

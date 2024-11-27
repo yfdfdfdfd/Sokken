@@ -1,14 +1,24 @@
 <script setup lang="ts">
-import HelloWorld from './SubTitle.vue'
+import { ref, computed } from 'vue'; // ref と computed をインポート
+import HelloWorld from './SubTitle.vue'; // SubTitle.vue のコンポーネントをインポート
+
+// ログイン状態を管理
+const isLoggedIn = ref<boolean>(false); // サーバーからの状態に変更可能
+
+// ヘッダーメッセージを計算
+const headerMessage = computed(() => 
+  isLoggedIn.value ? 'ようこそ！' : 'AI検定'
+);
 </script>
 
 <template>
   <header>
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
     <div class="wrapper">
       <HelloWorld msg="AI検定" />
     </div>
+    <!-- ヘッダーメッセージを表示 -->
+    <h1>{{ headerMessage }}</h1>
   </header>
 </template>
 
