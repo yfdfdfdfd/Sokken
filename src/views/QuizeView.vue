@@ -6,6 +6,7 @@ import { useRoute } from 'vue-router'
 import QuestionOption from '@/components/QuestionOption.vue'
 import QuestionList from '@/components/QuestionList.vue'
 import { useTimerStore } from '@/stores/timer'
+import router from '@/router'
 
 const timerstore = useTimerStore()
 const { getDiff } = timerstore
@@ -17,6 +18,7 @@ const errorMessage = ref<string | undefined>(undefined)
 const answer = ref<string | undefined>(undefined)
 const diff = ref<number>(0)
 const intervalId = ref<number | undefined>(undefined)
+const Dialog = ref<boolean>(false)
 
 async function fetchQuestionData() {
   try {
@@ -37,6 +39,7 @@ async function fetchQuestionData() {
     errorMessage.value = '問題データの取得に失敗しました'
   }
 }
+
 onMounted(() => {
   fetchQuestionData()
   intervalId.value = setInterval(() => {
@@ -50,7 +53,7 @@ onUnmounted(() => {
   }
 })
 
-//idが変更された場合のみ
+// idが変更された場合のみ
 watch(
   () => route.params.id,
   () => {
@@ -58,11 +61,24 @@ watch(
   }
 )
 
+// 制限時間切れを監視
 watch(
   () => diff.value < 0,
-  () => {
-      alert('時間切れです')
+  (isTimeOver) => {
+    if (isTimeOver) {
+      Dialog.value = true
     }
+  }
+)
+
+// ダイアログが閉じられたら結果画面に遷移
+watch(
+  () => Dialog.value,
+  (isDialogClosed) => {
+    if (!isDialogClosed) {
+      router.replace('/result')
+    }
+  }
 )
 </script>
 
@@ -82,6 +98,21 @@ watch(
       />
     </div>
     <p v-if="errorMessage" style="color: #f6aa00; margin-top: 5px">{{ errorMessage }}</p>
+
+    <v-dialog v-model="Dialog" width="auto">
+  <v-card max-width="400">
+    <v-card-title class="centered-title">
+      終了
+    </v-card-title>
+    <v-card-text>
+      制限時間になりました。試験を終了します
+    </v-card-text>
+    <v-card-actions>
+      <v-btn class="ms-auto" @click="Dialog = false">OK</v-btn>
+    </v-card-actions>
+  </v-card>
+</v-dialog>
+
   </main>
 </template>
 
@@ -97,4 +128,15 @@ main > * {
   align-items: center;
   height: 100vh;
 }
+
+.centered-title {
+  display: flex;
+  justify-content: center; 
+  align-items: center;    
+  text-align: center;     
+  font-size: 1.5rem;
+  background-color: auto;
+  color: auto;
+}
+
 </style>

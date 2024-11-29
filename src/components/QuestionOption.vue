@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import router from './../router/index'
-import { defineProps } from 'vue'
+import { defineProps, ref } from 'vue'
+
+const Message = ref<string | undefined>(undefined)
+const Dialog = ref<boolean>(false)
+const Select = ref<string | undefined>(undefined)
 
 const props = defineProps<{
   list: string[]
@@ -9,12 +13,25 @@ const props = defineProps<{
   timer: number
 }>()
 
+//正誤判定がオンの場合正誤判定を行う(予定)
 function selectOption(option: string) {
   if (option === props.answer) {
-    alert('正解です！')
-    router.push(`/quize/${props.id + 1}`)
+    Message.value = '正解です！'
+    Select.value = option
+    Dialog.value = true
+    setTimeout(() => {
+      Dialog.value = false
+    }, 800)
+    setTimeout(() => {
+      router.push(`/quize/${props.id + 1}`)
+    }, 1600)
   } else {
-    alert('不正解です！')
+    Message.value = '不正解です！'
+    Select.value = option
+    Dialog.value = true
+    setTimeout(() => {
+      Dialog.value = false
+    }, 1600)
   }
 }
 </script>
@@ -33,6 +50,14 @@ function selectOption(option: string) {
       </li>
     </ul>
   </div>
+
+  <v-dialog v-model="Dialog" width="auto">
+    <v-card max-width="400" prepend-icon="mdi-update" :text="Select" :title="Message">
+      <template v-slot:actions>
+        <v-btn class="ms-auto" text="Ok" @click="Dialog = false"></v-btn>
+      </template>
+    </v-card>
+  </v-dialog>
 </template>
 
 <style scoped>
