@@ -1,31 +1,10 @@
-#ベースイメージ
-FROM nvidia/cuda:11.8.0-base-ubuntu22.04
+FROM python:3.10.13
 
-#必要なパッケージをインストール
-RUN apt-get update && apt-get install -y \
-    python3 \
-    python3-pip \
-    git \
-    wget \
-    curl \
-    && apt-get clean
+ENV PATH /root/.local/bin:$PATH
 
-#Pythonのデフォルトバージョンを設定
-RUN ln -s /usr/bin/python3 /usr/bin/python
+COPY pyproject.toml poetry.lock ./
 
-#必要なPythonライブラリをインストール
-RUN pip install --upgrade pip
-RUN pip install \
-    transformers \
-    datasets \
-    accelerate \
-    torch \
-    torchvision \
-    torchaudio \
-    sentencepiece
-
-#作業ディレクトリを作成
-WORKDIR /workspace
-
-#デフォルトのコマンド
-CMD ["/bin/bash"]
+RUN apt update && apt -y upgrade \
+    && curl -sSL https://install.python-poetry.org | python3 - \
+    && poetry config virtualenvs.create false \
+    && poetry install
