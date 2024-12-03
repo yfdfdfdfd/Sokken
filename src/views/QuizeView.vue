@@ -20,6 +20,7 @@ const diff = ref<number>(0)
 const intervalId = ref<number | undefined>(undefined)
 const Dialog = ref<boolean>(false)
 
+
 async function fetchQuestionData() {
   try {
     const config = new Configuration({
@@ -53,7 +54,7 @@ onUnmounted(() => {
   }
 })
 
-// idが変更された場合のみ
+// idが変更された時
 watch(
   () => route.params.id,
   () => {
@@ -67,6 +68,8 @@ watch(
   (isTimeOver) => {
     if (isTimeOver) {
       Dialog.value = true
+      //ここでgetPastTime()の時間を止める
+      
     }
   }
 )
