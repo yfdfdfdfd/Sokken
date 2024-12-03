@@ -1,0 +1,10 @@
+project/
+├── Dockerfile                       # Docker環境の設定
+├── train.py                         # モデルの訓練スクリプト
+├── data/
+│   ├── data.csv                     # 学習用データ（AI検定の問題）
+│   ├── preprocess.py                # データ前処理用スクリプト
+├── models/
+│   ├── model.py                     # モデル定義
+│   └── tokenizer.py                 # トークナイザー設定
+└── requirements.txt                 # 必要なPythonライブラリのリスト

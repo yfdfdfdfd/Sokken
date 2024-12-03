@@ -1,10 +1,15 @@
-FROM python:3.10.13
+FROM python:3.11.10
+FROM pytorch/pytorch:2.5.1-cuda12.4-cudnn9-runtime
 
-ENV PATH /root/.local/bin:$PATH
+# 必要なライブラリのインストール
+RUN pip install --upgrade pip
+RUN pip install transformers pandas scikit-learn
 
-COPY pyproject.toml poetry.lock ./
+# 作業ディレクトリの設定
+WORKDIR /app
 
-RUN apt update && apt -y upgrade \
-    && curl -sSL https://install.python-poetry.org | python3 - \
-    && poetry config virtualenvs.create false \
-    && poetry install
+# ローカルのコードをコンテナにコピー
+COPY . /app
+
+# 実行コマンド
+CMD ["python", "train.py"]

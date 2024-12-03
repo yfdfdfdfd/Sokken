@@ -12,14 +12,12 @@
                 "ms-azuretools.vscode-docker"
             ],
             "settings": {
-                "[python]": {
-                    "editor.formatOnSave": true,
-                    "editor.codeActionsOnSave": {
-                        "source.fixAll": true,
-                        "source.organizeImports": true
-                    },
-                    "editor.defaultFormatter": "charliermarsh.ruff"
+                "editor.formatOnSave": true,
+                "editor.codeActionsOnSave": {
+                    "source.fixAll": "explicit", 
+                    "source.organizeImports": "explicit"
                 },
+                "editor.defaultFormatter": "charliermarsh.ruff",
                 "python.testing.pytestArgs": [
                     "test"
                 ],
