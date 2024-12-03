@@ -5,7 +5,7 @@ import { ref } from 'vue';
 
 // タイマーストアを使用
 const timerStore = useTimerStore();
-const useTimer = ref<number>(50); // 初期値は50秒
+const useTimer = ref<number>(50); // 初期値は50
 
 // ビュー遷移
 async function transition() {
@@ -18,6 +18,7 @@ function updateTime(event: Event) {
     const input = event.target as HTMLInputElement;
     useTimer.value = parseInt(input.value, 10) || 1; // 入力値を整数として取得
     console.log(`New time: ${useTimer.value} 秒`);
+    // console.log(`New time: ${useTimer.value} 分`);
 }
 </script>
 
@@ -47,6 +48,7 @@ function updateTime(event: Event) {
                 <div class="settingComponent">
                     <div>
                         <div style="text-align: right;">{{ useTimer }}秒</div>
+                        <!-- <div style="text-align: right;">{{ useTimer }}分</div> -->
                         <input 
                             type="range" 
                             min="1" 

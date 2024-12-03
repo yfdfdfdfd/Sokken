@@ -100,19 +100,19 @@ watch(
     <p v-if="errorMessage" style="color: #f6aa00; margin-top: 5px">{{ errorMessage }}</p>
 
     <v-dialog v-model="Dialog" width="auto">
-  <v-card max-width="400">
-    <v-card-title class="centered-title">
-      終了
-    </v-card-title>
-    <v-card-text>
-      制限時間になりました。試験を終了します
-    </v-card-text>
-    <v-card-actions>
-      <v-btn class="ms-auto" @click="Dialog = false">OK</v-btn>
-    </v-card-actions>
-  </v-card>
-</v-dialog>
-
+      <v-card max-width="500">
+        <v-card-title class="centered-title">
+          制限時間が終了しました
+        </v-card-title>
+        <v-card-text>
+          試験を終了します<br>
+          クリックで結果画面に遷移します。
+        </v-card-text>
+        <v-card-actions>
+          <v-btn class="ms-auto" @click="Dialog = false">OK</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </main>
 </template>
 

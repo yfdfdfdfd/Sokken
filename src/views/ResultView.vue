@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import NavHeader from '@/components/NavHeader.vue';
 import { useTimerStore } from '@/stores/timer'
+import { useCounterStore } from '@/stores/counter'
 import router from '@/router';
 
-const timerstore = useTimerStore()
-const { getPastTime } = timerstore
+const timerStore = useTimerStore()
+const counterStore = useCounterStore()
+
+const { getPastTime } = timerStore
+const { correct } = counterStore
 
 </script>
 
@@ -14,9 +18,10 @@ const { getPastTime } = timerstore
     <div>
         <h1>結果</h1>
         <p>お疲れ様でした！</p>
-        <p>あなたの正解数は{{ }}問です。</p>
+        <p>あなたの正解数は{{correct}}問です。</p>
         <p v-if="getPastTime() !== undefined">
             あなたの回答時間は{{ getPastTime()-1}}秒です。</p>
+            <!-- あなたの解答時間は{{ getPastTime()}}分です。</p> -->
         <p v-else>タイマーが設定されていません。</p>
         <button class="button" @click="router.replace('/welcome')">ホームに戻る</button>
     </div>
@@ -69,7 +74,4 @@ const { getPastTime } = timerstore
     .button:active {
         background-color: #3e8e41;
     }
-
-
-
 </style>

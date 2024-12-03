@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import router from './../router/index'
-import { defineProps, ref } from 'vue'
+import { defineProps, ref, watch } from 'vue'
+import { useCounterStore } from '@/stores/counter'
 
-const Message = ref<string | undefined>(undefined)
+const conterStore = useCounterStore()
+
 const Dialog = ref<boolean>(false)
-const Select = ref<string | undefined>(undefined)
+const Message = ref<string>('')
+const Select = ref<string | undefined>('')
 
 const props = defineProps<{
   list: string[]
@@ -13,27 +16,24 @@ const props = defineProps<{
   timer: number
 }>()
 
-//正誤判定がオンの場合正誤判定を行う(予定)
+// 正誤判定
 function selectOption(option: string) {
+  Select.value = option
   if (option === props.answer) {
     Message.value = '正解です！'
-    Select.value = option
-    Dialog.value = true
-    setTimeout(() => {
-      Dialog.value = false
-    }, 800)
-    setTimeout(() => {
-      router.push(`/quize/${props.id + 1}`)
-    }, 1600)
+    conterStore.increment()
   } else {
     Message.value = '不正解です！'
-    Select.value = option
-    Dialog.value = true
-    setTimeout(() => {
-      Dialog.value = false
-    }, 1600)
   }
+  Dialog.value = true
 }
+
+// ダイアログを閉じた際に遷移
+watch(Dialog, (isDialogOpen) => {
+  if (!isDialogOpen && Message.value === '正解です！') {
+    router.push(`/quize/${props.id + 1}`)
+  }
+})
 </script>
 
 <template>
@@ -52,10 +52,16 @@ function selectOption(option: string) {
   </div>
 
   <v-dialog v-model="Dialog" width="auto">
-    <v-card max-width="400" prepend-icon="mdi-update" :text="Select" :title="Message">
-      <template v-slot:actions>
-        <v-btn class="ms-auto" text="Ok" @click="Dialog = false"></v-btn>
-      </template>
+    <v-card max-width="500">
+      <v-card-title class="centered-title">
+        {{ Message }}
+      </v-card-title>
+      <v-card-text>
+        {{ Select }}
+      </v-card-text>
+      <v-card-actions>
+        <v-btn class="ms-auto" @click="Dialog = false">OK</v-btn>
+      </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
@@ -91,5 +97,14 @@ button {
 button.selected {
   background-color: #4caf50;
   color: white;
+}
+
+.centered-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 </style>
