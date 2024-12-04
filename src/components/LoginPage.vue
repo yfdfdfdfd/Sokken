@@ -53,7 +53,7 @@ async function loginUser() {
           type="email"
           id="email"
           placeholder="メールアドレスを入力"
-          style="padding: 8px; margin-top: 10px; width: 100%"
+          style="padding: 8px; margin-top: 10px; width: 100%; border: white;background-color: white;"
           v-model="email"
         />
       </div>
@@ -73,7 +73,7 @@ async function loginUser() {
           id="password"
           placeholder="パスワードを入力"
           v-model="password"
-          style="padding: 8px; margin-top: 10px; margin-bottom: 10px; width: 100%"
+          style="padding: 8px; margin-top: 10px; margin-bottom: 10px; width: 100%; background-color: white;"
         />
         <div style="margin-top: 10px">
           <router-link to="/create" style="color: auto; text-decoration: underline">

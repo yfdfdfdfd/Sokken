@@ -3,9 +3,10 @@ import router from '../router/index';
 import { useTimerStore } from '@/stores/timer';
 import { ref } from 'vue';
 
+
 // タイマーストアを使用
 const timerStore = useTimerStore();
-const useTimer = ref<number>(50); // 初期値は50秒
+const useTimer = ref<number>(50); // 初期値は50
 
 // ビュー遷移
 async function transition() {
@@ -18,9 +19,9 @@ function updateTime(event: Event) {
     const input = event.target as HTMLInputElement;
     useTimer.value = parseInt(input.value, 10) || 1; // 入力値を整数として取得
     console.log(`New time: ${useTimer.value} 秒`);
+    // console.log(`New time: ${useTimer.value} 分`);
 }
 </script>
-
 
 <template>
     <div>
@@ -47,10 +48,12 @@ function updateTime(event: Event) {
                 <div class="settingComponent">
                     <div>
                         <div style="text-align: right;">{{ useTimer }}秒</div>
+                        <!-- <div style="text-align: right;">{{ useTimer }}分</div> -->
                         <input 
                             type="range" 
-                            min="1" 
+                            min="5" 
                             max="50" 
+                            step="5"
                             :value="useTimer" 
                             class="slider" 
                             style="width: 100%;" 
@@ -58,6 +61,17 @@ function updateTime(event: Event) {
                     </div>
                 </div>
             </div>
+
+            <!-- 設定項目: 正誤判定
+            <div class="settingItem">
+                <div class="settingLabel">正誤判定</div>
+                <div class="settingComponent">
+                    <label>
+                        <input type="checkbox" v-model="isJudgementEnabled">
+                        <span style="margin-left: 5px;">正誤判定を無効にする</span>
+                    </label>
+                </div>
+            </div> -->
         </div>
 
         <!-- 説明文 -->
@@ -75,15 +89,13 @@ function updateTime(event: Event) {
     </div>
 </template>
 
-
 <style scoped>
-
 .title {
     text-align: center;
     font-size: 24px;
     font-weight: bold;
     margin: 20px 0;
-    }
+}
 
 .contents {
     margin: 0 auto;
@@ -199,9 +211,9 @@ function updateTime(event: Event) {
 .typingButton:active {
     background-color: #3e8e41;
 }
+
 .imageLabel {
     font-size: 14px;
     color: #888;
 }
 </style>
-

@@ -3,23 +3,37 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useTimerStore = defineStore('timer', () => {
-    const timer = ref<number | undefined>(undefined)
+    const endTime = ref<number | undefined>(undefined)
+    const startTime = ref<number | undefined>(undefined)
+    const finishtime = ref<number>(0)
 
     function setTimer(time: number) {
-        timer.value = time + dtime() // 現在時刻 + 設定した時間をタイマーにセット
+        endTime.value = time + dtime() // 現在時刻 + 設定した時間をタイマーにセット (終わる時間)
+        startTime.value = dtime() // 現在時刻をタイマーのスタート時間としてセット
     }
 
     function dtime() {
         return Math.floor(new Date().getTime() / 1000) // 現在時刻を秒単位で返す
     }
 
-    function getDiff() {
-        if (timer.value !== undefined) {
-            return timer.value - dtime()
+    function getDiff() { // タイマーの残り時間を返す
+        if (endTime.value !== undefined) {
+            return endTime.value - dtime()
+        }
+        return 0 
+    }
+    //タイマーの経過時間を返す関数を追加
+    function getPastTime() {
+        if (startTime.value !== undefined) {
+            return dtime() - startTime.value
         }
         return 0
     }
-    return { timer, setTimer, getDiff }
+    function setFinishTime(time: number) {
+        finishtime.value = time
+    }
+    
+    return { endTime,setTimer, getDiff, getPastTime, setFinishTime, finishtime }
 })
 
 

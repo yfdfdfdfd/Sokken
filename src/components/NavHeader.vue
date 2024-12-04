@@ -1,14 +1,14 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
+const dialog = ref(false);
 
-const confirmLogout = (event: Event) => {
-    event.preventDefault(); // 最初にデフォルトの動作を防ぐ
-    if (confirm('ログアウトしますか?')) {
-        localStorage.removeItem('token');
-        router.replace('/');
-    }
+const logout = () => {
+    localStorage.removeItem('token'); 
+    router.replace('/'); 
+    dialog.value = false; 
 };
 </script>
 
@@ -19,12 +19,27 @@ const confirmLogout = (event: Event) => {
                 <RouterLink to="/welcome">Home</RouterLink>
                 <RouterLink to="/about">About</RouterLink>
                 <RouterLink to="/feedback">Feedback</RouterLink>
+                <RouterLink to="/paformance">paformance</RouterLink>
                 <RouterLink to="/history">History</RouterLink>
-                <a href="#" @click="confirmLogout">Logout</a>
+                <a href="#" @click.prevent="dialog = true">Logout</a> <!-- prevent追加でデフォルト動作を防ぐ -->
             </nav>
         </div>
+
+        <v-dialog v-model="dialog" max-width="400">
+            <v-card>
+                <v-card-title class="headline">ログアウト確認</v-card-title>
+                <v-card-text>本当にログアウトしますか？</v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="grey darken-1" @click="dialog = false">キャンセル</v-btn>
+                    <v-btn color="red darken-1"  @click="logout">ログアウト</v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </header>
 </template>
+
+
 
 <style scoped>
 header {
@@ -62,6 +77,16 @@ nav a:first-of-type {
     border: 0;
 }
 
+.navbar {
+    position: fixed;
+    top: 0;
+    width: auto;
+    background-color: auto;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
 @media (min-width: 1024px) {
     header {
         place-items: center;
@@ -85,17 +110,5 @@ nav a:first-of-type {
         padding: 1rem 0;
         margin-top: 1rem;
     }
-}
-</style>
-
-<style scoped>
-.navbar {
-    position: fixed;
-    top: 0;
-    width: auto;
-    background-color: auto;
-    padding: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
 }
 </style>

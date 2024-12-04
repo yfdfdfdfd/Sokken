@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import router from './../router/index'
-import { defineProps } from 'vue'
+import { defineProps, ref, watch } from 'vue'
+import { useCounterStore } from '@/stores/counter'
+
+const conterStore = useCounterStore()
+
+const Dialog = ref<boolean>(false)
+const Message = ref<string>('')
+const Select = ref<string | undefined>('')
 
 const props = defineProps<{
   list: string[]
@@ -9,14 +16,34 @@ const props = defineProps<{
   timer: number
 }>()
 
+// 正誤判定
+// function selectOption(option: string) {
+//   Select.value = option
+//   if (option === props.answer) {
+//     Message.value = '正解です！'
+//     conterStore.increment()
+//   } else {
+//     Message.value = '不正解です！'
+//   }
+//   Dialog.value = true
+// }
+
 function selectOption(option: string) {
-  if (option === props.answer) {
-    alert('正解です！')
+    Select.value = option
+    if (option === props.answer) {
+    conterStore.increment()
+    } else {
+    conterStore.decrement()
+    }
     router.push(`/quize/${props.id + 1}`)
-  } else {
-    alert('不正解です！')
-  }
 }
+
+// ダイアログを閉じた際に遷移
+watch(Dialog, (isDialogOpen) => {
+  if (!isDialogOpen && Message.value === '正解です！') {
+    router.push(`/quize/${props.id + 1}`)
+  }
+})
 </script>
 
 <template>
@@ -33,6 +60,20 @@ function selectOption(option: string) {
       </li>
     </ul>
   </div>
+
+  <v-dialog v-model="Dialog" width="auto">
+    <v-card max-width="500">
+      <v-card-title class="centered-title">
+        {{ Message }}
+      </v-card-title>
+      <v-card-text>
+        {{ Select }}
+      </v-card-text>
+      <v-card-actions>
+        <v-btn class="ms-auto" @click="Dialog = false">OK</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <style scoped>
@@ -66,5 +107,14 @@ button {
 button.selected {
   background-color: #4caf50;
   color: white;
+}
+
+.centered-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 </style>
