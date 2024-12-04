@@ -8,9 +8,6 @@ import QuestionList from '@/components/QuestionList.vue'
 import { useTimerStore } from '@/stores/timer'
 import router from '@/router'
 
-const timerstore = useTimerStore()
-const { getDiff } = timerstore
-
 const route = useRoute()
 const question = ref<string | undefined>(undefined)
 const list = ref<string[]>([])
@@ -20,6 +17,8 @@ const diff = ref<number>(0)
 const intervalId = ref<number | undefined>(undefined)
 const Dialog = ref<boolean>(false)
 
+const timerstore = useTimerStore()
+const { getDiff } = timerstore
 
 async function fetchQuestionData() {
   try {
@@ -43,6 +42,8 @@ async function fetchQuestionData() {
 
 onMounted(() => {
   fetchQuestionData()
+  diff.value = getDiff()
+  //一秒ごとにdiffを更新
   intervalId.value = setInterval(() => {
     diff.value = getDiff()
   }, 1000)
@@ -51,6 +52,7 @@ onMounted(() => {
 onUnmounted(() => {
   if (intervalId.value) {
     clearInterval(intervalId.value)
+    
   }
 })
 
@@ -64,12 +66,11 @@ watch(
 
 // 制限時間切れを監視
 watch(
-  () => diff.value < 0,
+  () => diff.value <= 0,
   (isTimeOver) => {
     if (isTimeOver) {
       Dialog.value = true
-      //ここでgetPastTime()の時間を止める
-      
+      timerstore.setFinishTime(timerstore.getPastTime())// 保存
     }
   }
 )
@@ -81,6 +82,15 @@ watch(
     if (!isDialogClosed) {
       router.replace('/result')
     }
+  }
+)
+
+//問題数に達成すると結果画面に遷移
+watch(
+  () => route.params.id === '10',
+  () => {
+    timerstore.setFinishTime(timerstore.getPastTime())// 保存
+    router.replace('/result')
   }
 )
 </script>
@@ -103,7 +113,7 @@ watch(
     <p v-if="errorMessage" style="color: #f6aa00; margin-top: 5px">{{ errorMessage }}</p>
 
     <v-dialog v-model="Dialog" width="auto">
-      <v-card max-width="500">
+      <v-card max-width="500" style="text-align: center;">
         <v-card-title class="centered-title">
           制限時間が終了しました
         </v-card-title>
@@ -137,9 +147,13 @@ main > * {
   justify-content: center; 
   align-items: center;    
   text-align: center;     
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   background-color: auto;
   color: auto;
+}
+
+.ms-auto {
+  margin-right: 105px;
 }
 
 </style>

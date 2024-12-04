@@ -39,6 +39,7 @@ const router = createRouter({
       name: 'result',
       component: () => import('../views/ResultView.vue')
     },
+    
   ]
 })
 

@@ -7,7 +7,7 @@ import router from '@/router';
 const timerStore = useTimerStore()
 const counterStore = useCounterStore()
 
-const { getPastTime } = timerStore
+const { finishtime } = timerStore
 const { correct } = counterStore
 
 </script>
@@ -19,8 +19,8 @@ const { correct } = counterStore
         <h1>結果</h1>
         <p>お疲れ様でした！</p>
         <p>あなたの正解数は{{correct}}問です。</p>
-        <p v-if="getPastTime() !== undefined">
-            あなたの回答時間は{{ getPastTime()-1}}秒です。</p>
+        <p v-if="finishtime">
+            あなたの回答時間は{{finishtime}}秒です。</p>
             <!-- あなたの解答時間は{{ getPastTime()}}分です。</p> -->
         <p v-else>タイマーが設定されていません。</p>
         <button class="button" @click="router.replace('/welcome')">ホームに戻る</button>

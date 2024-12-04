@@ -5,7 +5,7 @@ import { defineStore } from 'pinia'
 export const useTimerStore = defineStore('timer', () => {
     const endTime = ref<number | undefined>(undefined)
     const startTime = ref<number | undefined>(undefined)
-    
+    const finishtime = ref<number>(0)
 
     function setTimer(time: number) {
         endTime.value = time + dtime() // 現在時刻 + 設定した時間をタイマーにセット (終わる時間)
@@ -29,7 +29,11 @@ export const useTimerStore = defineStore('timer', () => {
         }
         return 0
     }
-    return { endTime, setTimer, getDiff, getPastTime }
+    function setFinishTime(time: number) {
+        finishtime.value = time
+    }
+    
+    return { endTime,setTimer, getDiff, getPastTime, setFinishTime, finishtime }
 })
 
 

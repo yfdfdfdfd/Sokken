@@ -3,7 +3,6 @@ import router from '../router/index';
 import { useTimerStore } from '@/stores/timer';
 import { ref } from 'vue';
 
-// const isJudgementEnabled = ref(false); // 初期値はfalse
 
 // タイマーストアを使用
 const timerStore = useTimerStore();
@@ -52,8 +51,9 @@ function updateTime(event: Event) {
                         <!-- <div style="text-align: right;">{{ useTimer }}分</div> -->
                         <input 
                             type="range" 
-                            min="1" 
+                            min="5" 
                             max="50" 
+                            step="5"
                             :value="useTimer" 
                             class="slider" 
                             style="width: 100%;" 

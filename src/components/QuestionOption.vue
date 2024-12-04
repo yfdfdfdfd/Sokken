@@ -17,15 +17,25 @@ const props = defineProps<{
 }>()
 
 // 正誤判定
+// function selectOption(option: string) {
+//   Select.value = option
+//   if (option === props.answer) {
+//     Message.value = '正解です！'
+//     conterStore.increment()
+//   } else {
+//     Message.value = '不正解です！'
+//   }
+//   Dialog.value = true
+// }
+
 function selectOption(option: string) {
-  Select.value = option
-  if (option === props.answer) {
-    Message.value = '正解です！'
+    Select.value = option
+    if (option === props.answer) {
     conterStore.increment()
-  } else {
-    Message.value = '不正解です！'
-  }
-  Dialog.value = true
+    } else {
+    conterStore.decrement()
+    }
+    router.push(`/quize/${props.id + 1}`)
 }
 
 // ダイアログを閉じた際に遷移
