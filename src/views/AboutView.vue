@@ -8,38 +8,32 @@ import NavHeader from '@/components/NavHeader.vue'
   <div class="center">
     <div class="grid">
       <AppHeader />
-      <main>
+      <main style="background-color: #f9f9f9; padding: 30px;">
         <div class="title">
-          <h2 style="margin-top: 70px; margin-bottom: 20px;">サイト説明</h2>
+            <h2 style="margin-bottom: 20px; font-weight: bold;">目次</h2>
           <section>
-            <h3>Home</h3>
-            <h4>
-              Homeページでは、問題の出題数の変更、時間設定ができます。
-              <br>
-              出題開始ボタンを押すことで始まります。
-            </h4>
+        <h3 class="hover-underline">Home</h3>
+        <h4>
+          Homeページでは、本番を想定して問題を解くことができ、制限時間の設定ができます。
+          解答開始ボタンを押すことで始まります。
+        </h4>
           </section>
-          <br>
+          <br />
           <section>
-            <h3>About</h3>
-            <h4>
-              Aboutページでは、このサイトの説明を見ることができます。
-            </h4>
-          </section> 
-          <br>
-          <section>
-            <h3>Feedback</h3>
-            <h4>
-              Feedbackページでは、問題のジャンル、問題文、選択肢、正解を入力して問題を作成できます。
-            </h4>
+        <h3 class="hover-underline">About</h3>
+        <h4>Aboutページでは、このサイトの説明を見ることができます。</h4>
           </section>
-          <br>
+          <br />
           <section>
-            <h3>History</h3>
-            <h4>
-              Historyページでは、過去に解いた問題を閲覧できます。
-            </h4>
+        <h3 class="hover-underline">Practice</h3>
+        <h4>Practiceページではインプット向けの勉強を行うことができます。</h4>
           </section>
+          <br />
+          <section>
+        <h3 class="hover-underline">History</h3>
+        <h4>Historyページでは、過去に解いた問題を閲覧できます。</h4>
+        </section>
+          <br />
         </div>
       </main>
     </div>
@@ -56,5 +50,16 @@ import NavHeader from '@/components/NavHeader.vue'
   display: grid;
   grid-template-columns: 1fr 1fr;
   padding: 0 2rem;
+}
+
+.hover-underline:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+h3 {
+    display: block;
+    font-weight: 500;
+    
 }
 </style>

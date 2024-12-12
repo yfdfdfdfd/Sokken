@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { useCounterStore } from '@/stores/counter'
 
 const router = useRouter();
 const dialog = ref(false);
+const counterStore = useCounterStore()
+const{ resetcrement } = counterStore
 
 const logout = () => {
     localStorage.removeItem('token'); 
@@ -16,12 +19,11 @@ const logout = () => {
     <header>
         <div class="wrapper">
             <nav class="navbar">
-                <RouterLink to="/welcome">Home</RouterLink>
+                <RouterLink to="/welcome" @click="resetcrement">Home</RouterLink>
                 <RouterLink to="/about">About</RouterLink>
-                <RouterLink to="/feedback">Feedback</RouterLink>
-                <RouterLink to="/paformance">paformance</RouterLink>
+                <RouterLink to="/practice">Practice</RouterLink>
                 <RouterLink to="/history">History</RouterLink>
-                <a href="#" @click.prevent="dialog = true">Logout</a> <!-- prevent追加でデフォルト動作を防ぐ -->
+                <a href="#" @click.prevent="dialog = true" @click="resetcrement">Logout</a>
             </nav>
         </div>
 
@@ -32,7 +34,7 @@ const logout = () => {
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="grey darken-1" @click="dialog = false">キャンセル</v-btn>
-                    <v-btn color="red darken-1"  @click="logout">ログアウト</v-btn>
+                    <v-btn color="#d2691e"  @click="logout">ログアウト</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -71,6 +73,12 @@ nav a {
     display: inline-block;
     padding: 0 1rem;
     border-left: 1px solid var(--color-border);
+    transition: color 0.3s ease, border-color 0.3s ease; /* Add transition for color and border-color */
+}
+
+nav a:hover {
+    color: var(--color-hover); /* Define a hover color */
+    border-color: var(--color-hover); /* Change border color on hover */
 }
 
 nav a:first-of-type {
@@ -81,7 +89,6 @@ nav a:first-of-type {
     position: fixed;
     top: 0;
     width: auto;
-    background-color: auto;
     padding: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     z-index: 1000;
@@ -112,3 +119,4 @@ nav a:first-of-type {
     }
 }
 </style>
+

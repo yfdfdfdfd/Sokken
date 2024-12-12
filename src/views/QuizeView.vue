@@ -87,7 +87,7 @@ watch(
 
 //問題数に達成すると結果画面に遷移
 watch(
-  () => route.params.id === '10',
+  () => route.params.id === '15',
   () => {
     timerstore.setFinishTime(timerstore.getPastTime())// 保存
     router.replace('/result')

@@ -104,9 +104,8 @@ button {
   background-color: auto;
 }
 
-button.selected {
-  background-color: #4caf50;
-  color: white;
+button:hover {
+  background-color: #e8e8e8;
 }
 
 .centered-title {

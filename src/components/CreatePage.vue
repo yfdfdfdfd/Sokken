@@ -70,7 +70,7 @@ async function createUser() {
           id="name"
           v-model="name"
           placeholder="名前を入力"
-          style="padding: 8px; margin-top: 10px; width: 100%"
+          style="padding: 8px; margin-top: 10px; margin-bottom: 10px; width: 100%"
         />
       </div>
       <div>
@@ -80,7 +80,7 @@ async function createUser() {
           id="email"
           v-model="email"
           placeholder="メールアドレスを入力"
-          style="padding: 8px; margin-top: 10px; width: 100%"
+          style="padding: 8px; margin-top: 10px; margin-bottom: 10px; width: 100%"
         />
       </div>
 
@@ -91,7 +91,7 @@ async function createUser() {
           id="password"
           v-model="password"
           placeholder="パスワードを入力"
-          style="padding: 8px; margin-top: 10px; width: 100%"
+          style="padding: 8px; margin-top: 10px; margin-bottom: 10px; width: 100%"
         />
       </div>
       <div>
@@ -101,7 +101,7 @@ async function createUser() {
           id="confirmPassword"
           v-model="confirmPassword"
           placeholder="パスワードを再入力"
-          style="padding: 8px; margin-top: 10px; width: 100%"
+          style="padding: 8px; margin-top: 10px; margin-bottom: 10px; width: 100%"
         />
       </div>
       <button
@@ -110,7 +110,7 @@ async function createUser() {
           margin-top: 20px;
           padding: 10px 20px;
           width: 100%;
-          background-color: #4caf50;
+          background-color: #34a3d1;
           color: white;
           border: none;
           border-radius: 5px;

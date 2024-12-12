@@ -30,6 +30,11 @@ const router = createRouter({
       component: () => import('../views/QuizeView.vue'),
     },
     {
+      path: '/quizepractice/:id',
+      name: 'quizepractice',
+      component: () => import('../views/QuizepracticeView.vue'),
+    },
+    {
       path: '/welcome',
       name: 'welcome',
       component: () => import('../views/WelcomeView.vue')
@@ -39,7 +44,11 @@ const router = createRouter({
       name: 'result',
       component: () => import('../views/ResultView.vue')
     },
-    
+    {
+      path: '/practice',
+      name: 'practice',
+      component: () => import('../views/PracticeView.vue')
+    }
   ]
 })
 

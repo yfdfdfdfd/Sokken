@@ -91,7 +91,7 @@ async function loginUser() {
             margin-top: 20px;
             padding: 10px 20px;
             width: 100%;
-            background-color: #4caf50;
+            background-color: #34a3d1;
             color: white;
             border: none;
             border-radius: 5px;

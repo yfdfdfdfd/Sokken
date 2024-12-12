@@ -9,6 +9,7 @@ const counterStore = useCounterStore()
 
 const { finishtime } = timerStore
 const { correct } = counterStore
+const{ resetcrement } = counterStore
 
 </script>
 
@@ -22,8 +23,8 @@ const { correct } = counterStore
         <p v-if="finishtime">
             あなたの回答時間は{{finishtime}}秒です。</p>
             <!-- あなたの解答時間は{{ getPastTime()}}分です。</p> -->
-        <p v-else>タイマーが設定されていません。</p>
-        <button class="button" @click="router.replace('/welcome')">ホームに戻る</button>
+        <p v-else>タイマーは設定されていません。</p>
+        <button class="button" @click="() => { router.replace('/welcome'); resetcrement(); }">ホームに戻る</button>
     </div>
     </main>
 </template>
@@ -53,7 +54,7 @@ const { correct } = counterStore
     }
 
     .button {
-        background-color: #4caf50;
+        background-color: #34a3d1;
         color: white;
         border: none;
         border-radius: 5px;
@@ -68,10 +69,10 @@ const { correct } = counterStore
     }
 
     .button:hover {
-        background-color: #45a049;
+        background-color: auto;
     }
 
     .button:active {
-        background-color: #3e8e41;
+        background-color: auto;
     }
 </style>

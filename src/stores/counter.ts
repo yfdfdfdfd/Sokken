@@ -11,6 +11,11 @@ export const useCounterStore = defineStore('counter', () => {
   function decrement() {
     wrong.value++
   }
-  return { correct , increment, wrong, decrement }
+  //correctとwrongの値をリセットする関数
+  function resetcrement() {
+    correct.value = 0
+    wrong.value = 0
+  }
+  return { correct , increment, wrong, decrement,resetcrement }
 })
 

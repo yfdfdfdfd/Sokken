@@ -1,26 +1,12 @@
 <script setup lang="ts">
 import router from '../router/index';
-import { useTimerStore } from '@/stores/timer';
-import { ref } from 'vue';
 
-
-// タイマーストアを使用
-const timerStore = useTimerStore();
-const useTimer = ref<number>(50); // 初期値は50
 
 // ビュー遷移
 async function transition() {
-    timerStore.setTimer(useTimer.value);
-    router.replace('/quize/0'); // クイズ画面へ遷移
+    router.replace('/quizepractice/0'); // クイズ画面へ遷移
 }
 
-// 時間スライダーの更新
-function updateTime(event: Event) {
-    const input = event.target as HTMLInputElement;
-    useTimer.value = parseInt(input.value, 10) || 1; // 入力値を整数として取得
-    console.log(`New time: ${useTimer.value} 秒`);
-    // console.log(`New time: ${useTimer.value} 分`);
-}
 </script>
 
 <template>
@@ -41,43 +27,20 @@ function updateTime(event: Event) {
                     </label>
                 </div>
             </div>
-
-            <!-- 設定項目: 制限時間 -->
-            <div class="settingItem">
-                <div class="settingLabel">制限時間</div>
-                <div class="settingComponent">
-                    <div>
-                        <div style="text-align: right;">{{ useTimer }}秒</div>
-                        <!-- <div style="text-align: right;">{{ useTimer }}分</div> -->
-                        <input 
-                            type="range" 
-                            min="5" 
-                            max="50" 
-                            step="5"
-                            :value="useTimer" 
-                            class="slider" 
-                            style="width: 100%;" 
-                            @input="updateTime">
-                    </div>
-                </div>
-            </div>
-
-            <!-- 設定項目: 正誤判定
             <div class="settingItem">
                 <div class="settingLabel">正誤判定</div>
                 <div class="settingComponent">
                     <label>
-                        <input type="checkbox" v-model="isJudgementEnabled">
-                        <span style="margin-left: 5px;">正誤判定を無効にする</span>
+                        <span style="margin-left: 5px;">正誤判定をする</span>
                     </label>
                 </div>
-            </div> -->
+            </div>
         </div>
 
         <!-- 説明文 -->
         <div class="description">
             <ul>
-                <li>検定カテゴリー合格基準と同じ時間に設定する場合は「50分」で設定してください。</li>
+                <li>本番を想定して試験される場合はHOMEをご利用ください。</li>
                 <li>お名前など個人を特定するデータ及び成績はシステム上に保存されません。</li>
             </ul>
         </div>
