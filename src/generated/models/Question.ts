@@ -48,6 +48,12 @@ export interface Question {
      * @type {string}
      * @memberof Question
      */
+    commentary: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Question
+     */
     tag?: string | null;
 }
 
@@ -59,6 +65,7 @@ export function instanceOfQuestion(value: object): value is Question {
     if (!('questionText' in value) || value['questionText'] === undefined) return false;
     if (!('correctAnswer' in value) || value['correctAnswer'] === undefined) return false;
     if (!('choices' in value) || value['choices'] === undefined) return false;
+    if (!('commentary' in value) || value['commentary'] === undefined) return false;
     return true;
 }
 
@@ -76,6 +83,7 @@ export function QuestionFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         'questionText': json['question_text'],
         'correctAnswer': json['correct_answer'],
         'choices': json['choices'],
+        'commentary': json['commentary'],
         'tag': json['tag'] == null ? undefined : json['tag'],
     };
 }
@@ -95,6 +103,7 @@ export function QuestionFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         'question_text': value['questionText'],
         'correct_answer': value['correctAnswer'],
         'choices': value['choices'],
+        'commentary': value['commentary'],
         'tag': value['tag'],
     };
 }

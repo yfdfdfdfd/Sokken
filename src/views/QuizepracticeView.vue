@@ -13,6 +13,7 @@ const question = ref<string | undefined>(undefined)
 const list = ref<string[]>([])
 const errorMessage = ref<string | undefined>(undefined)
 const answer = ref<string | undefined>(undefined)
+const commentary = ref<string | undefined>(undefined)
 const intervalId = ref<number | undefined>(undefined)
 const Dialog = ref<boolean>(false)
 
@@ -30,6 +31,7 @@ async function fetchQuestionData() {
         question.value = response.questionText
         answer.value = response.correctAnswer
         list.value = response.choices
+        commentary.value = response.commentary
 
         console.log('Question data:', response)
     } catch (error) {
@@ -68,7 +70,7 @@ watch(
 
 //問題数に達成すると結果画面に遷移
 watch(
-    () => route.params.id === '10',
+    () => route.params.id === '5',
     () => {
         timerstore.setFinishTime(timerstore.getPastTime()) // 保存
         Dialog.value = true
@@ -87,7 +89,8 @@ watch(
                 v-if="answer"
                 :answer="answer"
                 :list="list"
-                :id="Number($route.params.id)"
+                :Commentary="commentary || ''"
+                :id="Number(route.params.id)"
             />
         </div>
         <p v-if="errorMessage" style="color: #f6aa00; margin-top: 5px">{{ errorMessage }}</p>

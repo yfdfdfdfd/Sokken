@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import router from './../router/index'
-import { defineProps, ref, watch } from 'vue'
+import { defineProps, ref } from 'vue'
 import { useCounterStore } from '@/stores/counter'
 
-const conterStore = useCounterStore()
+const counterStore = useCounterStore()
 
-const Dialog = ref<boolean>(false)
-const Message = ref<string>('')
-const Select = ref<string | undefined>('')
+// 選択された選択肢を管理する変数
+const selectedOption = ref<string | undefined>('')
 
 const props = defineProps<{
   list: string[]
@@ -16,34 +15,22 @@ const props = defineProps<{
   timer: number
 }>()
 
-// 正誤判定
-// function selectOption(option: string) {
-//   Select.value = option
-//   if (option === props.answer) {
-//     Message.value = '正解です！'
-//     conterStore.increment()
-//   } else {
-//     Message.value = '不正解です！'
-//   }
-//   Dialog.value = true
-// }
-
+// 選択肢を選択する関数
 function selectOption(option: string) {
-    Select.value = option
-    if (option === props.answer) {
-    conterStore.increment()
-    } else {
-    conterStore.decrement()
-    }
-    router.push(`/quize/${props.id + 1}`)
+  selectedOption.value = option
+  if (option === props.answer) {
+    counterStore.increment()
+  } else {
+    counterStore.decrement()
+  }
 }
 
-// ダイアログを閉じた際に遷移
-watch(Dialog, (isDialogOpen) => {
-  if (!isDialogOpen && Message.value === '正解です！') {
+// 次の問題に進む関数
+function nextQuestion() {
+  if (selectedOption.value !== undefined) {
     router.push(`/quize/${props.id + 1}`)
   }
-})
+}
 </script>
 
 <template>
@@ -51,29 +38,25 @@ watch(Dialog, (isDialogOpen) => {
     <p style="margin-bottom: 10px; text-align: right; border-radius: 10px">
       残り時間: {{ props.timer }}秒
     </p>
-    <p>問題番号: {{ props.id + 1 }}</p>
+    <p style="margin-left: 50px;">問題番号: {{ props.id + 1 }}</p>
     <ul>
       <li v-for="(option, index) in props.list" :key="index">
-        <button @click="selectOption(option)">
+        <label>
+          <input 
+            type="radio" 
+            :value="option" 
+            name="question" 
+            @change="selectOption(option)"
+          >
           {{ option }}
-        </button>
+        </label>
       </li>
     </ul>
+    <button 
+      @click="nextQuestion" 
+      :disabled="!selectedOption">次の問題へ
+    </button>
   </div>
-
-  <v-dialog v-model="Dialog" width="auto">
-    <v-card max-width="500">
-      <v-card-title class="centered-title">
-        {{ Message }}
-      </v-card-title>
-      <v-card-text>
-        {{ Select }}
-      </v-card-text>
-      <v-card-actions>
-        <v-btn class="ms-auto" @click="Dialog = false">OK</v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
 </template>
 
 <style scoped>
@@ -86,26 +69,33 @@ ul {
   width: 100%;
   list-style-type: none;
   padding: 0;
+  margin-left: 50px;
 }
 
 li {
   width: 100%;
   margin: 10px 0;
+  font-size: 20px;
 }
 
 button {
   padding: 15px 10px;
   font-size: 16px;
   cursor: pointer;
-  width: 90%;
+  width: 80%;
   box-sizing: border-box;
   display: block;
-  margin: 0 auto;
+  margin: 20px auto;
   background-color: auto;
+  border: 1px solid #ccc;
 }
 
 button:hover {
-  background-color: #e8e8e8;
+  background: var(--color-background-soft);
+}
+
+button:disabled {
+  background-color: auto;
 }
 
 .centered-title {

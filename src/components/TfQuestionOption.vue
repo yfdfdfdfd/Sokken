@@ -12,6 +12,7 @@ const Select = ref<string | undefined>('')
 const props = defineProps<{
     list: string[]
     answer: string
+    Commentary: string
     id: number
 }>()
 
@@ -51,8 +52,11 @@ watch(Dialog, (isDialogOpen) => {
             <v-card-title class="centered-title">
                 {{ Message }}
             </v-card-title>
-            <v-card-text>
+            <v-card-text style="text-align: center; font-size: 20px;">
                 {{ Select }}
+            </v-card-text>
+            <v-card-text v-if="Message === '正解です！'">
+                {{ props.Commentary }}
             </v-card-text>
             <v-card-actions>
                 <v-btn class="ms-auto" @click="Dialog = false">OK</v-btn>
@@ -89,9 +93,8 @@ button {
     background-color: auto;
 }
 
-button.selected {
-    background-color: #4caf50;
-    color: white;
+button:hover {
+    background: var(--color-background-soft);
 }
 
 .centered-title {

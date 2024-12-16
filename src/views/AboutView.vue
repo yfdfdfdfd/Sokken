@@ -8,7 +8,7 @@ import NavHeader from '@/components/NavHeader.vue'
   <div class="center">
     <div class="grid">
       <AppHeader />
-      <main style="background-color: #f9f9f9; padding: 30px;">
+      <main style="background: var(--color-background); padding: 30px;">
         <div class="title">
             <h2 style="margin-bottom: 20px; font-weight: bold;">目次</h2>
           <section>

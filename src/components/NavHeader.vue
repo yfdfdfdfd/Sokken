@@ -6,7 +6,7 @@ import { useCounterStore } from '@/stores/counter'
 const router = useRouter();
 const dialog = ref(false);
 const counterStore = useCounterStore()
-const{ resetcrement } = counterStore
+const { resetcrement } = counterStore
 
 const logout = () => {
     localStorage.removeItem('token'); 
@@ -34,89 +34,90 @@ const logout = () => {
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="grey darken-1" @click="dialog = false">キャンセル</v-btn>
-                    <v-btn color="#d2691e"  @click="logout">ログアウト</v-btn>
+                    <v-btn color="#d2691e" @click="logout">ログアウト</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
     </header>
 </template>
 
-
-
 <style scoped>
 header {
     line-height: 1.5;
     max-height: 100vh;
+    margin: 0; 
+    padding: 0; 
 }
 
-.logo {
-    display: block;
-    margin: 0 auto 2rem;
+.wrapper {
+    width: 100%; 
+    margin: 0; 
+    padding: 0; 
 }
 
 nav {
-    width: 100%;
-    font-size: 12px;
-    text-align: center;
-    margin-top: 2rem;
+    width: 100%; 
+    display: flex; 
+    justify-content: space-around; 
+    align-items: center; 
+    font-size: 14px;
+    padding: 0; 
+    margin: 0; 
+    background-color: white; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
 }
 
-nav a.router-link-exact-active {
-    color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-    background-color: transparent;
-}
-
-nav a {
+nav a,
+nav .router-link-active {
     display: inline-block;
-    padding: 0 1rem;
-    border-left: 1px solid var(--color-border);
-    transition: color 0.3s ease, border-color 0.3s ease; /* Add transition for color and border-color */
+    width: 100%;
+    padding: 1rem; 
+    text-align: center;
+    text-decoration: none;
+    transition: color 0.3s, border-color 0.3s;
 }
 
 nav a:hover {
-    color: var(--color-hover); /* Define a hover color */
-    border-color: var(--color-hover); /* Change border color on hover */
+    color: var(--color-hover); 
+    border-bottom: 2px solid var(--color-hover); 
 }
 
-nav a:first-of-type {
-    border: 0;
+nav a.router-link-active {
+    color: var(--color-text); 
 }
 
 .navbar {
-    position: fixed;
-    top: 0;
-    width: auto;
-    padding: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
+    width: 100%; 
+    padding: 0 2rem; 
+    margin-top: 5px;
+    display: flex; 
+    justify-content: space-evenly;
+    align-items: center; 
+    background: var(--color-background)
+}
+
+.navbar :hover {
+    background: var(--color-background--hover);
+    border-bottom: 2px solid var(--color-hover); 
 }
 
 @media (min-width: 1024px) {
     header {
         place-items: center;
-        padding-right: calc(var(--section-gap) / 2);
+        padding-right: 0;
     }
 
     .logo {
         margin: 0 2rem 0 0;
     }
 
-    header .wrapper {
-        display: flex;
-        place-items: flex-start;
-        flex-wrap: wrap;
-    }
-
     nav {
-        text-align: left;
-        margin-left: -1rem;
-        font-size: 1rem;
-        padding: 1rem 0;
-        margin-top: 1rem;
+        font-size: 16px; 
+        padding: 0 1.5rem;
     }
 }
 </style>
-

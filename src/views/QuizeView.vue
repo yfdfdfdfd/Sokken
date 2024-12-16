@@ -87,7 +87,7 @@ watch(
 
 //問題数に達成すると結果画面に遷移
 watch(
-  () => route.params.id === '15',
+  () => route.params.id === '10',
   () => {
     timerstore.setFinishTime(timerstore.getPastTime())// 保存
     router.replace('/result')
@@ -106,7 +106,7 @@ watch(
         v-if="answer"
         :answer="answer"
         :list="list"
-        :id="Number($route.params.id)"
+        :id="Number(route.params.id)"
         :timer="Math.max(0, diff)"
       />
     </div>

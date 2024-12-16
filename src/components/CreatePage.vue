@@ -70,7 +70,7 @@ async function createUser() {
           id="name"
           v-model="name"
           placeholder="名前を入力"
-          style="padding: 8px; margin-top: 10px; margin-bottom: 10px; width: 100%"
+          class="input-style"
         />
       </div>
       <div>
@@ -80,7 +80,7 @@ async function createUser() {
           id="email"
           v-model="email"
           placeholder="メールアドレスを入力"
-          style="padding: 8px; margin-top: 10px; margin-bottom: 10px; width: 100%"
+          class="input-style"
         />
       </div>
 
@@ -91,7 +91,7 @@ async function createUser() {
           id="password"
           v-model="password"
           placeholder="パスワードを入力"
-          style="padding: 8px; margin-top: 10px; margin-bottom: 10px; width: 100%"
+          class="input-style"
         />
       </div>
       <div>
@@ -101,7 +101,7 @@ async function createUser() {
           id="confirmPassword"
           v-model="confirmPassword"
           placeholder="パスワードを再入力"
-          style="padding: 8px; margin-top: 10px; margin-bottom: 10px; width: 100%"
+          class="input-style"
         />
       </div>
       <button
@@ -145,22 +145,28 @@ async function createUser() {
             text-align: center;
           "
         >
-          <p>アカウント作成が完了しました</p>
-          <!-- <button
-            @click="dialogVisible = false"
-            style="
-              margin-top: 10px;
-              padding: 8px 16px;
-              background-color: #4caf50;
-              border: none;
-              border-radius: 5px;
-              cursor: pointer;
-            "
-          >
-            OK
-          </button> -->
+          <v-dialog v-model="dialogVisible" max-width="500">
+            <v-card>
+              <v-card-text style="text-align: center; font-size: 20px;">アカウント作成が完了しました</v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="primary" @click="dialogVisible = false">閉じる</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
         </div>
       </div>
     </template>
   </WelcomeItem>
 </template>
+
+<style scoped>
+.input-style {
+  padding: 8px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+  background: var(--color-background);
+  border: 1px solid #ccc;
+}
+</style>
