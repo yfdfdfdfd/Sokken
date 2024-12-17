@@ -4,10 +4,11 @@ import HelloWorld from './SubTitle.vue'
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+    <img alt="Vue logo" class="logo" src="../components/imgs/brain.png" width="30%" height="30%" />
 
     <div class="wrapper">
       <HelloWorld msg="AI検定" />
+      <!-- <HelloWorld msg="AI検定フィードバックシステム" /> -->
     </div>
   </header>
 </template>
@@ -21,6 +22,7 @@ header {
 .logo {
   display: block;
   margin: 0 auto 2rem;
+  /* margin-right: 50px; */
 }
 
 @media (min-width: 1024px) {
@@ -31,7 +33,8 @@ header {
   }
 
   .logo {
-    margin: 0 2rem 0 0;
+    /* margin: 0 2rem 0 0; */
+    margin-right: 50px;
   }
 
   header .wrapper {
