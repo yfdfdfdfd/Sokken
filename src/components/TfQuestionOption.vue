@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import router from './../router/index'
 import { defineProps, ref, watch } from 'vue'
-import { useCounterStore } from '@/stores/counter'
 
-const conterStore = useCounterStore()
 
 const Dialog = ref<boolean>(false)
 const Message = ref<string>('')
@@ -20,7 +18,6 @@ function selectOption(option: string) {
     Select.value = option
     if (option === props.answer) {
         Message.value = '正解です！'
-        conterStore.increment()
     } else {
         Message.value = '不正解です！'
     }
@@ -40,7 +37,7 @@ watch(Dialog, (isDialogOpen) => {
         <p>問題番号: {{ props.id + 1 }}</p>
         <ul>
             <li v-for="(option, index) in props.list" :key="index">
-                <button @click="selectOption(option)">
+                <button class="option-button" @click="selectOption(option)">
                     {{ option }}
                 </button>
             </li>
@@ -59,7 +56,7 @@ watch(Dialog, (isDialogOpen) => {
                 {{ props.Commentary }}
             </v-card-text>
             <v-card-actions>
-                <v-btn class="ms-auto" @click="Dialog = false">OK</v-btn>
+                <v-btn class="dialog-button" @click="Dialog = false">OK</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -82,7 +79,7 @@ li {
     margin: 10px 0;
 }
 
-button {
+.option-button {
     padding: 15px 10px;
     font-size: 16px;
     cursor: pointer;
@@ -93,8 +90,18 @@ button {
     background-color: auto;
 }
 
-button:hover {
+.option-button:hover {
     background: var(--color-background-soft);
+    color: auto;
+}
+
+.dialog-button {
+    background-color: var(--color-primary);
+    color: black;
+}
+
+.dialog-button:hover {
+    background-color: var(--color-primary-dark);
 }
 
 .centered-title {

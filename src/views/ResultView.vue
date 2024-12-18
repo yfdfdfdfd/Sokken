@@ -1,15 +1,13 @@
 <script setup lang="ts">
 import NavHeader from '@/components/NavHeader.vue';
 import { useTimerStore } from '@/stores/timer'
-import { useCounterStore } from '@/stores/counter'
-import router from '@/router';
+import { useAnswerStatusStore } from '@/stores/answerstatus';
+// import router from '@/router';
 
 const timerStore = useTimerStore()
-const counterStore = useCounterStore()
-
+const answerStatusStore = useAnswerStatusStore()
 const { finishtime } = timerStore
-const { correct } = counterStore
-const{ resetcrement } = counterStore
+const { getStatus } = answerStatusStore
 
 </script>
 
@@ -19,12 +17,16 @@ const{ resetcrement } = counterStore
     <div>
         <h1>結果</h1>
         <p>お疲れ様でした！</p>
-        <p>あなたの正解数は{{correct}}問です。</p>
         <p v-if="finishtime">
             あなたの回答時間は{{finishtime}}秒です。</p>
-            <!-- あなたの解答時間は{{ getPastTime()}}分です。</p> -->
         <p v-else>タイマーは設定されていません。</p>
-        <button class="button" @click="() => { router.replace('/welcome'); resetcrement(); }">ホームに戻る</button>
+        <div class="result"> 
+            <div v-for="(status, index) in getStatus()" :key="index">
+                <div class="result-count">{{ index + 1 }}</div>
+                <div class="result-item">{{ status != undefined ? status==true ? "◯":"✕":"未回答"}}</div>
+            </div>      
+        </div>
+        <!-- <button class="button" @click="() => { router.replace('/welcome');}">ホームに戻る</button> -->
     </div>
     </main>
 </template>
@@ -74,5 +76,23 @@ const{ resetcrement } = counterStore
 
     .button:active {
         background-color: auto;
+    }
+
+    .result {
+        display: flex;
+        margin-top: 20px;
+        flex-wrap: wrap;
+    }
+
+    .result > div {
+        display: flex;
+        flex-direction: column;
+        
+    }
+
+    .result > div > div {
+        border: 1px solid #ccc;
+        width: 100px;
+        padding:0px 10px;
     }
 </style>

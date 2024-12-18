@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { useCounterStore } from '@/stores/counter'
 
 const router = useRouter();
 const dialog = ref(false);
-const counterStore = useCounterStore()
-const { resetcrement } = counterStore
+
 
 const logout = () => {
     localStorage.removeItem('token'); 
@@ -19,11 +17,11 @@ const logout = () => {
     <header>
         <div class="wrapper">
             <nav class="navbar">
-                <RouterLink to="/welcome" @click="resetcrement">Home</RouterLink>
+                <RouterLink to="/welcome">Home</RouterLink>
                 <RouterLink to="/about">About</RouterLink>
                 <RouterLink to="/practice">Practice</RouterLink>
                 <RouterLink to="/history">History</RouterLink>
-                <a href="#" @click.prevent="dialog = true" @click="resetcrement">Logout</a>
+                <a href="#" @click.prevent="dialog = true">Logout</a>
             </nav>
         </div>
 
