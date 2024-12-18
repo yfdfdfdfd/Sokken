@@ -18,6 +18,8 @@ import type {
   HTTPValidationError,
   Question,
   User,
+  UserAnswer,
+  UserAnswerCreate,
   UserCreate,
   UserLogin,
 } from '../models/index';
@@ -28,6 +30,10 @@ import {
     QuestionToJSON,
     UserFromJSON,
     UserToJSON,
+    UserAnswerFromJSON,
+    UserAnswerToJSON,
+    UserAnswerCreateFromJSON,
+    UserAnswerCreateToJSON,
     UserCreateFromJSON,
     UserCreateToJSON,
     UserLoginFromJSON,
@@ -46,8 +52,17 @@ export interface LoginUserLoginPostRequest {
     userLogin: UserLogin;
 }
 
+export interface PostResultResultsPostRequest {
+    userAnswerCreate: UserAnswerCreate;
+}
+
 export interface ReadQuestionsQuestionsQuestionIdGetRequest {
     questionId: number;
+}
+
+export interface ReadUserAnswerUserAnswersUserAnswerIdGetRequest {
+    userAnswerId: number;
+    userId: number;
 }
 
 export interface ReadUserUsersUserIdGetRequest {
@@ -183,6 +198,44 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
+     * ユーザーの回答を登録する
+     * Post Result
+     */
+    async postResultResultsPostRaw(requestParameters: PostResultResultsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserAnswer>> {
+        if (requestParameters['userAnswerCreate'] == null) {
+            throw new runtime.RequiredError(
+                'userAnswerCreate',
+                'Required parameter "userAnswerCreate" was null or undefined when calling postResultResultsPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/results/`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UserAnswerCreateToJSON(requestParameters['userAnswerCreate']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => UserAnswerFromJSON(jsonValue));
+    }
+
+    /**
+     * ユーザーの回答を登録する
+     * Post Result
+     */
+    async postResultResultsPost(requestParameters: PostResultResultsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserAnswer> {
+        const response = await this.postResultResultsPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Read Questions
      */
     async readQuestionsQuestionsQuestionIdGetRaw(requestParameters: ReadQuestionsQuestionsQuestionIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Question>> {
@@ -212,6 +265,50 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async readQuestionsQuestionsQuestionIdGet(requestParameters: ReadQuestionsQuestionsQuestionIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Question> {
         const response = await this.readQuestionsQuestionsQuestionIdGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Read User Answer
+     */
+    async readUserAnswerUserAnswersUserAnswerIdGetRaw(requestParameters: ReadUserAnswerUserAnswersUserAnswerIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserAnswer>> {
+        if (requestParameters['userAnswerId'] == null) {
+            throw new runtime.RequiredError(
+                'userAnswerId',
+                'Required parameter "userAnswerId" was null or undefined when calling readUserAnswerUserAnswersUserAnswerIdGet().'
+            );
+        }
+
+        if (requestParameters['userId'] == null) {
+            throw new runtime.RequiredError(
+                'userId',
+                'Required parameter "userId" was null or undefined when calling readUserAnswerUserAnswersUserAnswerIdGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['userId'] != null) {
+            queryParameters['user_id'] = requestParameters['userId'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/user_answers/{user_answer_id}`.replace(`{${"user_answer_id"}}`, encodeURIComponent(String(requestParameters['userAnswerId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => UserAnswerFromJSON(jsonValue));
+    }
+
+    /**
+     * Read User Answer
+     */
+    async readUserAnswerUserAnswersUserAnswerIdGet(requestParameters: ReadUserAnswerUserAnswersUserAnswerIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserAnswer> {
+        const response = await this.readUserAnswerUserAnswersUserAnswerIdGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
