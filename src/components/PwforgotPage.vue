@@ -52,6 +52,8 @@ import CommunityIcon from './icons/IconCommunity.vue'
   padding: 8px;
   margin-top: 10px;
   width: 100%;
+  background-color: var(--color-background);
+  color: var(--color--text);
   border: 1px solid #ccc;
 }
 

@@ -53,7 +53,6 @@ import NavHeader from '@/components/NavHeader.vue'
 }
 
 .hover-underline:hover {
-  text-decoration: underline;
   cursor: pointer;
 }
 

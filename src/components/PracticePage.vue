@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import router from '../router/index';
 
-
 // ビュー遷移
 async function transition() {
-    router.replace('/quizepractice/0'); // クイズ画面へ遷移
+    router.replace('/quizepractice/0');
 }
-
 </script>
 
 <template>
@@ -20,9 +18,6 @@ async function transition() {
                 <div class="settingLabel">解答方式</div>
                 <div class="settingComponent">
                     <label>
-                        <span class="radioButton">
-                            <input type="radio" name="inputMode" value="roman" checked>
-                        </span>
                         <span class="radioLabel">選択式</span>
                     </label>
                 </div>
@@ -37,7 +32,6 @@ async function transition() {
             </div>
         </div>
 
-        <!-- 説明文 -->
         <div class="description">
             <ul>
                 <li>本番を想定して試験される場合はHOMEをご利用ください。</li>
@@ -45,7 +39,6 @@ async function transition() {
             </ul>
         </div>
 
-        <!-- ナビゲーションボタン -->
         <div class="nav">
             <button class="typingButton" @click="transition">解答を開始する</button>
         </div>
@@ -63,8 +56,7 @@ async function transition() {
 .contents {
     margin: 0 auto;
     padding: 20px;
-    max-width: 600px;
-    /* background-color: #f9f9f9; */
+    width: 553.1px;
     background-color: auto;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -90,49 +82,8 @@ async function transition() {
     align-items: center;
 }
 
-.radioButton {
-    display: flex;
-    align-items: center;
-    margin-right: 10px;
-}
-
-.radioButton input {
-    display: none;
-}
-
-.radioButton .checked {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: #4caf50;
-    border: 2px solid #4caf50;
-    margin-right: 5px;
-}
-
 .radioLabel {
     font-size: 16px;
-}
-
-[data-progress] {
-    position: relative;
-    width: 100%;
-    height: 8px;
-    background-color: #ddd;
-    border-radius: 4px;
-    margin-top: 10px;
-}
-
-[data-progress] .slider {
-    position: absolute;
-    top: -4px;
-    left: calc(100% - 10px); /* 初期位置を右端に */
-    width: 20px;
-    height: 20px;
-    background-color: #4caf50;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
 }
 
 /* 説明文 */
@@ -165,14 +116,6 @@ async function transition() {
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s;
-}
-
-.typingButton:hover {
-    background-color: auto;
-}
-
-.typingButton:active {
-    background-color: auto;
 }
 
 .imageLabel {

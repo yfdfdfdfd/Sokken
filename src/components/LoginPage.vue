@@ -49,18 +49,10 @@ async function loginUser() {
     <template #default>
       <div>
         <label for="email">メールアドレス:</label>
-        <input
+        <input class="input-text"
           type="email"
           id="email"
           placeholder="メールアドレスを入力"
-          style="
-            padding: 8px;
-            margin-top: 10px;
-            width: 100%;
-            border: white;
-            background-color: white;
-            border: 1px solid #ccc;
-          "
           v-model="email"
         />
       </div>
@@ -75,19 +67,11 @@ async function loginUser() {
     <template #default>
       <div>
         <label for="password">パスワード</label>
-        <input
+        <input class="input-text"
           type="password"
           id="password"
           placeholder="パスワードを入力"
           v-model="password"
-          style="
-            padding: 8px;
-            margin-top: 10px;
-            margin-bottom: 10px;
-            width: 100%;
-            background-color: white;
-            border: 1px solid #ccc;
-          "
         />
         <div style="margin-top: 10px">
           <router-link to="/create" style="color: auto; text-decoration: underline">
@@ -119,3 +103,15 @@ async function loginUser() {
     </template>
   </WelcomeItem>
 </template>
+
+<style scoped>
+.input-text {
+  padding: 8px;
+  margin-top: 10px;
+  width: 100%;
+  border: white;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  border: 1px solid #ccc;
+}
+</style>

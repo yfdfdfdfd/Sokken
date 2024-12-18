@@ -32,8 +32,12 @@ export const useTimerStore = defineStore('timer', () => {
     function setFinishTime(time: number) {
         finishtime.value = time
     }
+    //今の時間を返す関数を追加
+    function getNowTime() {
+        return dtime()
+    }
     
-    return { endTime,setTimer, getDiff, getPastTime, setFinishTime, finishtime }
+    return { endTime,setTimer, getDiff, getPastTime, setFinishTime, finishtime ,getNowTime }
 })
 
 

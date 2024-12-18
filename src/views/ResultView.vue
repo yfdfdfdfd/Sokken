@@ -9,6 +9,10 @@ const answerStatusStore = useAnswerStatusStore()
 const { finishtime } = timerStore
 const { getStatus } = answerStatusStore
 
+async function postuserAnswer() { 
+    
+}
+
 </script>
 
 <template>
@@ -16,10 +20,8 @@ const { getStatus } = answerStatusStore
     <main>
     <div>
         <h1>結果</h1>
-        <p>お疲れ様でした！</p>
-        <p v-if="finishtime">
-            あなたの回答時間は{{finishtime}}秒です。</p>
-        <p v-else>タイマーは設定されていません。</p>
+        <p>お疲れ様でした！<span v-if="finishtime">あなたの回答時間は{{finishtime}}秒です。</span>
+            <span v-else>タイマーは設定されていません。</span></p>
         <div class="result"> 
             <div v-for="(status, index) in getStatus()" :key="index">
                 <div class="result-count">{{ index + 1 }}</div>
