@@ -6,6 +6,7 @@ import { useRoute } from 'vue-router'
 import QuestionOption from '@/components/QuestionOption.vue'
 import QuestionList from '@/components/QuestionList.vue'
 import { useTimerStore } from '@/stores/timer'
+import { useAnswerStatusStore } from '@/stores/answerstatus'
 import router from '@/router'
 
 const route = useRoute()
@@ -18,7 +19,9 @@ const intervalId = ref<number | undefined>(undefined)
 const Dialog = ref<boolean>(false)
 
 const timerstore = useTimerStore()
+const answerstatusstore = useAnswerStatusStore()
 const { getDiff } = timerstore
+const { getStatus } = answerstatusstore
 
 async function fetchQuestionData() {
   try {
@@ -35,8 +38,13 @@ async function fetchQuestionData() {
 
     console.log('Question data:', response)
   } catch (error) {
-    console.error('Error fetching question data:', error)
-    errorMessage.value = '問題データの取得に失敗しました'
+    if (route.params.id === '14') {
+      Dialog.value = true
+      timerstore.setFinishTime(timerstore.getPastTime()) // 保存
+    } else {
+      console.error('Error fetching question data:', error)
+      errorMessage.value = '問題データの取得に失敗しました'
+    }
   }
 }
 
@@ -80,17 +88,9 @@ watch(
   () => Dialog.value,
   (isDialogClosed) => {
     if (!isDialogClosed) {
+      getStatus
       router.replace('/result')
     }
-  }
-)
-
-//問題数に達成すると結果画面に遷移
-watch(
-  () => route.params.id === '10',
-  () => {
-    timerstore.setFinishTime(timerstore.getPastTime())// 保存
-    router.replace('/result')
   }
 )
 </script>

@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import router from './../router/index'
 import { defineProps, ref } from 'vue'
-import { useCounterStore } from '@/stores/counter'
+import { useAnswerStatusStore } from '@/stores/answerstatus';
 
-const counterStore = useCounterStore()
-
-// 選択された選択肢を管理する変数
 const selectedOption = ref<string | undefined>('')
+const answerStatusStore = useAnswerStatusStore()
+const { initStatus } = answerStatusStore
+const { setStatus } = answerStatusStore
+
+// 初期化
+initStatus(30)
 
 const props = defineProps<{
   list: string[]
@@ -15,13 +18,14 @@ const props = defineProps<{
   timer: number
 }>()
 
+
 // 選択肢を選択する関数
 function selectOption(option: string) {
   selectedOption.value = option
   if (option === props.answer) {
-    counterStore.increment()
+    setStatus(props.id, true)
   } else {
-    counterStore.decrement()
+    setStatus(props.id, false)
   }
 }
 
@@ -46,7 +50,8 @@ function nextQuestion() {
             type="radio" 
             :value="option" 
             name="question" 
-            @change="selectOption(option)"
+            @click="selectOption(option)" 
+            :checked="option === selectedOption"
           >
           {{ option }}
         </label>
@@ -82,10 +87,11 @@ button {
   padding: 15px 10px;
   font-size: 16px;
   cursor: pointer;
-  width: 80%;
+  width: 25%;
   box-sizing: border-box;
   display: block;
-  margin: 20px auto;
+  margin: 25px auto;
+  margin-right: 50px;
   background-color: auto;
   border: 1px solid #ccc;
 }

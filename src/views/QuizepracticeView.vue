@@ -5,7 +5,6 @@ import { ref, onMounted, watch, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import TfQuestionOption from '@/components/TfQuestionOption.vue'
 import QuestionList from '@/components/QuestionList.vue'
-import { useTimerStore } from '@/stores/timer'
 import router from '@/router'
 
 const route = useRoute()
@@ -16,8 +15,6 @@ const answer = ref<string | undefined>(undefined)
 const commentary = ref<string | undefined>(undefined)
 const intervalId = ref<number | undefined>(undefined)
 const Dialog = ref<boolean>(false)
-
-const timerstore = useTimerStore()
 
 async function fetchQuestionData() {
     try {
@@ -32,11 +29,15 @@ async function fetchQuestionData() {
         answer.value = response.correctAnswer
         list.value = response.choices
         commentary.value = response.commentary
-
         console.log('Question data:', response)
+
     } catch (error) {
-        console.error('Error fetching question data:', error)
-        errorMessage.value = '問題データの取得に失敗しました'
+        if (route.params.id === '14') {
+            Dialog.value = true
+        } else {
+            console.error('Error fetching question data:', error)
+            errorMessage.value = '問題データの取得に失敗しました'
+        }
     }
 }
 
@@ -65,15 +66,6 @@ watch(
         if (!isDialogClosed) {
             router.replace('/practice')
         }
-    }
-)
-
-//問題数に達成すると結果画面に遷移
-watch(
-    () => route.params.id === '5',
-    () => {
-        timerstore.setFinishTime(timerstore.getPastTime()) // 保存
-        Dialog.value = true
     }
 )
 </script>
@@ -136,6 +128,6 @@ main > * {
 }
 
 .ms-auto {
-    margin-right: 105px;
+    margin-bottom: 10px;
 }
 </style>
