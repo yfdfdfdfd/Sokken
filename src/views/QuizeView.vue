@@ -60,7 +60,6 @@ onMounted(() => {
 onUnmounted(() => {
   if (intervalId.value) {
     clearInterval(intervalId.value)
-    
   }
 })
 
@@ -78,7 +77,7 @@ watch(
   (isTimeOver) => {
     if (isTimeOver) {
       Dialog.value = true
-      timerstore.setFinishTime(timerstore.getPastTime())// 保存
+      timerstore.setFinishTime(timerstore.getPastTime()) // 保存
     }
   }
 )
@@ -113,12 +112,10 @@ watch(
     <p v-if="errorMessage" style="color: #f6aa00; margin-top: 5px">{{ errorMessage }}</p>
 
     <v-dialog v-model="Dialog" width="auto">
-      <v-card max-width="500" style="text-align: center;">
-        <v-card-title class="centered-title">
-          制限時間が終了しました
-        </v-card-title>
+      <v-card max-width="500" style="text-align: center">
+        <v-card-title class="centered-title"> 制限時間が終了しました </v-card-title>
         <v-card-text>
-          試験を終了します<br>
+          試験を終了します<br />
           クリックで結果画面に遷移します。
         </v-card-text>
         <v-card-actions>
@@ -144,9 +141,9 @@ main > * {
 
 .centered-title {
   display: flex;
-  justify-content: center; 
-  align-items: center;    
-  text-align: center;     
+  justify-content: center;
+  align-items: center;
+  text-align: center;
   font-size: 1.2rem;
   background-color: auto;
   color: auto;
@@ -155,5 +152,4 @@ main > * {
 .ms-auto {
   margin-right: 105px;
 }
-
 </style>

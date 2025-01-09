@@ -17,6 +17,7 @@ import * as runtime from '../runtime';
 import type {
   HTTPValidationError,
   Question,
+  SessionResponse,
   User,
   UserAnswer,
   UserAnswerCreate,
@@ -28,6 +29,8 @@ import {
     HTTPValidationErrorToJSON,
     QuestionFromJSON,
     QuestionToJSON,
+    SessionResponseFromJSON,
+    SessionResponseToJSON,
     UserFromJSON,
     UserToJSON,
     UserAnswerFromJSON,
@@ -160,7 +163,7 @@ export class DefaultApi extends runtime.BaseAPI {
     /**
      * Login User
      */
-    async loginUserLoginPostRaw(requestParameters: LoginUserLoginPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async loginUserLoginPostRaw(requestParameters: LoginUserLoginPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SessionResponse>> {
         if (requestParameters['userLogin'] == null) {
             throw new runtime.RequiredError(
                 'userLogin',
@@ -182,17 +185,13 @@ export class DefaultApi extends runtime.BaseAPI {
             body: UserLoginToJSON(requestParameters['userLogin']),
         }, initOverrides);
 
-        if (this.isJsonMime(response.headers.get('content-type'))) {
-            return new runtime.JSONApiResponse<any>(response);
-        } else {
-            return new runtime.TextApiResponse(response) as any;
-        }
+        return new runtime.JSONApiResponse(response, (jsonValue) => SessionResponseFromJSON(jsonValue));
     }
 
     /**
      * Login User
      */
-    async loginUserLoginPost(requestParameters: LoginUserLoginPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+    async loginUserLoginPost(requestParameters: LoginUserLoginPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SessionResponse> {
         const response = await this.loginUserLoginPostRaw(requestParameters, initOverrides);
         return await response.value();
     }

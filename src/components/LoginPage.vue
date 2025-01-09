@@ -12,8 +12,6 @@ const password = ref('')
 const errorMessage = ref('')
 
 async function loginUser() {
-  console.log('login function called') // デバッグログ
-
   if (password.value === '' || email.value === '') {
     errorMessage.value = 'メールアドレスとパスワードを入力してください'
     return
@@ -29,12 +27,11 @@ async function loginUser() {
         password: password.value
       }
     })
-    console.log('User Logged in:', response) // デバッグログ
     errorMessage.value = ''
-
+    console.log('User logged in:', response)
     router.replace('/welcome')
   } catch (error) {
-    console.error('Error logging in:', error) // デバッグログ
+    console.error('Error logging in:', error)
     errorMessage.value = 'ログインに失敗しました'
   }
 }
@@ -49,7 +46,8 @@ async function loginUser() {
     <template #default>
       <div>
         <label for="email">メールアドレス:</label>
-        <input class="input-text"
+        <input
+          class="input-text"
           type="email"
           id="email"
           placeholder="メールアドレスを入力"
@@ -66,39 +64,20 @@ async function loginUser() {
     <template #heading></template>
     <template #default>
       <div>
-        <label for="password">パスワード</label>
-        <input class="input-text"
+        <label for="password">パスワード:</label>
+        <input
+          class="input-text"
           type="password"
           id="password"
           placeholder="パスワードを入力"
           v-model="password"
         />
-        <div style="margin-top: 10px">
-          <router-link to="/create" style="color: auto; text-decoration: underline">
-            アカウント新規作成
-          </router-link>
+        <div class="link-container">
+          <router-link to="/create">アカウント新規作成</router-link>
+          <router-link to="/forget">パスワードを忘れた</router-link>
         </div>
-        <div style="margin-top: 10px">
-          <router-link to="/forget" style="color: auto; text-decoration: underline">
-            パスワードを忘れた
-          </router-link>
-        </div>
-        <button
-          @click="loginUser"
-          style="
-            margin-top: 20px;
-            padding: 10px 20px;
-            width: 100%;
-            background-color: #34a3d1;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-          "
-        >
-          ログイン
-        </button>
-        <p v-if="errorMessage" style="color: #f6aa00; margin-top: 5px">{{ errorMessage }}</p>
+        <button class="login-button" @click="loginUser">ログイン</button>
+        <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
       </div>
     </template>
   </WelcomeItem>
@@ -109,9 +88,27 @@ async function loginUser() {
   padding: 8px;
   margin-top: 10px;
   width: 100%;
-  border: white;
+  border: 1px solid #ccc;
   background-color: var(--color-background);
   color: var(--color-text);
-  border: 1px solid #ccc;
+}
+.link-container {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.login-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  width: 100%;
+  background-color: #34a3d1;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.error-message {
+  color: #f6aa00;
+  margin-top: 5px;
 }
 </style>

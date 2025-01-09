@@ -34,7 +34,7 @@ export interface UserAnswerCreate {
      */
     userId: number;
     /**
-     * 
+     * 回答情報
      * @type {Array<QuestionCreateChild>}
      * @memberof UserAnswerCreate
      */

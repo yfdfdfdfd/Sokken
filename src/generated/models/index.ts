@@ -3,6 +3,7 @@
 export * from './HTTPValidationError';
 export * from './Question';
 export * from './QuestionCreateChild';
+export * from './SessionResponse';
 export * from './User';
 export * from './UserAnswer';
 export * from './UserAnswerCreate';

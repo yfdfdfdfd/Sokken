@@ -4,6 +4,7 @@ index.ts
 models/HTTPValidationError.ts
 models/Question.ts
 models/QuestionCreateChild.ts
+models/SessionResponse.ts
 models/User.ts
 models/UserAnswer.ts
 models/UserAnswerCreate.ts
