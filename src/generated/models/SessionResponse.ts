@@ -21,12 +21,6 @@ import { mapValues } from '../runtime';
 export interface SessionResponse {
     /**
      * 
-     * @type {number}
-     * @memberof SessionResponse
-     */
-    userId: number;
-    /**
-     * 
      * @type {string}
      * @memberof SessionResponse
      */
@@ -37,7 +31,6 @@ export interface SessionResponse {
  * Check if a given object implements the SessionResponse interface.
  */
 export function instanceOfSessionResponse(value: object): value is SessionResponse {
-    if (!('userId' in value) || value['userId'] === undefined) return false;
     if (!('token' in value) || value['token'] === undefined) return false;
     return true;
 }
@@ -52,7 +45,6 @@ export function SessionResponseFromJSONTyped(json: any, ignoreDiscriminator: boo
     }
     return {
         
-        'userId': json['user_id'],
         'token': json['token'],
     };
 }
@@ -68,7 +60,6 @@ export function SessionResponseFromJSONTyped(json: any, ignoreDiscriminator: boo
 
     return {
         
-        'user_id': value['userId'],
         'token': value['token'],
     };
 }

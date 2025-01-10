@@ -30,7 +30,7 @@ export interface QuestionCreateChild {
      * @type {boolean}
      * @memberof QuestionCreateChild
      */
-    isCorrect: boolean;
+    isCorrect: boolean | null;
 }
 
 /**

@@ -36,7 +36,7 @@ async function fetchQuestionData() {
     answer.value = response.correctAnswer
     list.value = response.choices
 
-    console.log('Question data:', response)
+    console.log('Question data:', response.id)
   } catch (error) {
     if (route.params.id === '14') {
       Dialog.value = true

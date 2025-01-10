@@ -28,11 +28,11 @@ import {
  */
 export interface UserAnswerCreate {
     /**
-     * ユーザーID
-     * @type {number}
+     * トークン
+     * @type {string}
      * @memberof UserAnswerCreate
      */
-    userId: number;
+    token: string;
     /**
      * 回答情報
      * @type {Array<QuestionCreateChild>}
@@ -45,7 +45,7 @@ export interface UserAnswerCreate {
  * Check if a given object implements the UserAnswerCreate interface.
  */
 export function instanceOfUserAnswerCreate(value: object): value is UserAnswerCreate {
-    if (!('userId' in value) || value['userId'] === undefined) return false;
+    if (!('token' in value) || value['token'] === undefined) return false;
     if (!('child' in value) || value['child'] === undefined) return false;
     return true;
 }
@@ -60,7 +60,7 @@ export function UserAnswerCreateFromJSONTyped(json: any, ignoreDiscriminator: bo
     }
     return {
         
-        'userId': json['user_id'],
+        'token': json['token'],
         'child': ((json['child'] as Array<any>).map(QuestionCreateChildFromJSON)),
     };
 }
@@ -76,7 +76,7 @@ export function UserAnswerCreateFromJSONTyped(json: any, ignoreDiscriminator: bo
 
     return {
         
-        'user_id': value['userId'],
+        'token': value['token'],
         'child': ((value['child'] as Array<any>).map(QuestionCreateChildToJSON)),
     };
 }

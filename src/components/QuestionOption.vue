@@ -1,15 +1,13 @@
 <script setup lang="ts">
 import router from './../router/index'
 import { defineProps, ref } from 'vue'
-import { useAnswerStatusStore } from '@/stores/answerstatus';
+import { useAnswerStatusStore } from '@/stores/answerstatus'
 
 const selectedOption = ref<string | undefined>('')
 const answerStatusStore = useAnswerStatusStore()
-const { initStatus } = answerStatusStore
 const { setStatus } = answerStatusStore
 
 // 初期化
-initStatus(30)
 
 const props = defineProps<{
   list: string[]
@@ -17,7 +15,6 @@ const props = defineProps<{
   id: number
   timer: number
 }>()
-
 
 // 選択肢を選択する関数
 function selectOption(option: string) {
@@ -42,25 +39,22 @@ function nextQuestion() {
     <p style="margin-bottom: 10px; text-align: right; border-radius: 10px">
       残り時間: {{ props.timer }}秒
     </p>
-    <p style="margin-left: 50px;">問題番号: {{ props.id + 1 }}</p>
+    <p style="margin-left: 50px">問題番号: {{ props.id + 1 }}</p>
     <ul>
       <li v-for="(option, index) in props.list" :key="index">
         <label>
-          <input 
-            type="radio" 
-            :value="option" 
-            name="question" 
-            @click="selectOption(option)" 
+          <input
+            type="radio"
+            :value="option"
+            name="question"
+            @click="selectOption(option)"
             :checked="option === selectedOption"
-          >
+          />
           {{ option }}
         </label>
       </li>
     </ul>
-    <button 
-      @click="nextQuestion" 
-      :disabled="!selectedOption">次の問題へ
-    </button>
+    <button @click="nextQuestion" :disabled="!selectedOption">次の問題へ</button>
   </div>
 </template>
 

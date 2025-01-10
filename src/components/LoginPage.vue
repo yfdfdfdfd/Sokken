@@ -6,10 +6,12 @@ import { DefaultApi, Configuration } from '../generated'
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import router from './../router/index'
+import { useLoginStore } from '@/stores/loginStore'
 
 const email = ref('')
 const password = ref('')
 const errorMessage = ref('')
+const loginStore = useLoginStore()
 
 async function loginUser() {
   if (password.value === '' || email.value === '') {
@@ -29,6 +31,9 @@ async function loginUser() {
     })
     errorMessage.value = ''
     console.log('User logged in:', response)
+
+    const { token } = response
+    loginStore.login({ token })
     router.replace('/welcome')
   } catch (error) {
     console.error('Error logging in:', error)

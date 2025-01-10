@@ -3,26 +3,28 @@ import { defineStore } from 'pinia'
 export const useLoginStore = defineStore('login', {
   // 初期状態
   state: () => ({
-    isLoggedIn: false,
-    user: null as { id: number; name: string } | null
+    user: undefined as { token: string } | undefined
   }),
 
   // ゲッター
   getters: {
-    isAuthenticated: (state) => state.isLoggedIn,
-    userName: (state) => state.user?.name || 'ゲスト'
+    isAuthenticated: (state) => state.user !== undefined,
+    getToken(state): string {
+      if (!state.user) {
+        throw new Error('User is not logged in')
+      }
+      return state.user.token
+    }
   },
 
   // アクション
   actions: {
-    login(user: { id: number; name: string }) {
-      this.isLoggedIn = true
+    login(user: { token: string }) {
       this.user = user
     },
 
     logout() {
-      this.isLoggedIn = false
-      this.user = null
+      this.user = undefined
     }
   }
 })

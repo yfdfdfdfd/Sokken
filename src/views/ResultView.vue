@@ -2,6 +2,7 @@
 import NavHeader from '@/components/NavHeader.vue'
 import { useTimerStore } from '@/stores/timer'
 import { useAnswerStatusStore } from '@/stores/answerstatus'
+import { useLoginStore } from '@/stores/loginStore'
 import { Configuration, DefaultApi } from '@/generated'
 import { onMounted, ref } from 'vue'
 
@@ -9,6 +10,7 @@ const timerStore = useTimerStore()
 const answerStatusStore = useAnswerStatusStore()
 const { finishtime } = timerStore
 const { getStatus } = answerStatusStore
+const getToken = useLoginStore().getToken
 const errorMessage = ref<string | undefined>(undefined)
 
 async function postuserAnswer() {
@@ -18,20 +20,17 @@ async function postuserAnswer() {
     })
     const response = await new DefaultApi(config).postResultResultsPost({
       userAnswerCreate: {
-        userId: 0,
-        child: getStatus().map((status, index) => ({
-          questionId: index,
-          isCorrect: status
-        }))
+        token: getToken,
+        child: getStatus()
       }
     })
     console.log('User created:', response)
     errorMessage.value = ''
   } catch (error) {
     console.error('Error creating user:', error)
+    errorMessage.value = '結果の送信に失敗しました。'
   }
 }
-
 onMounted(() => {
   postuserAnswer()
 })
@@ -46,11 +45,12 @@ onMounted(() => {
         お疲れ様でした！<span v-if="finishtime">あなたの回答時間は{{ finishtime }}秒です。</span>
         <span v-else>タイマーは設定されていません。</span>
       </p>
+      <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
       <div class="result">
         <div v-for="(status, index) in getStatus()" :key="index">
           <div class="result-count">{{ index + 1 }}</div>
           <div class="result-item">
-            {{ status != undefined ? (status == true ? '◯' : '✕') : '未回答' }}
+            {{ status.isCorrect != undefined ? (status.isCorrect == true ? '◯' : '✕') : '未回答' }}
           </div>
         </div>
       </div>
@@ -119,5 +119,10 @@ main {
   border: 1px solid #ccc;
   width: 100px;
   padding: 0px 10px;
+}
+
+.error-message {
+  color: #f6aa00;
+  margin-top: 5px;
 }
 </style>

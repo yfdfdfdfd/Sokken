@@ -65,13 +65,7 @@ async function createUser() {
     <template #default>
       <div>
         <label for="name">名前:</label>
-        <input
-          type="text"
-          id="name"
-          v-model="name"
-          placeholder="名前を入力"
-          class="input-style"
-        />
+        <input type="text" id="name" v-model="name" placeholder="名前を入力" class="input-style" />
       </div>
       <div>
         <label for="email">メールアドレス:</label>
@@ -104,9 +98,7 @@ async function createUser() {
           class="input-style"
         />
       </div>
-      <button class="create-button" @click="createUser">
-        アカウント作成
-      </button>
+      <button class="create-button" @click="createUser">アカウント作成</button>
       <p v-if="errorMessage" style="color: #f6aa00">{{ errorMessage }}</p>
 
       <!-- Dialog for success message -->
@@ -174,5 +166,4 @@ async function createUser() {
   border-radius: 5px;
   cursor: pointer;
 }
-
 </style>
