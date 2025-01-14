@@ -39,12 +39,6 @@ export interface UserAnswer {
     questionId: number;
     /**
      * 
-     * @type {string}
-     * @memberof UserAnswer
-     */
-    commentary: string;
-    /**
-     * 
      * @type {boolean}
      * @memberof UserAnswer
      */
@@ -70,7 +64,6 @@ export function instanceOfUserAnswer(value: object): value is UserAnswer {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('userId' in value) || value['userId'] === undefined) return false;
     if (!('questionId' in value) || value['questionId'] === undefined) return false;
-    if (!('commentary' in value) || value['commentary'] === undefined) return false;
     if (!('isCorrect' in value) || value['isCorrect'] === undefined) return false;
     if (!('quizeListUuid' in value) || value['quizeListUuid'] === undefined) return false;
     if (!('answeredAt' in value) || value['answeredAt'] === undefined) return false;
@@ -90,7 +83,6 @@ export function UserAnswerFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'id': json['id'],
         'userId': json['user_id'],
         'questionId': json['question_id'],
-        'commentary': json['commentary'],
         'isCorrect': json['is_correct'],
         'quizeListUuid': json['quize_list_uuid'],
         'answeredAt': (new Date(json['answered_at'])),
@@ -111,7 +103,6 @@ export function UserAnswerFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'id': value['id'],
         'user_id': value['userId'],
         'question_id': value['questionId'],
-        'commentary': value['commentary'],
         'is_correct': value['isCorrect'],
         'quize_list_uuid': value['quizeListUuid'],
         'answered_at': ((value['answeredAt']).toISOString()),
