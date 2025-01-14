@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useAnswerStatusStore } from '@/stores/answerstatus'
+import { useAnswerStatusStore } from '@/stores/useAnswerStatusStore'
 import router from '../router/index'
 import { useTimerStore } from '@/stores/timer'
 import { ref } from 'vue'
@@ -12,7 +12,7 @@ const useTimer = ref<number>(50) // 初期値は50
 const { initStatus } = answerStatusStore
 // ビュー遷移
 async function transition() {
-  initStatus(10)
+  initStatus(1)
   timerStore.setTimer(useTimer.value)
   router.replace('/quize/0') // クイズ画面へ遷移
 }

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import NavHeader from '@/components/NavHeader.vue'
 import { useTimerStore } from '@/stores/timer'
-import { useAnswerStatusStore } from '@/stores/answerstatus'
+import { useAnswerStatusStore } from '@/stores/useAnswerStatusStore'
 import { useLoginStore } from '@/stores/loginStore'
 import { Configuration, DefaultApi } from '@/generated'
 import { onMounted, ref } from 'vue'

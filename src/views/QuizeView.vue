@@ -6,7 +6,7 @@ import { useRoute } from 'vue-router'
 import QuestionOption from '@/components/QuestionOption.vue'
 import QuestionList from '@/components/QuestionList.vue'
 import { useTimerStore } from '@/stores/timer'
-import { useAnswerStatusStore } from '@/stores/answerstatus'
+import { useAnswerStatusStore } from '@/stores/useAnswerStatusStore'
 import router from '@/router'
 
 const route = useRoute()
@@ -17,6 +17,7 @@ const answer = ref<string | undefined>(undefined)
 const diff = ref<number>(0)
 const intervalId = ref<number | undefined>(undefined)
 const Dialog = ref<boolean>(false)
+const Dialog2 = ref<boolean>(false)
 
 const timerstore = useTimerStore()
 const answerstatusstore = useAnswerStatusStore()
@@ -38,9 +39,10 @@ async function fetchQuestionData() {
 
     console.log('Question data:', response.id)
   } catch (error) {
-    if (route.params.id === '14') {
-      Dialog.value = true
-      timerstore.setFinishTime(timerstore.getPastTime()) // 保存
+    if (route.params.id === '1') {
+      // if (route.params.id === '29') {
+      Dialog2.value = true
+      timerstore.setFinishTime(timerstore.getPastTime) // 保存
     } else {
       console.error('Error fetching question data:', error)
       errorMessage.value = '問題データの取得に失敗しました'
@@ -77,7 +79,7 @@ watch(
   (isTimeOver) => {
     if (isTimeOver) {
       Dialog.value = true
-      timerstore.setFinishTime(timerstore.getPastTime()) // 保存
+      timerstore.setFinishTime(timerstore.getPastTime) // 保存
     }
   }
 )
@@ -85,6 +87,16 @@ watch(
 // ダイアログが閉じられたら結果画面に遷移
 watch(
   () => Dialog.value,
+  (isDialogClosed) => {
+    if (!isDialogClosed) {
+      getStatus
+      router.replace('/result')
+    }
+  }
+)
+
+watch(
+  () => Dialog2.value,
   (isDialogClosed) => {
     if (!isDialogClosed) {
       getStatus
@@ -120,6 +132,19 @@ watch(
         </v-card-text>
         <v-card-actions>
           <v-btn class="ms-auto" @click="Dialog = false">OK</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="Dialog2" width="auto">
+      <v-card max-width="500" style="text-align: center">
+        <v-card-title class="centered-title"> 問題が終了しました </v-card-title>
+        <v-card-text>
+          試験を終了します<br />
+          クリックで結果画面に遷移します。
+        </v-card-text>
+        <v-card-actions>
+          <v-btn class="ms-auto" @click="Dialog2 = false">OK</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

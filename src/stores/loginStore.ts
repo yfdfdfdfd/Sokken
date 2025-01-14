@@ -26,5 +26,9 @@ export const useLoginStore = defineStore('login', {
     logout() {
       this.user = undefined
     }
+  },
+
+  persist: {
+    storage: sessionStorage
   }
 })

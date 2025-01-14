@@ -200,7 +200,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * ユーザーの回答を登録する
      * Post Result
      */
-    async postResultResultsPostRaw(requestParameters: PostResultResultsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserAnswer>> {
+    async postResultResultsPostRaw(requestParameters: PostResultResultsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
         if (requestParameters['userAnswerCreate'] == null) {
             throw new runtime.RequiredError(
                 'userAnswerCreate',
@@ -222,14 +222,18 @@ export class DefaultApi extends runtime.BaseAPI {
             body: UserAnswerCreateToJSON(requestParameters['userAnswerCreate']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => UserAnswerFromJSON(jsonValue));
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
     }
 
     /**
      * ユーザーの回答を登録する
      * Post Result
      */
-    async postResultResultsPost(requestParameters: PostResultResultsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserAnswer> {
+    async postResultResultsPost(requestParameters: PostResultResultsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
         const response = await this.postResultResultsPostRaw(requestParameters, initOverrides);
         return await response.value();
     }

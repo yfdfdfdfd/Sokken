@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import router from './../router/index'
 import { defineProps, ref } from 'vue'
-import { useAnswerStatusStore } from '@/stores/answerstatus'
+import { useAnswerStatusStore } from '@/stores/useAnswerStatusStore'
 
 const selectedOption = ref<string | undefined>('')
 const answerStatusStore = useAnswerStatusStore()
