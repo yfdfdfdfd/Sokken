@@ -2,15 +2,12 @@ import { defineStore } from 'pinia'
 
 export const useAnswerStatusStore = defineStore('answerstatus', {
   state: () => ({
-    status: undefined as
-      | { isCorrect: boolean | null; questionId: number; commentary: string }[]
-      | undefined
+    status: undefined as { isCorrect: boolean | null; questionId: number }[] | undefined
   }),
   actions: {
     initStatus(length: number) {
       this.status = Array.from({ length }, (_, i) => ({
         isCorrect: null,
-        commentary: '',
         questionId: i + 1
       }))
     },
