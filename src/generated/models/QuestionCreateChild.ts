@@ -38,7 +38,6 @@ export interface QuestionCreateChild {
  */
 export function instanceOfQuestionCreateChild(value: object): value is QuestionCreateChild {
   if (!('questionId' in value) || value['questionId'] === undefined) return false
-  if (!('commentary' in value) || value['commentary'] === undefined) return false
   if (!('isCorrect' in value) || value['isCorrect'] === undefined) return false
   return true
 }
