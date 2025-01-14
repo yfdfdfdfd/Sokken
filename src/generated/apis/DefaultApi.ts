@@ -63,9 +63,8 @@ export interface ReadQuestionsQuestionsQuestionIdGetRequest {
     questionId: number;
 }
 
-export interface ReadUserAnswerUserAnswersUserAnswerIdGetRequest {
-    userAnswerId: number;
-    userId: number;
+export interface ReadUserAnswerUserHistoryQuizeListUuidGetRequest {
+    quizeListUuid: string;
 }
 
 export interface ReadUserUsersUserIdGetRequest {
@@ -197,7 +196,7 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * ユーザーの回答を登録する
+     * ユーザーの回答を送信する
      * Post Result
      */
     async postResultResultsPostRaw(requestParameters: PostResultResultsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
@@ -230,7 +229,7 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * ユーザーの回答を登録する
+     * ユーザーの回答を送信する
      * Post Result
      */
     async postResultResultsPost(requestParameters: PostResultResultsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
@@ -274,31 +273,20 @@ export class DefaultApi extends runtime.BaseAPI {
     /**
      * Read User Answer
      */
-    async readUserAnswerUserAnswersUserAnswerIdGetRaw(requestParameters: ReadUserAnswerUserAnswersUserAnswerIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserAnswer>> {
-        if (requestParameters['userAnswerId'] == null) {
+    async readUserAnswerUserHistoryQuizeListUuidGetRaw(requestParameters: ReadUserAnswerUserHistoryQuizeListUuidGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserAnswer>> {
+        if (requestParameters['quizeListUuid'] == null) {
             throw new runtime.RequiredError(
-                'userAnswerId',
-                'Required parameter "userAnswerId" was null or undefined when calling readUserAnswerUserAnswersUserAnswerIdGet().'
-            );
-        }
-
-        if (requestParameters['userId'] == null) {
-            throw new runtime.RequiredError(
-                'userId',
-                'Required parameter "userId" was null or undefined when calling readUserAnswerUserAnswersUserAnswerIdGet().'
+                'quizeListUuid',
+                'Required parameter "quizeListUuid" was null or undefined when calling readUserAnswerUserHistoryQuizeListUuidGet().'
             );
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters['userId'] != null) {
-            queryParameters['user_id'] = requestParameters['userId'];
-        }
-
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/user_answers/{user_answer_id}`.replace(`{${"user_answer_id"}}`, encodeURIComponent(String(requestParameters['userAnswerId']))),
+            path: `/user_history/{quize_list_uuid}`.replace(`{${"quize_list_uuid"}}`, encodeURIComponent(String(requestParameters['quizeListUuid']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -310,8 +298,8 @@ export class DefaultApi extends runtime.BaseAPI {
     /**
      * Read User Answer
      */
-    async readUserAnswerUserAnswersUserAnswerIdGet(requestParameters: ReadUserAnswerUserAnswersUserAnswerIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserAnswer> {
-        const response = await this.readUserAnswerUserAnswersUserAnswerIdGetRaw(requestParameters, initOverrides);
+    async readUserAnswerUserHistoryQuizeListUuidGet(requestParameters: ReadUserAnswerUserHistoryQuizeListUuidGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserAnswer> {
+        const response = await this.readUserAnswerUserHistoryQuizeListUuidGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

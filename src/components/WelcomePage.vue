@@ -5,16 +5,15 @@ import { useTimerStore } from '@/stores/timer'
 import { ref } from 'vue'
 
 const answerStatusStore = useAnswerStatusStore()
-// タイマーストアを使用
 const timerStore = useTimerStore()
-const useTimer = ref<number>(50) // 初期値は50
+const useTimer = ref<number>(50)
 
 const { initStatus } = answerStatusStore
 // ビュー遷移
 async function transition() {
   initStatus(1)
   timerStore.setTimer(useTimer.value)
-  router.replace('/quize/0') // クイズ画面へ遷移
+  router.replace('/quize/0')
 }
 
 // 時間スライダーの更新
