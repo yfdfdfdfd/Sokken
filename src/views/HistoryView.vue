@@ -15,7 +15,7 @@ import HistoryPage from '@/components/HistoryPage.vue'
 <style scoped>
 main {
   display: flex;
-  margin-top: 70px;
+  margin: 120px;
 }
 
 main > * {
@@ -23,6 +23,5 @@ main > * {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
 }
 </style>

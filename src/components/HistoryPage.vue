@@ -84,6 +84,5 @@ h1 {
 .v-table {
   background-color: var(--color-background);
   color: var(--color-text);
-  margin-top: 150px;
 }
 </style>

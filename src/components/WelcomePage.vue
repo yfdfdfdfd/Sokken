@@ -12,6 +12,7 @@ const { initStatus } = answerStatusStore
 // ビュー遷移
 async function transition() {
   initStatus(1)
+  // initStatus(30)
   timerStore.setTimer(useTimer.value)
   router.replace('/quize/0')
 }
