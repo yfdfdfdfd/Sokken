@@ -27,12 +27,12 @@ const router = createRouter({
     {
       path: '/quize/:id',
       name: 'quize',
-      component: () => import('../views/QuizeView.vue'),
+      component: () => import('../views/QuizeView.vue')
     },
     {
       path: '/quizepractice/:id',
       name: 'quizepractice',
-      component: () => import('../views/QuizepracticeView.vue'),
+      component: () => import('../views/QuizepracticeView.vue')
     },
     {
       path: '/welcome',
@@ -53,6 +53,11 @@ const router = createRouter({
       path: '/history',
       name: 'history',
       component: () => import('../views/HistoryView.vue')
+    },
+    {
+      path: '/history/:quizeListUuid',
+      name: 'historydetail',
+      component: () => import('../views/HistoryDetailView.vue')
     }
   ]
 })
