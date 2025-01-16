@@ -36,26 +36,20 @@ onMounted(() => {
     <h1 style="width: 100%">問題履歴</h1>
     <div v-if="errorMessage">{{ errorMessage }}</div>
     <div v-else>
-      <v-table class="v-table" v-if="child && child.length > 0">
-        <thead>
-          <tr>
-            <th style="text-align: center; border: 1px solid black">問題</th>
-            <th style="text-align: center; border: 1px solid black">解説</th>
-            <th style="text-align: center; border: 1px solid black">正解</th>
-            <th style="text-align: center; border: 1px solid black">タグ</th>
-            <th style="text-align: center; border: 1px solid black">正誤</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(item, index) in child" :key="index">
-            <td>{{ item.questionText }}</td>
-            <td>{{ item.commentary }}</td>
-            <td>{{ item.correctAnswer }}</td>
-            <td style="writing-mode: vertical-rl; text-align: center">{{ item.tag }}</td>
-            <td>{{ item.isCorrect ? '◯' : '✕' }}</td>
-          </tr>
-        </tbody>
-      </v-table>
+      <div v-if="child && child.length > 0">
+        <div
+          v-for="(item, index) in child"
+          :key="index"
+          style="border: 1px solid var(--color-border); margin-bottom: 10px; padding: 10px"
+        >
+          <p class="detail-item"><strong>問題:</strong> {{ item.questionText }}</p>
+          <p class="detail-item"><strong>解説:</strong> {{ item.commentary }}</p>
+          <p class="detail-item"><strong>選択肢:</strong> {{ item.choices }}</p>
+          <p class="detail-item"><strong>正解:</strong> {{ item.correctAnswer }}</p>
+          <p class="detail-item"><strong>タグ:</strong>{{ item.tag }}</p>
+          <p class="detail-item"><strong>あなたの正誤:</strong> {{ item.isCorrect ? '◯' : '✕' }}</p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -70,8 +64,10 @@ h1 {
   margin-bottom: 20px;
 }
 
-.v-table {
-  background-color: var(--color-background);
-  color: var(--color-text);
+.detail-item {
+  margin: 0;
+  padding: 0;
+  margin-bottom: 10px;
+  font-size: 1rem;
 }
 </style>
