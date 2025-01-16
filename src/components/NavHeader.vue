@@ -62,10 +62,6 @@ nav {
   margin: 0;
   background-color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1000;
 }
 
 nav a,
@@ -92,11 +88,15 @@ nav a.router-link-active {
 .navbar {
   width: 100%;
   padding: 0 2rem;
-  margin-top: 5px;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   background: var(--color-background);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  height: 70px;
 }
 
 .navbar :hover {
