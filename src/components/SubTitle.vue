@@ -7,9 +7,7 @@ defineProps<{
 <template>
   <div class="greetings">
     <h1 class="blue">{{ msg }}</h1>
-    <h3 style="white-space: nowrap;">
-      AI検定の勉強を目的としたwebサイト
-    </h3>
+    <h3 style="white-space: nowrap; text-align: center">AI検定の勉強を目的としたwebサイト</h3>
   </div>
 </template>
 
@@ -33,7 +31,7 @@ h3 {
 @media (min-width: 1024px) {
   .greetings h1,
   .greetings h3 {
-    text-align: left;
+    text-align: center;
   }
 }
 </style>
