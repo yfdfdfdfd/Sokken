@@ -41,7 +41,7 @@ onMounted(() => {
         <div
           v-for="(item, index) in child"
           :key="index"
-          style="border: 1px solid var(--color-border); margin-bottom: 10px; padding: 10px"
+          style="border: 1px solid var(--color-border); margin-bottom: 30px; padding: 10px"
         >
           <p class="detail-item"><strong>問題:</strong> {{ item.questionText }}</p>
           <p class="detail-item"><strong>解説:</strong> {{ item.commentary }}</p>

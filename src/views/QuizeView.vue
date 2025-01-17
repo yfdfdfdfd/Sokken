@@ -39,7 +39,7 @@ async function fetchQuestionData() {
 
     console.log('Question data:', response.id)
 
-    if (route.params.id === '1') {
+    if (route.params.id === '5') {
       Dialog2.value = true
       timerstore.setFinishTime(timerstore.getPastTime) // 保存
     }

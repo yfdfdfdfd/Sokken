@@ -125,4 +125,12 @@ main {
   color: #f6aa00;
   margin-top: 5px;
 }
+
+.result-count {
+  text-align: center;
+}
+
+.result-item {
+  text-align: center;
+}
 </style>
