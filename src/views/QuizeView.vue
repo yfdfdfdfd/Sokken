@@ -40,7 +40,6 @@ async function fetchQuestionData() {
     console.log('Question data:', response.id)
   } catch (error) {
     if (route.params.id === '1') {
-      // if (route.params.id === '29') {
       Dialog2.value = true
       timerstore.setFinishTime(timerstore.getPastTime) // 保存
     } else {
