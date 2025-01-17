@@ -14,19 +14,20 @@ import NavHeader from '@/components/NavHeader.vue'
           <section>
             <h3 class="hover-underline">Home</h3>
             <h4>
-              Homeページでは、本番を想定して問題を解くことができ、制限時間の設定ができます。
+              Homeページでは、本番を想定して問題を解くことができ、制限時間を5分～50分の間で設定ができます。
               解答開始ボタンを押すことで始まります。
             </h4>
           </section>
           <br />
           <section>
             <h3 class="hover-underline">About</h3>
-            <h4>Aboutページでは、このサイトの説明を見ることができます。</h4>
+            <h4>--現在閲覧中のページ--</h4>
           </section>
           <br />
           <section>
             <h3 class="hover-underline">Practice</h3>
             <h4>Practiceページではインプット向けの勉強を行うことができます。</h4>
+            <h4>知識が全くない方はこちらからおすすめします</h4>
           </section>
           <br />
           <section>
@@ -36,7 +37,8 @@ import NavHeader from '@/components/NavHeader.vue'
           <br />
           <section>
             <h3 class="hover-underline">Logout</h3>
-            <h4>ホーム画面に戻ります。セッションがなくなります</h4>
+            <h4>ログイン画面に戻ります。</h4>
+            <h4>セッションがなくなりますので再度ログインが必要になります</h4>
           </section>
           <br />
         </div>
