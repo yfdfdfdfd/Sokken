@@ -5,7 +5,7 @@ import { ref, onMounted, watch, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import TfQuestionOption from '@/components/TfQuestionOption.vue'
 import QuestionList from '@/components/QuestionList.vue'
-import router from '@/router/router'
+import router from '@/router'
 
 const route = useRoute()
 const question = ref<string | undefined>(undefined)

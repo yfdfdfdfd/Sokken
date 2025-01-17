@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useAnswerStatusStore } from '@/stores/useAnswerStatusStore'
-import router from '../router/router'
+import router from '../router'
 import { useTimerStore } from '@/stores/useTimerStore'
 import { ref } from 'vue'
 

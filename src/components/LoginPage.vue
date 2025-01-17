@@ -5,7 +5,7 @@ import CommunityIcon from './icons/IconCommunity.vue'
 import { DefaultApi, Configuration } from '../generated'
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
-import router from '../router/router'
+import router from '../router'
 import { useLoginStore } from '@/stores/useLoginStore'
 
 const email = ref('')

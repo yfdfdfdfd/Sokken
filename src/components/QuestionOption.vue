@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import router from '../router/router'
+import router from '../router'
 import { defineProps, ref } from 'vue'
 import { useAnswerStatusStore } from '@/stores/useAnswerStatusStore'
 
