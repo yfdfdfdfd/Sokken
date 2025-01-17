@@ -6,7 +6,7 @@ import { DefaultApi, Configuration } from '../generated'
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import router from './../router/index'
-import { useLoginStore } from '@/stores/loginStore'
+import { useLoginStore } from '@/stores/useLoginStore'
 
 const email = ref('')
 const password = ref('')

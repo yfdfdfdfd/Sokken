@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useAnswerStatusStore } from '@/stores/useAnswerStatusStore'
 import router from '../router/index'
-import { useTimerStore } from '@/stores/timer'
+import { useTimerStore } from '@/stores/useTimerStore'
 import { ref } from 'vue'
 
 const answerStatusStore = useAnswerStatusStore()

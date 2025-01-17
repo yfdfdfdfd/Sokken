@@ -3,7 +3,7 @@
 <script setup lang="ts">
 import { DefaultApi, Configuration, type UserAnswerResponseChild } from '../generated'
 import { ref, onMounted } from 'vue'
-import { useLoginStore } from '@/stores/loginStore'
+import { useLoginStore } from '@/stores/useLoginStore'
 import router from './../router/index'
 
 const child = ref<UserAnswerResponseChild[] | undefined>(undefined)

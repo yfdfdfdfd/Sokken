@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { DefaultApi, Configuration, type UserAnswerDetailResponseChild } from '../generated'
 import { ref, onMounted } from 'vue'
-import { useLoginStore } from '@/stores/loginStore'
+import { useLoginStore } from '@/stores/useLoginStore'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
