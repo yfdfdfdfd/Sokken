@@ -28,9 +28,7 @@ function selectOption(option: string) {
 
 // 次の問題に進む関数
 function nextQuestion() {
-  if (selectedOptions[props.id] !== undefined) {
-    router.push(`/quize/${props.id + 1}`)
-  }
+  router.push(`/quize/${props.id + 1}`)
 }
 </script>
 
@@ -54,7 +52,7 @@ function nextQuestion() {
         </label>
       </li>
     </ul>
-    <button @click="nextQuestion" :disabled="!selectedOptions[props.id]">次の問題へ</button>
+    <button @click="nextQuestion">次の問題へ</button>
   </div>
 </template>
 
