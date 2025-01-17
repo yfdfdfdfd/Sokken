@@ -7,7 +7,7 @@ import QuestionOption from '@/components/QuestionOption.vue'
 import QuestionList from '@/components/QuestionList.vue'
 import { useTimerStore } from '@/stores/useTimerStore'
 import { useAnswerStatusStore } from '@/stores/useAnswerStatusStore'
-import router from '@/router'
+import router from '@/router/router'
 
 const route = useRoute()
 const question = ref<string | undefined>(undefined)

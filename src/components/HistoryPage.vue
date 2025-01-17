@@ -4,7 +4,7 @@
 import { DefaultApi, Configuration, type UserAnswerResponseChild } from '../generated'
 import { ref, onMounted } from 'vue'
 import { useLoginStore } from '@/stores/useLoginStore'
-import router from './../router/index'
+import router from '../router/router'
 
 const child = ref<UserAnswerResponseChild[] | undefined>(undefined)
 const errorMessage = ref<string | undefined>(undefined)

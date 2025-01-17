@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import WelcomeItem from './WelcomeItem.vue'
 import DocumentationIcon from './icons/IconDocumentation.vue'
 import { DefaultApi, Configuration } from '../generated'
-import router from './../router/index'
+import router from '../router/router'
 
 const name = ref('')
 const email = ref('')
