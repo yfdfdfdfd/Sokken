@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import router from '../router'
-import { defineProps, ref } from 'vue'
+import { defineProps, reactive } from 'vue'
 import { useAnswerStatusStore } from '@/stores/useAnswerStatusStore'
 
-const selectedOption = ref<string | undefined>('')
+const selectedOptions = reactive<{ [key: number]: string | undefined }>({})
 const answerStatusStore = useAnswerStatusStore()
 const { setStatus } = answerStatusStore
 
@@ -18,7 +18,7 @@ const props = defineProps<{
 
 // 選択肢を選択する関数
 function selectOption(option: string) {
-  selectedOption.value = option
+  selectedOptions[props.id] = option
   if (option === props.answer) {
     setStatus(props.id, true)
   } else {
@@ -28,7 +28,7 @@ function selectOption(option: string) {
 
 // 次の問題に進む関数
 function nextQuestion() {
-  if (selectedOption.value !== undefined) {
+  if (selectedOptions[props.id] !== undefined) {
     router.push(`/quize/${props.id + 1}`)
   }
 }
@@ -48,13 +48,13 @@ function nextQuestion() {
             :value="option"
             name="question"
             @click="selectOption(option)"
-            :checked="option === selectedOption"
+            :checked="option === selectedOptions[props.id]"
           />
           {{ option }}
         </label>
       </li>
     </ul>
-    <button @click="nextQuestion" :disabled="!selectedOption">次の問題へ</button>
+    <button @click="nextQuestion" :disabled="!selectedOptions[props.id]">次の問題へ</button>
   </div>
 </template>
 
