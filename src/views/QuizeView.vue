@@ -38,14 +38,14 @@ async function fetchQuestionData() {
     list.value = response.choices
 
     console.log('Question data:', response.id)
-  } catch (error) {
+
     if (route.params.id === '1') {
       Dialog2.value = true
       timerstore.setFinishTime(timerstore.getPastTime) // 保存
-    } else {
-      console.error('Error fetching question data:', error)
-      errorMessage.value = '問題データの取得に失敗しました'
     }
+  } catch (error) {
+    console.error('Error fetching question data:', error)
+    errorMessage.value = '問題データの取得に失敗しました'
   }
 }
 

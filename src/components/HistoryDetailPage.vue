@@ -19,6 +19,7 @@ async function fetchQuestionDetailHistory() {
       quizeListUuid: route.params.quizeListUuid as string
     })
     child.value = response.child
+
     console.log('Question Detailhistory:', response)
   } catch (error) {
     console.error('Error fetching question history:', error)
@@ -47,7 +48,10 @@ onMounted(() => {
           <p class="detail-item"><strong>選択肢:</strong> {{ item.choices }}</p>
           <p class="detail-item"><strong>正解:</strong> {{ item.correctAnswer }}</p>
           <p class="detail-item"><strong>タグ:</strong>{{ item.tag }}</p>
-          <p class="detail-item"><strong>あなたの正誤:</strong> {{ item.isCorrect ? '◯' : '✕' }}</p>
+          <p class="detail-item">
+            <strong>あなたの正誤:</strong>
+            {{ item.isCorrect === null ? '未回答' : item.isCorrect ? '◯' : '✕' }}
+          </p>
         </div>
       </div>
     </div>
