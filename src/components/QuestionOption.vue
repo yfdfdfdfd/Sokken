@@ -60,6 +60,8 @@ function nextQuestion() {
 .question-container {
   font-size: 24px;
   width: 100%;
+  max-height: 420px;
+  margin-right: 10px;
 }
 
 ul {
@@ -75,15 +77,16 @@ li {
   font-size: 20px;
 }
 
+/* 次の問題に進むボタン */
 button {
-  padding: 15px 10px;
+  padding: 8px 10px;
   font-size: 16px;
   cursor: pointer;
   width: 25%;
   box-sizing: border-box;
   display: block;
   margin: 25px auto;
-  margin-right: 50px;
+  margin-right: 20px;
   background-color: auto;
   border: 1px solid #ccc;
 }

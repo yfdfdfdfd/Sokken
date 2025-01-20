@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import NavHeader from '@/components/NavHeader.vue'
+import BreadList from '@/components/BreadList.vue'
 import { DefaultApi, Configuration } from '../generated'
 import { ref, onMounted, watch, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
@@ -106,7 +107,8 @@ watch(
 </script>
 
 <template>
-  <NavHeader />
+  <NavHeader style="position: absolute; top: 0; width: 100%" />
+  <BreadList style="margin-top: 80px" />
   <main>
     <div>
       <QuestionList v-if="question" :question="question" />
@@ -160,7 +162,7 @@ main > * {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 70vh;
 }
 
 .centered-title {
