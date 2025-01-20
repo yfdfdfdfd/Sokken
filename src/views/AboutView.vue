@@ -77,7 +77,7 @@ h3 {
 
 .right {
   background: var(--color-background-soft);
-  padding: 30px;
+  padding: 5px 30px;
   font-size: 1rem;
   border: 1px solid var(--color-border);
   border-radius: 20px;
