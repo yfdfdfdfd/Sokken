@@ -112,8 +112,6 @@ watch(
   <main>
     <div>
       <QuestionList v-if="question" :question="question" />
-    </div>
-    <div>
       <QuestionOption
         v-if="answer"
         :answer="answer"
@@ -159,7 +157,7 @@ main {
 
 main > * {
   flex: 1;
-  display: flex;
+  /* display: flex; */
   justify-content: center;
   align-items: center;
   height: 70vh;

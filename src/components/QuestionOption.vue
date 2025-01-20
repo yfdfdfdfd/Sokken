@@ -59,7 +59,6 @@ function nextQuestion() {
 <style scoped>
 .question-container {
   font-size: 24px;
-  width: 100%;
   max-height: 420px;
   margin-right: 10px;
 }
@@ -79,7 +78,7 @@ li {
 
 /* 次の問題に進むボタン */
 button {
-  padding: 8px 10px;
+  padding: 5px 1px;
   font-size: 16px;
   cursor: pointer;
   width: 25%;
@@ -87,7 +86,6 @@ button {
   display: block;
   margin: 25px auto;
   margin-right: 20px;
-  background-color: auto;
   border: 1px solid #ccc;
 }
 
