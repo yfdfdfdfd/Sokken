@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import NavHeader from '@/components/NavHeader.vue'
+import BreadList from '@/components/BreadList.vue'
 import { DefaultApi, Configuration } from '../generated'
 import { ref, onMounted, watch, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import QuestionOption from '@/components/QuestionOption.vue'
 import QuestionList from '@/components/QuestionList.vue'
-import { useTimerStore } from '@/stores/timer'
+import { useTimerStore } from '@/stores/useTimerStore'
+import { useAnswerStatusStore } from '@/stores/useAnswerStatusStore'
 import router from '@/router'
 
 const route = useRoute()
@@ -16,9 +18,12 @@ const answer = ref<string | undefined>(undefined)
 const diff = ref<number>(0)
 const intervalId = ref<number | undefined>(undefined)
 const Dialog = ref<boolean>(false)
+const Dialog2 = ref<boolean>(false)
 
 const timerstore = useTimerStore()
+const answerstatusstore = useAnswerStatusStore()
 const { getDiff } = timerstore
+const { getStatus } = answerstatusstore
 
 async function fetchQuestionData() {
   try {
@@ -33,7 +38,12 @@ async function fetchQuestionData() {
     answer.value = response.correctAnswer
     list.value = response.choices
 
-    console.log('Question data:', response)
+    console.log('Question data:', response.id)
+
+    if (route.params.id === '5') {
+      Dialog2.value = true
+      timerstore.setFinishTime(timerstore.getPastTime) // 保存
+    }
   } catch (error) {
     console.error('Error fetching question data:', error)
     errorMessage.value = '問題データの取得に失敗しました'
@@ -52,7 +62,6 @@ onMounted(() => {
 onUnmounted(() => {
   if (intervalId.value) {
     clearInterval(intervalId.value)
-    
   }
 })
 
@@ -70,7 +79,7 @@ watch(
   (isTimeOver) => {
     if (isTimeOver) {
       Dialog.value = true
-      timerstore.setFinishTime(timerstore.getPastTime())// 保存
+      timerstore.setFinishTime(timerstore.getPastTime) // 保存
     }
   }
 )
@@ -80,28 +89,29 @@ watch(
   () => Dialog.value,
   (isDialogClosed) => {
     if (!isDialogClosed) {
+      getStatus
       router.replace('/result')
     }
   }
 )
 
-//問題数に達成すると結果画面に遷移
 watch(
-  () => route.params.id === '10',
-  () => {
-    timerstore.setFinishTime(timerstore.getPastTime())// 保存
-    router.replace('/result')
+  () => Dialog2.value,
+  (isDialogClosed) => {
+    if (!isDialogClosed) {
+      getStatus
+      router.replace('/result')
+    }
   }
 )
 </script>
 
 <template>
-  <NavHeader />
+  <NavHeader style="position: absolute; top: 0; width: 100%" />
+  <BreadList style="margin-top: 80px" />
   <main>
     <div>
       <QuestionList v-if="question" :question="question" />
-    </div>
-    <div>
       <QuestionOption
         v-if="answer"
         :answer="answer"
@@ -113,16 +123,27 @@ watch(
     <p v-if="errorMessage" style="color: #f6aa00; margin-top: 5px">{{ errorMessage }}</p>
 
     <v-dialog v-model="Dialog" width="auto">
-      <v-card max-width="500" style="text-align: center;">
-        <v-card-title class="centered-title">
-          制限時間が終了しました
-        </v-card-title>
+      <v-card max-width="500" style="text-align: center">
+        <v-card-title class="centered-title"> 制限時間が終了しました </v-card-title>
         <v-card-text>
-          試験を終了します<br>
+          試験を終了します<br />
           クリックで結果画面に遷移します。
         </v-card-text>
         <v-card-actions>
           <v-btn class="ms-auto" @click="Dialog = false">OK</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="Dialog2" width="auto">
+      <v-card max-width="500" style="text-align: center">
+        <v-card-title class="centered-title"> 問題が終了しました </v-card-title>
+        <v-card-text>
+          試験を終了します<br />
+          クリックで結果画面に遷移します。
+        </v-card-text>
+        <v-card-actions>
+          <v-btn class="ms-auto" @click="Dialog2 = false">OK</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -136,17 +157,17 @@ main {
 
 main > * {
   flex: 1;
-  display: flex;
+  /* display: flex; */
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 70vh;
 }
 
 .centered-title {
   display: flex;
-  justify-content: center; 
-  align-items: center;    
-  text-align: center;     
+  justify-content: center;
+  align-items: center;
+  text-align: center;
   font-size: 1.2rem;
   background-color: auto;
   color: auto;
@@ -155,5 +176,4 @@ main > * {
 .ms-auto {
   margin-right: 105px;
 }
-
 </style>

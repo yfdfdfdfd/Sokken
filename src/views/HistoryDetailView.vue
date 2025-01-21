@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import NavHeader from '@/components/NavHeader.vue'
-import HistoryPage from '@/components/HistoryPage.vue'
+import HistoryDetailPage from '@/components/HistoryDetailPage.vue'
 </script>
 
 <template>
   <NavHeader />
   <main>
     <div>
-      <HistoryPage />
+      <HistoryDetailPage />
     </div>
   </main>
 </template>

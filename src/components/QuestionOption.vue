@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import router from './../router/index'
-import { defineProps, ref } from 'vue'
-import { useCounterStore } from '@/stores/counter'
+import router from '../router'
+import { defineProps, reactive } from 'vue'
+import { useAnswerStatusStore } from '@/stores/useAnswerStatusStore'
 
-const counterStore = useCounterStore()
+const selectedOptions = reactive<{ [key: number]: string | undefined }>({})
+const answerStatusStore = useAnswerStatusStore()
+const { setStatus } = answerStatusStore
 
-// 選択された選択肢を管理する変数
-const selectedOption = ref<string | undefined>('')
+// 初期化
 
 const props = defineProps<{
   list: string[]
@@ -17,19 +18,17 @@ const props = defineProps<{
 
 // 選択肢を選択する関数
 function selectOption(option: string) {
-  selectedOption.value = option
+  selectedOptions[props.id] = option
   if (option === props.answer) {
-    counterStore.increment()
+    setStatus(props.id, true)
   } else {
-    counterStore.decrement()
+    setStatus(props.id, false)
   }
 }
 
 // 次の問題に進む関数
 function nextQuestion() {
-  if (selectedOption.value !== undefined) {
-    router.push(`/quize/${props.id + 1}`)
-  }
+  router.push(`/quize/${props.id + 1}`)
 }
 </script>
 
@@ -38,31 +37,30 @@ function nextQuestion() {
     <p style="margin-bottom: 10px; text-align: right; border-radius: 10px">
       残り時間: {{ props.timer }}秒
     </p>
-    <p style="margin-left: 50px;">問題番号: {{ props.id + 1 }}</p>
+    <p style="margin-left: 50px">問題番号: {{ props.id + 1 }}</p>
     <ul>
       <li v-for="(option, index) in props.list" :key="index">
         <label>
-          <input 
-            type="radio" 
-            :value="option" 
-            name="question" 
-            @change="selectOption(option)"
-          >
+          <input
+            type="radio"
+            :value="option"
+            name="question"
+            @click="selectOption(option)"
+            :checked="option === selectedOptions[props.id]"
+          />
           {{ option }}
         </label>
       </li>
     </ul>
-    <button 
-      @click="nextQuestion" 
-      :disabled="!selectedOption">次の問題へ
-    </button>
+    <button @click="nextQuestion">次の問題へ</button>
   </div>
 </template>
 
 <style scoped>
 .question-container {
   font-size: 24px;
-  width: 100%;
+  max-height: 420px;
+  margin-right: 10px;
 }
 
 ul {
@@ -78,15 +76,16 @@ li {
   font-size: 20px;
 }
 
+/* 次の問題に進むボタン */
 button {
-  padding: 15px 10px;
+  padding: 5px 1px;
   font-size: 16px;
   cursor: pointer;
-  width: 80%;
+  width: 25%;
   box-sizing: border-box;
   display: block;
-  margin: 20px auto;
-  background-color: auto;
+  margin: 25px auto;
+  margin-right: 20px;
   border: 1px solid #ccc;
 }
 

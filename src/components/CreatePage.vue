@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import WelcomeItem from './WelcomeItem.vue'
 import DocumentationIcon from './icons/IconDocumentation.vue'
 import { DefaultApi, Configuration } from '../generated'
-import router from './../router/index'
+import router from '../router'
 
 const name = ref('')
 const email = ref('')
@@ -47,7 +47,7 @@ async function createUser() {
     if (dialogVisible.value) {
       setTimeout(() => {
         router.replace('/')
-      }, 1500)
+      }, 2500)
     }
   } catch (error) {
     console.error('Error creating user:', error) // デバッグログ
@@ -65,13 +65,7 @@ async function createUser() {
     <template #default>
       <div>
         <label for="name">名前:</label>
-        <input
-          type="text"
-          id="name"
-          v-model="name"
-          placeholder="名前を入力"
-          class="input-style"
-        />
+        <input type="text" id="name" v-model="name" placeholder="名前を入力" class="input-style" />
       </div>
       <div>
         <label for="email">メールアドレス:</label>
@@ -104,21 +98,7 @@ async function createUser() {
           class="input-style"
         />
       </div>
-      <button
-        @click="createUser"
-        style="
-          margin-top: 20px;
-          padding: 10px 20px;
-          width: 100%;
-          background-color: #34a3d1;
-          color: white;
-          border: none;
-          border-radius: 5px;
-          cursor: pointer;
-        "
-      >
-        アカウント作成
-      </button>
+      <button class="create-button" @click="createUser">アカウント作成</button>
       <p v-if="errorMessage" style="color: #f6aa00">{{ errorMessage }}</p>
 
       <!-- Dialog for success message -->
@@ -147,7 +127,7 @@ async function createUser() {
         >
           <v-dialog v-model="dialogVisible" max-width="500">
             <v-card>
-              <v-card-text style="text-align: center; font-size: 20px;">アカウント作成が完了しました</v-card-text>
+              <v-card-text class="dialog-text">アカウント作成が完了しました</v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="primary" @click="dialogVisible = false">閉じる</v-btn>
@@ -167,6 +147,23 @@ async function createUser() {
   margin-bottom: 10px;
   width: 100%;
   background: var(--color-background);
+  color: var(--color-text);
   border: 1px solid #ccc;
+}
+
+.dialog-text {
+  text-align: center;
+  font-size: 20px;
+}
+
+.create-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  width: 100%;
+  background-color: #34a3d1;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 </style>

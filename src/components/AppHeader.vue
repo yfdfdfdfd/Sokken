@@ -4,7 +4,14 @@ import HelloWorld from './SubTitle.vue'
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="../components/imgs/brain.png" width="30%" height="30%" />
+    <img
+      alt="Vue logo"
+      class="logo"
+      src="../components/imgs/brain.png"
+      width="30%"
+      height="30%"
+      style="max-width: 30%; max-height: 30%; width: 100%; height: auto"
+    />
 
     <div class="wrapper">
       <HelloWorld msg="AI検定" />
@@ -44,7 +51,6 @@ header {
   }
 
   nav {
-    text-align: left;
     margin-left: -1rem;
     font-size: 1rem;
 

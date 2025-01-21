@@ -17,7 +17,11 @@ import * as runtime from '../runtime';
 import type {
   HTTPValidationError,
   Question,
+  SessionResponse,
   User,
+  UserAnswerCreate,
+  UserAnswerDetailResponse,
+  UserAnswerResponse,
   UserCreate,
   UserLogin,
 } from '../models/index';
@@ -26,8 +30,16 @@ import {
     HTTPValidationErrorToJSON,
     QuestionFromJSON,
     QuestionToJSON,
+    SessionResponseFromJSON,
+    SessionResponseToJSON,
     UserFromJSON,
     UserToJSON,
+    UserAnswerCreateFromJSON,
+    UserAnswerCreateToJSON,
+    UserAnswerDetailResponseFromJSON,
+    UserAnswerDetailResponseToJSON,
+    UserAnswerResponseFromJSON,
+    UserAnswerResponseToJSON,
     UserCreateFromJSON,
     UserCreateToJSON,
     UserLoginFromJSON,
@@ -46,8 +58,21 @@ export interface LoginUserLoginPostRequest {
     userLogin: UserLogin;
 }
 
+export interface PostResultResultsPostRequest {
+    userAnswerCreate: UserAnswerCreate;
+}
+
 export interface ReadQuestionsQuestionsQuestionIdGetRequest {
     questionId: number;
+}
+
+export interface ReadUserAnswerUserHistoryByUuidGetRequest {
+    quizeListUuid: string;
+    token: string;
+}
+
+export interface ReadUserAnswerUserHistoryUuidGetRequest {
+    token: string;
 }
 
 export interface ReadUserUsersUserIdGetRequest {
@@ -145,7 +170,7 @@ export class DefaultApi extends runtime.BaseAPI {
     /**
      * Login User
      */
-    async loginUserLoginPostRaw(requestParameters: LoginUserLoginPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async loginUserLoginPostRaw(requestParameters: LoginUserLoginPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SessionResponse>> {
         if (requestParameters['userLogin'] == null) {
             throw new runtime.RequiredError(
                 'userLogin',
@@ -167,6 +192,43 @@ export class DefaultApi extends runtime.BaseAPI {
             body: UserLoginToJSON(requestParameters['userLogin']),
         }, initOverrides);
 
+        return new runtime.JSONApiResponse(response, (jsonValue) => SessionResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Login User
+     */
+    async loginUserLoginPost(requestParameters: LoginUserLoginPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SessionResponse> {
+        const response = await this.loginUserLoginPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * ユーザーの回答を送信する
+     * Post Result
+     */
+    async postResultResultsPostRaw(requestParameters: PostResultResultsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters['userAnswerCreate'] == null) {
+            throw new runtime.RequiredError(
+                'userAnswerCreate',
+                'Required parameter "userAnswerCreate" was null or undefined when calling postResultResultsPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/results/`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UserAnswerCreateToJSON(requestParameters['userAnswerCreate']),
+        }, initOverrides);
+
         if (this.isJsonMime(response.headers.get('content-type'))) {
             return new runtime.JSONApiResponse<any>(response);
         } else {
@@ -175,10 +237,11 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Login User
+     * ユーザーの回答を送信する
+     * Post Result
      */
-    async loginUserLoginPost(requestParameters: LoginUserLoginPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
-        const response = await this.loginUserLoginPostRaw(requestParameters, initOverrides);
+    async postResultResultsPost(requestParameters: PostResultResultsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.postResultResultsPostRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -212,6 +275,91 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async readQuestionsQuestionsQuestionIdGet(requestParameters: ReadQuestionsQuestionsQuestionIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Question> {
         const response = await this.readQuestionsQuestionsQuestionIdGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Read User Answer
+     */
+    async readUserAnswerUserHistoryByUuidGetRaw(requestParameters: ReadUserAnswerUserHistoryByUuidGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserAnswerDetailResponse>> {
+        if (requestParameters['quizeListUuid'] == null) {
+            throw new runtime.RequiredError(
+                'quizeListUuid',
+                'Required parameter "quizeListUuid" was null or undefined when calling readUserAnswerUserHistoryByUuidGet().'
+            );
+        }
+
+        if (requestParameters['token'] == null) {
+            throw new runtime.RequiredError(
+                'token',
+                'Required parameter "token" was null or undefined when calling readUserAnswerUserHistoryByUuidGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['quizeListUuid'] != null) {
+            queryParameters['quize_list_uuid'] = requestParameters['quizeListUuid'];
+        }
+
+        if (requestParameters['token'] != null) {
+            queryParameters['token'] = requestParameters['token'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/user_history_by_uuid/`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => UserAnswerDetailResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Read User Answer
+     */
+    async readUserAnswerUserHistoryByUuidGet(requestParameters: ReadUserAnswerUserHistoryByUuidGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserAnswerDetailResponse> {
+        const response = await this.readUserAnswerUserHistoryByUuidGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Read User Answer
+     */
+    async readUserAnswerUserHistoryUuidGetRaw(requestParameters: ReadUserAnswerUserHistoryUuidGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserAnswerResponse>> {
+        if (requestParameters['token'] == null) {
+            throw new runtime.RequiredError(
+                'token',
+                'Required parameter "token" was null or undefined when calling readUserAnswerUserHistoryUuidGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['token'] != null) {
+            queryParameters['token'] = requestParameters['token'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/user_history_uuid`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => UserAnswerResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Read User Answer
+     */
+    async readUserAnswerUserHistoryUuidGet(requestParameters: ReadUserAnswerUserHistoryUuidGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserAnswerResponse> {
+        const response = await this.readUserAnswerUserHistoryUuidGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

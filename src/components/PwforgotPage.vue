@@ -13,11 +13,10 @@ import CommunityIcon from './icons/IconCommunity.vue'
     <template #default>
       <div>
         <label for="email">メールアドレス:</label>
-        <input
+        <input class="input-text"
           type="email"
           id="email"
           placeholder="メールアドレスを入力"
-          style="padding: 8px; margin-top: 10px; width: 100%"
         />
       </div>
     </template>
@@ -35,7 +34,7 @@ import CommunityIcon from './icons/IconCommunity.vue'
         margin-top: 20px;
         padding: 10px 20px;
         width: 100%;
-        background-color: #4caf50;
+        background-color: #34a3d1;
         color: white;
         border: none;
         border-radius: 5px;
@@ -46,3 +45,16 @@ import CommunityIcon from './icons/IconCommunity.vue'
     </button>
   </WelcomeItem>
 </template>
+
+<style scoped>
+
+.input-text {
+  padding: 8px;
+  margin-top: 10px;
+  width: 100%;
+  background-color: var(--color-background);
+  color: var(--color--text);
+  border: 1px solid #ccc;
+}
+
+</style>

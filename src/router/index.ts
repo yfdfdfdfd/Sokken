@@ -27,12 +27,12 @@ const router = createRouter({
     {
       path: '/quize/:id',
       name: 'quize',
-      component: () => import('../views/QuizeView.vue'),
+      component: () => import('../views/QuizeView.vue')
     },
     {
       path: '/quizepractice/:id',
       name: 'quizepractice',
-      component: () => import('../views/QuizepracticeView.vue'),
+      component: () => import('../views/QuizepracticeView.vue')
     },
     {
       path: '/welcome',
@@ -48,8 +48,25 @@ const router = createRouter({
       path: '/practice',
       name: 'practice',
       component: () => import('../views/PracticeView.vue')
+    },
+    {
+      path: '/history',
+      name: 'history',
+      component: () => import('../views/HistoryView.vue')
+    },
+    {
+      path: '/history/:quizeListUuid',
+      name: 'historydetail',
+      component: () => import('../views/HistoryDetailView.vue')
     }
-  ]
+  ],
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { left: 0, top: 0 }
+    }
+  }
 })
 
 export default router
