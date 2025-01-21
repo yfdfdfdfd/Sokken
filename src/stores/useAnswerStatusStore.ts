@@ -1,4 +1,17 @@
 import { defineStore } from 'pinia'
+import CryptoJS from 'crypto-js'
+
+const serializer = {
+  serialize: (value: any) => {
+    const jsonString = JSON.stringify(value)
+    return CryptoJS.AES.encrypt(jsonString, 'secret-key').toString()
+  },
+  deserialize: (value: string) => {
+    const bytes = CryptoJS.AES.decrypt(value, 'secret-key')
+    const decryptedString = bytes.toString(CryptoJS.enc.Utf8)
+    return JSON.parse(decryptedString)
+  }
+}
 
 export const useAnswerStatusStore = defineStore('answerstatus', {
   state: () => ({
@@ -27,6 +40,7 @@ export const useAnswerStatusStore = defineStore('answerstatus', {
     }
   },
   persist: {
-    storage: sessionStorage
+    storage: sessionStorage,
+    serializer
   }
 })
