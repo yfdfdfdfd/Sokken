@@ -20,7 +20,7 @@ main {
 
 main > * {
   flex: 1;
-  display: flex;
+  /* display: flex; */
   justify-content: center;
   align-items: center;
 }

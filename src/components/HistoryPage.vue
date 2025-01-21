@@ -34,6 +34,23 @@ async function fetchQuestionHistory() {
   }
 }
 
+async function deleteDetails(item: UserAnswerResponseChild) {
+  try {
+    const config = new Configuration({
+      basePath: 'http://localhost:8000'
+    })
+    const response = await new DefaultApi(config).deleteUserAnswerUserHistoryUuidDelete({
+      token: getToken,
+      quizeListUuid: item.quizeListUuid
+    })
+    console.log('Deleted details:', response)
+    fetchQuestionHistory()
+  } catch (error) {
+    console.error('Error deleting details:', error)
+    errorMessage.value = '履歴データの削除に失敗しました'
+  }
+}
+
 onMounted(() => {
   fetchQuestionHistory()
 })
@@ -41,28 +58,45 @@ onMounted(() => {
 
 <template>
   <div>
+    <h1 style="width: 100%">履歴</h1>
     <div v-if="errorMessage">{{ errorMessage }}</div>
     <div v-else>
       <v-table class="v-table" v-if="child && child.length > 0">
         <thead>
           <tr>
             <th style="text-align: center; border: 1px solid var(--color-border); font-size: large">
-              問題集番号
-            </th>
-            <th style="text-align: center; border: 1px solid var(--color-border); font-size: large">
               回答日時
             </th>
             <th style="text-align: center; border: 1px solid var(--color-border); font-size: large">
-              詳細
+              問題詳細
+            </th>
+            <th style="text-align: center; border: 1px solid var(--color-border); font-size: large">
+              削除
             </th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(item, index) in child" :key="index">
-            <td>{{ item.quizeListUuid }}</td>
-            <td>{{ new Date(item.answeredAt).toLocaleString() }}</td>
-            <td>
+            <td style="text-align: center; border: 1px solid var(--color-border); font-size: large">
+              {{ new Date(item.answeredAt).toLocaleString() }}
+            </td>
+            <td style="text-align: center; border: 1px solid var(--color-border); font-size: large">
               <v-btn @click="viewDetails(item)">詳細を見る</v-btn>
+            </td>
+            <td style="text-align: center; border: 1px solid var(--color-border); font-size: large">
+              <button icon @click="deleteDetails(item)">
+                <img
+                  src="../components/imgs/box.png"
+                  alt="削除"
+                  style="
+                    background-color: aliceblue;
+                    width: 40px;
+                    height: 40px;
+                    margin-top: 10px;
+                    border-radius: 50%;
+                  "
+                />
+              </button>
             </td>
           </tr>
         </tbody>
