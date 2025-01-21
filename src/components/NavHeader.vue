@@ -26,11 +26,11 @@ const logout = () => {
 
     <v-dialog v-model="dialog" max-width="400">
       <v-card>
-        <v-card-title class="headline">ログアウト確認</v-card-title>
-        <v-card-text>本当にログアウトしますか？</v-card-text>
+        <v-card-title class="headline">ログアウト</v-card-title>
+        <v-card-text style="text-align: center">ログアウトしてもよろしいですか？</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="grey darken-1" @click="dialog = false">キャンセル</v-btn>
+          <v-btn color="black" @click="dialog = false">キャンセル</v-btn>
           <v-btn color="#d2691e" @click="logout">ログアウト</v-btn>
         </v-card-actions>
       </v-card>
@@ -39,6 +39,12 @@ const logout = () => {
 </template>
 
 <style scoped>
+.headline {
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
+}
+
 header {
   line-height: 1.5;
   max-height: 100vh;
