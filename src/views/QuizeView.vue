@@ -79,7 +79,8 @@ watch(
   (isTimeOver) => {
     if (isTimeOver) {
       Dialog.value = true
-      timerstore.setFinishTime(timerstore.getPastTime) // 保存
+      // 終わった時間を保存
+      timerstore.setFinishTime(timerstore.getPastTime)
     }
   }
 )
