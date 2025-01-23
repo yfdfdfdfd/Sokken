@@ -2,10 +2,13 @@
 import router from '../router'
 import { defineProps, reactive } from 'vue'
 import { useAnswerStatusStore } from '@/stores/useAnswerStatusStore'
+import { useCountStore } from '@/stores/useCountStore'
 
 const selectedOptions = reactive<{ [key: number]: string | undefined }>({})
 const answerStatusStore = useAnswerStatusStore()
+const userCountStore = useCountStore()
 const { setStatus } = answerStatusStore
+const { increment } = userCountStore
 
 // 初期化
 
@@ -13,7 +16,6 @@ const props = defineProps<{
   list: string[]
   answer: string
   id: number
-  timer: number
 }>()
 
 // 選択肢を選択する関数
@@ -28,16 +30,15 @@ function selectOption(option: string) {
 
 // 次の問題に進む関数
 function nextQuestion() {
-  router.push(`/quize/${props.id + 1}`)
+  increment()
+  console.log('increment')
+  const randomQuestionId = Math.floor(Math.random() * 287)
+  router.push(`/quize/${randomQuestionId}`)
 }
 </script>
 
 <template>
   <div class="question-container">
-    <p style="margin-bottom: 10px; text-align: right; border-radius: 10px">
-      残り時間: {{ props.timer }}秒
-    </p>
-    <p style="margin-left: 50px">問題番号: {{ props.id + 1 }}</p>
     <ul>
       <li v-for="(option, index) in props.list" :key="index">
         <label>
@@ -58,8 +59,9 @@ function nextQuestion() {
 
 <style scoped>
 .question-container {
-  font-size: 24px;
+  font-size: 20px;
   max-height: 420px;
+  max-width: 950px;
   margin-right: 10px;
 }
 
@@ -67,7 +69,7 @@ ul {
   width: 100%;
   list-style-type: none;
   padding: 0;
-  margin-left: 50px;
+  margin-left: 30px;
 }
 
 li {
@@ -78,14 +80,14 @@ li {
 
 /* 次の問題に進むボタン */
 button {
-  padding: 5px 1px;
+  padding: 20px 5px;
   font-size: 16px;
   cursor: pointer;
   width: 25%;
   box-sizing: border-box;
   display: block;
-  margin: 25px auto;
-  margin-right: 20px;
+  margin: 50px auto;
+  margin-left: 1045px;
   border: 1px solid #ccc;
 }
 

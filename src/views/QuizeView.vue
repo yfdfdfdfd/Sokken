@@ -8,6 +8,7 @@ import QuestionOption from '@/components/QuestionOption.vue'
 import QuestionList from '@/components/QuestionList.vue'
 import { useTimerStore } from '@/stores/useTimerStore'
 import { useAnswerStatusStore } from '@/stores/useAnswerStatusStore'
+import { useCountStore } from '@/stores/useCountStore'
 import router from '@/router'
 
 const route = useRoute()
@@ -22,6 +23,7 @@ const Dialog2 = ref<boolean>(false)
 
 const timerstore = useTimerStore()
 const answerstatusstore = useAnswerStatusStore()
+const usecountstore = useCountStore()
 const { getDiff } = timerstore
 const { getStatus } = answerstatusstore
 
@@ -40,9 +42,9 @@ async function fetchQuestionData() {
 
     console.log('Question data:', response.id)
 
-    if (route.params.id === '30') {
+    if (usecountstore.count === 30) {
       Dialog2.value = true
-      timerstore.setFinishTime(timerstore.getPastTime) // 保存
+      timerstore.setFinishTime(timerstore.getPastTime)
     }
   } catch (error) {
     console.error('Error fetching question data:', error)
@@ -63,6 +65,7 @@ onUnmounted(() => {
   if (intervalId.value) {
     clearInterval(intervalId.value)
   }
+  usecountstore.reset()
 })
 
 // idが変更された時
@@ -86,6 +89,7 @@ watch(
 )
 
 // ダイアログが閉じられたら結果画面に遷移
+
 watch(
   () => Dialog.value,
   (isDialogClosed) => {
@@ -112,14 +116,8 @@ watch(
   <BreadList style="margin-top: 80px" />
   <main>
     <div>
-      <QuestionList v-if="question" :question="question" />
-      <QuestionOption
-        v-if="answer"
-        :answer="answer"
-        :list="list"
-        :id="Number(route.params.id)"
-        :timer="Math.max(0, diff)"
-      />
+      <QuestionList v-if="question" :question="question" :timer="Math.max(0, diff)" />
+      <QuestionOption v-if="answer" :answer="answer" :list="list" :id="Number(route.params.id)" />
     </div>
     <p v-if="errorMessage" style="color: #f6aa00; margin-top: 5px">{{ errorMessage }}</p>
 

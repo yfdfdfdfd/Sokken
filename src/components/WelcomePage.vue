@@ -12,9 +12,9 @@ const { initStatus } = answerStatusStore
 // ビュー遷移
 async function transition() {
   initStatus(30)
-  // initStatus(30)
   timerStore.setTimer(useTimer.value)
-  router.replace('/quize/0')
+  const randomQuestionId = Math.floor(Math.random() * 287)
+  router.replace(`/quize/${randomQuestionId}`)
 }
 
 // 時間スライダーの更新
@@ -65,17 +65,6 @@ function updateTime(event: Event) {
           </div>
         </div>
       </div>
-
-      <!-- 設定項目: 正誤判定
-            <div class="settingItem">
-                <div class="settingLabel">正誤判定</div>
-                <div class="settingComponent">
-                    <label>
-                        <input type="checkbox" v-model="isJudgementEnabled">
-                        <span style="margin-left: 5px;">正誤判定を無効にする</span>
-                    </label>
-                </div>
-            </div> -->
     </div>
 
     <!-- 説明文 -->

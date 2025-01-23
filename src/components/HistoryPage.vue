@@ -81,7 +81,7 @@ onMounted(() => {
               {{ new Date(item.answeredAt).toLocaleString() }}
             </td>
             <td style="text-align: center; border: 1px solid var(--color-border); font-size: large">
-              <v-btn @click="viewDetails(item)">詳細を見る</v-btn>
+              <v-btn color="primary" @click="viewDetails(item)">詳細を見る</v-btn>
             </td>
             <td style="text-align: center; border: 1px solid var(--color-border); font-size: large">
               <button icon @click="deleteDetails(item)">
