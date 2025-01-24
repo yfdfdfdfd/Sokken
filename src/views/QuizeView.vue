@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import NavHeader from '@/components/NavHeader.vue'
-import BreadList from '@/components/BreadList.vue'
+import NumberList from '@/components/NumberList.vue'
 import { DefaultApi, Configuration } from '../generated'
 import { ref, onMounted, watch, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
@@ -121,7 +121,7 @@ watch(
 
 <template>
   <NavHeader style="position: absolute; top: 0; width: 100%" />
-  <BreadList style="margin-top: 80px" />
+  <NumberList style="margin-top: 80px" />
   <main>
     <div>
       <QuestionList v-if="question" :question="question" :timer="Math.max(0, diff)" />

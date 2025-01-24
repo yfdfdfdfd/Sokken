@@ -1,18 +1,27 @@
 <script lang="ts">
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
+import { useCountStore } from '@/stores/useCountStore'
+import { useAnswerStatusStore } from '@/stores/useAnswerStatusStore'
+
+const usecountstore = useCountStore()
+const answerstatusstore = useAnswerStatusStore()
+const { getStatus } = answerstatusstore
+
+// ランダムに生成されたidを取得し配列に入れる
 
 export default {
   setup() {
     const router = useRouter()
-    const breadcrumbs = ref<number[]>(Array.from({ length: 30 }, (_, i) => i))
+    const numbers = ref<number[]>(Array.from({ length: 30 }, (_, i) => i))
 
-    function goToQuestion(id: number) {
-      router.push(`/quize/${id}`)
+    function goToQuestion() {
+      const nextQuestionId = getStatus(usecountstore.count)
+      router.push(`/quize/${nextQuestionId.questionId}`)
     }
 
     return {
-      breadcrumbs,
+      numbers,
       goToQuestion
     }
   }
@@ -20,22 +29,22 @@ export default {
 </script>
 
 <template>
-  <div class="breadcrumbs">
-    <span v-for="id in breadcrumbs" :key="id" @click="goToQuestion(id)"> {{ id + 1 }} </span>
+  <div class="number-list">
+    <span v-for="id in numbers" :key="id" @click="goToQuestion()"> {{ id + 1 }} </span>
   </div>
 </template>
 
 <style scoped>
-.breadcrumbs {
+.number-list {
   margin-top: 20px;
   text-align: center;
   overflow-x: auto;
   white-space: nowrap;
-  z-index: 1; /* Ensure the breadcrumbs are on top */
-  position: relative; /* Required for z-index to work */
+  z-index: 1;
+  position: relative;
 }
 
-.breadcrumbs span {
+.number-list span {
   cursor: pointer;
   margin: 0 5px;
   padding: 5px 10px;
@@ -46,16 +55,16 @@ export default {
 }
 
 /* Custom scrollbar styles */
-.breadcrumbs::-webkit-scrollbar {
+.number-list::-webkit-scrollbar {
   height: 10px;
 }
 
-.breadcrumbs::-webkit-scrollbar-thumb {
+.number-list::-webkit-scrollbar-thumb {
   background-color: var(--color-border);
   border-radius: 5px;
 }
 
-.breadcrumbs::-webkit-scrollbar-track {
+.number-list::-webkit-scrollbar-track {
   background: var(--color-background);
   border-radius: 5px;
 }
