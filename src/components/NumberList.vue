@@ -1,22 +1,18 @@
 <script lang="ts">
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
-import { useCountStore } from '@/stores/useCountStore'
 import { useAnswerStatusStore } from '@/stores/useAnswerStatusStore'
 
-const usecountstore = useCountStore()
 const answerstatusstore = useAnswerStatusStore()
 const { getStatus } = answerstatusstore
-
-// ランダムに生成されたidを取得し配列に入れる
 
 export default {
   setup() {
     const router = useRouter()
     const numbers = ref<number[]>(Array.from({ length: 30 }, (_, i) => i))
 
-    function goToQuestion() {
-      const nextQuestionId = getStatus(usecountstore.count)
+    function goToQuestion(questionId: number) {
+      const nextQuestionId = getStatus(questionId)
       router.push(`/quize/${nextQuestionId.questionId}`)
     }
 
@@ -30,7 +26,9 @@ export default {
 
 <template>
   <div class="number-list">
-    <span v-for="id in numbers" :key="id" @click="goToQuestion()"> {{ id + 1 }} </span>
+    <span v-for="questionId in numbers" :key="questionId" @click="goToQuestion(questionId)">
+      {{ questionId + 1 }}
+    </span>
   </div>
 </template>
 
