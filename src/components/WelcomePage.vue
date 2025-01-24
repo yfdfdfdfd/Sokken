@@ -1,20 +1,23 @@
 <script setup lang="ts">
-import { useAnswerStatusStore } from '@/stores/useAnswerStatusStore'
 import router from '../router'
 import { useTimerStore } from '@/stores/useTimerStore'
+import { useAnswerStatusStore } from '@/stores/useAnswerStatusStore'
+import { useCountStore } from '@/stores/useCountStore'
 import { ref } from 'vue'
 
 const answerStatusStore = useAnswerStatusStore()
 const timerStore = useTimerStore()
+const usecountstore = useCountStore()
 const useTimer = ref<number>(50)
-
+const { getStatus } = answerStatusStore
 const { initStatus } = answerStatusStore
+
 // ビュー遷移
 async function transition() {
   initStatus(30)
   timerStore.setTimer(useTimer.value)
-  const randomQuestionId = Math.floor(Math.random() * 287)
-  router.replace(`/quize/${randomQuestionId}`)
+  const nextQuestionId = getStatus(usecountstore.count)
+  router.replace(`/quize/${nextQuestionId.questionId}`)
 }
 
 // 時間スライダーの更新

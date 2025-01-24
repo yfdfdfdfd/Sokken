@@ -9,7 +9,7 @@ import { onMounted, ref } from 'vue'
 const timerStore = useTimerStore()
 const answerStatusStore = useAnswerStatusStore()
 const { finishtime } = timerStore
-const { getStatus } = answerStatusStore
+const { getStatusAll } = answerStatusStore
 const getToken = useLoginStore().getToken
 const errorMessage = ref<string | undefined>(undefined)
 
@@ -21,7 +21,7 @@ async function postuserAnswer() {
     const response = await new DefaultApi(config).postResultResultsPost({
       userAnswerCreate: {
         token: getToken,
-        child: getStatus()
+        child: getStatusAll()
       }
     })
     console.log('User created:', response)
@@ -47,7 +47,7 @@ onMounted(() => {
       </p>
       <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
       <div class="result">
-        <div v-for="(status, index) in getStatus()" :key="index">
+        <div v-for="(status, index) in getStatusAll()" :key="index">
           <div class="result-count">{{ index + 1 }}</div>
           <div class="result-item">
             {{ status.isCorrect != undefined ? (status.isCorrect == true ? '◯' : '✕') : '未回答' }}

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import router from '../router'
 import { defineProps, reactive } from 'vue'
 import { useAnswerStatusStore } from '@/stores/useAnswerStatusStore'
 import { useCountStore } from '@/stores/useCountStore'
@@ -31,9 +30,6 @@ function selectOption(option: string) {
 // 次の問題に進む関数
 function nextQuestion() {
   increment()
-  console.log('increment')
-  const randomQuestionId = Math.floor(Math.random() * 287)
-  router.push(`/quize/${randomQuestionId}`)
 }
 </script>
 

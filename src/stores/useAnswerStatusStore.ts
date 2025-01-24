@@ -19,9 +19,9 @@ export const useAnswerStatusStore = defineStore('answerstatus', {
   }),
   actions: {
     initStatus(length: number) {
-      this.status = Array.from({ length }, (_, i) => ({
+      this.status = Array.from({ length }, () => ({
         isCorrect: null,
-        questionId: i + 1
+        questionId: Math.floor(Math.random() * 287)
       }))
     },
     setStatus(index: number, value: boolean) {
@@ -31,9 +31,17 @@ export const useAnswerStatusStore = defineStore('answerstatus', {
         throw new Error('status is not initialized')
       }
     },
-    getStatus() {
+    getStatusAll() {
       if (this.status) {
+        console.log(this.status)
         return this.status
+      } else {
+        throw new Error('status is not initialized')
+      }
+    },
+    getStatus(index: number) {
+      if (this.status) {
+        return this.status[index]
       } else {
         throw new Error('status is not initialized')
       }

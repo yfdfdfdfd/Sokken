@@ -25,7 +25,7 @@ async function fetchQuestionHistory() {
     const response = await new DefaultApi(config).readUserAnswerUserHistoryUuidGet({
       token: getToken
     })
-    child.value = response.child
+    child.value = response.child.reverse()
 
     console.log('Question history:', response)
   } catch (error) {

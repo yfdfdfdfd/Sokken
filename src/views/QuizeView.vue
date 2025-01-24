@@ -41,11 +41,6 @@ async function fetchQuestionData() {
     list.value = response.choices
 
     console.log('Question data:', response.id)
-
-    if (usecountstore.count === 30) {
-      Dialog2.value = true
-      timerstore.setFinishTime(timerstore.getPastTime)
-    }
   } catch (error) {
     console.error('Error fetching question data:', error)
     errorMessage.value = '問題データの取得に失敗しました'
@@ -67,6 +62,19 @@ onUnmounted(() => {
   }
   usecountstore.reset()
 })
+
+watch(
+  () => usecountstore.count,
+  () => {
+    if (usecountstore.count === 30) {
+      Dialog2.value = true
+      timerstore.setFinishTime(timerstore.getPastTime)
+    } else {
+      const nextQuestionId = getStatus(usecountstore.count)
+      router.replace(`/quize/${nextQuestionId.questionId}`)
+    }
+  }
+)
 
 // idが変更された時
 watch(
