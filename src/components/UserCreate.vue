@@ -51,7 +51,7 @@ async function createUser() {
       }, 2500)
     }
   } catch (error) {
-    console.error('Error creating user:', error) // デバッグログ
+    console.error('Error creating user:', error)
     errorMessage.value = 'アカウント作成に失敗しました'
   }
 }
@@ -102,7 +102,6 @@ async function createUser() {
       <button class="create-button" @click="createUser">アカウント作成</button>
       <p v-if="errorMessage" style="color: #f6aa00">{{ errorMessage }}</p>
 
-      <!-- Dialog for success message -->
       <div
         v-if="dialog"
         style="
@@ -126,6 +125,7 @@ async function createUser() {
             text-align: center;
           "
         >
+          <!-- Dialog for success message -->
           <v-dialog v-model="dialog" max-width="500">
             <v-card>
               <v-card-text class="dialog-text">アカウント作成が完了しました</v-card-text>

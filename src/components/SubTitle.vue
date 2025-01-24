@@ -5,7 +5,8 @@ defineProps<{
 </script>
 
 <template>
-  <div class="greetings">
+  <div class="summary">
+    <!-- main.css に記述されたスタイル -->
     <h1 class="blue">{{ msg }}</h1>
     <h3 style="white-space: nowrap; text-align: center">AI検定の勉強を目的としたwebサイト</h3>
   </div>
@@ -23,14 +24,14 @@ h3 {
   font-size: 1.2rem;
 }
 
-.greetings h1,
-.greetings h3 {
+.summary h1,
+.summary h3 {
   text-align: center;
 }
 
 @media (min-width: 1024px) {
-  .greetings h1,
-  .greetings h3 {
+  .summary h1,
+  .summary h3 {
     text-align: center;
   }
 }
