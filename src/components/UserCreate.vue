@@ -10,10 +10,10 @@ const email = ref('')
 const password = ref('')
 const confirmPassword = ref('')
 const errorMessage = ref('')
-const dialogVisible = ref(false)
+const dialog = ref(false)
 
 async function createUser() {
-  console.log('createUser function called') // デバッグログ
+  console.log('createUser function called')
 
   if (password.value !== confirmPassword.value) {
     errorMessage.value = 'パスワードが一致しません'
@@ -36,15 +36,16 @@ async function createUser() {
         email: email.value
       }
     })
-    console.log('User created:', response) // デバッグログ
+    console.log('User created:', response)
+
     errorMessage.value = ''
     name.value = ''
     email.value = ''
     password.value = ''
     confirmPassword.value = ''
-    dialogVisible.value = true
+    dialog.value = true
 
-    if (dialogVisible.value) {
+    if (dialog.value) {
       setTimeout(() => {
         router.replace('/')
       }, 2500)
@@ -103,7 +104,7 @@ async function createUser() {
 
       <!-- Dialog for success message -->
       <div
-        v-if="dialogVisible"
+        v-if="dialog"
         style="
           position: fixed;
           top: 0;
@@ -125,12 +126,12 @@ async function createUser() {
             text-align: center;
           "
         >
-          <v-dialog v-model="dialogVisible" max-width="500">
+          <v-dialog v-model="dialog" max-width="500">
             <v-card>
               <v-card-text class="dialog-text">アカウント作成が完了しました</v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" @click="dialogVisible = false">閉じる</v-btn>
+                <v-btn color="primary" @click="dialog = false">閉じる</v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>
