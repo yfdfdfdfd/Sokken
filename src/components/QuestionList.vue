@@ -7,7 +7,7 @@ const props = defineProps<{
 
 <template>
   <div class="question-container">
-    <p class="timer">残り時間: {{ props.timer }}秒</p>
+    <p class="difftimer">残り時間: {{ props.timer }}秒</p>
     <h2>問題</h2>
     <h3 class="question">{{ props.question }}</h3>
   </div>
@@ -23,7 +23,7 @@ const props = defineProps<{
   font-size: 15px;
 }
 
-.timer {
+.difftimer {
   margin-top: 10px;
   margin-bottom: 10px;
   text-align: right;
