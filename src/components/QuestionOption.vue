@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { defineProps, reactive } from 'vue'
+import { defineProps } from 'vue'
 import { useAnswerStatusStore } from '@/stores/useAnswerStatusStore'
 import { useCountStore } from '@/stores/useCountStore'
 
-const selectedOptions = reactive<{ [key: number]: string | undefined }>({})
 const answerStatusStore = useAnswerStatusStore()
 const userCountStore = useCountStore()
 const { setStatus } = answerStatusStore
@@ -19,11 +18,11 @@ const props = defineProps<{
 
 // 選択肢を選択する関数
 function selectOption(option: string) {
-  selectedOptions[props.id] = option
+  console.log(userCountStore.getCount)
   if (option === props.answer) {
-    setStatus(props.id, true)
+    setStatus(userCountStore.getCount, true)
   } else {
-    setStatus(props.id, false)
+    setStatus(userCountStore.getCount, false)
   }
 }
 
@@ -36,15 +35,9 @@ function nextQuestion() {
 <template>
   <div class="question-container">
     <ul>
-      <li v-for="(option, index) in props.list" :key="index">
+      <li v-for="(option, index) in props.list" :key="props.id + index">
         <label>
-          <input
-            type="radio"
-            :value="option"
-            name="question"
-            @click="selectOption(option)"
-            :checked="option === selectedOptions[props.id]"
-          />
+          <input type="radio" :value="option" name="question" @click="selectOption(option)" />
           {{ option }}
         </label>
       </li>

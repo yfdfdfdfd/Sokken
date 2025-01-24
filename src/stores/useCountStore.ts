@@ -13,6 +13,11 @@ export const useCountStore = defineStore('count', {
       this.count = 0
     }
   },
+  getters: {
+    getCount(): number {
+      return this.count
+    }
+  },
   persist: {
     storage: sessionStorage
   }
