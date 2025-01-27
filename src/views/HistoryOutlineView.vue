@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import NavHeader from '@/components/NavHeader.vue'
-import HistoryPage from '@/components/HistoryPage.vue'
+import HistoryPage from '@/components/HistoryOutline.vue'
 </script>
 
 <template>
@@ -20,7 +20,7 @@ main {
 
 main > * {
   flex: 1;
-  display: flex;
+  /* display: flex; */
   justify-content: center;
   align-items: center;
 }

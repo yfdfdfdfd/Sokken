@@ -50,6 +50,11 @@ export interface CreateUserUsersPostRequest {
     userCreate: UserCreate;
 }
 
+export interface DeleteUserAnswerUserHistoryUuidDeleteRequest {
+    token: string;
+    quizeListUuid: string;
+}
+
 export interface DeleteUserUsersUserIdDeleteRequest {
     userId: number;
 }
@@ -132,6 +137,58 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async createUserUsersPost(requestParameters: CreateUserUsersPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<User> {
         const response = await this.createUserUsersPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Delete User Answer
+     */
+    async deleteUserAnswerUserHistoryUuidDeleteRaw(requestParameters: DeleteUserAnswerUserHistoryUuidDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters['token'] == null) {
+            throw new runtime.RequiredError(
+                'token',
+                'Required parameter "token" was null or undefined when calling deleteUserAnswerUserHistoryUuidDelete().'
+            );
+        }
+
+        if (requestParameters['quizeListUuid'] == null) {
+            throw new runtime.RequiredError(
+                'quizeListUuid',
+                'Required parameter "quizeListUuid" was null or undefined when calling deleteUserAnswerUserHistoryUuidDelete().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['token'] != null) {
+            queryParameters['token'] = requestParameters['token'];
+        }
+
+        if (requestParameters['quizeListUuid'] != null) {
+            queryParameters['quize_list_uuid'] = requestParameters['quizeListUuid'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/user_history_uuid`,
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        if (this.isJsonMime(response.headers.get('content-type'))) {
+            return new runtime.JSONApiResponse<any>(response);
+        } else {
+            return new runtime.TextApiResponse(response) as any;
+        }
+    }
+
+    /**
+     * Delete User Answer
+     */
+    async deleteUserAnswerUserHistoryUuidDelete(requestParameters: DeleteUserAnswerUserHistoryUuidDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.deleteUserAnswerUserHistoryUuidDeleteRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

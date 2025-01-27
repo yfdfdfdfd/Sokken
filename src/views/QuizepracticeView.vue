@@ -4,10 +4,11 @@ import { DefaultApi, Configuration } from '../generated'
 import { ref, onMounted, watch, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import TfQuestionOption from '@/components/TfQuestionOption.vue'
-import QuestionList from '@/components/QuestionList.vue'
+import TfQuestionList from '@/components/TfQuestionList.vue'
 import router from '@/router'
 
 const route = useRoute()
+const diff = ref<number>(0)
 const question = ref<string | undefined>(undefined)
 const list = ref<string[]>([])
 const errorMessage = ref<string | undefined>(undefined)
@@ -31,12 +32,8 @@ async function fetchQuestionData() {
     commentary.value = response.commentary
     console.log('Question data:', response)
   } catch (error) {
-    if (route.params.id === '1') {
-      Dialog.value = true
-    } else {
-      console.error('Error fetching question data:', error)
-      errorMessage.value = '問題データの取得に失敗しました'
-    }
+    console.error('Error fetching question data:', error)
+    errorMessage.value = '問題データの取得に失敗しました'
   }
 }
 
@@ -73,7 +70,7 @@ watch(
   <NavHeader />
   <main>
     <div>
-      <QuestionList v-if="question" :question="question" />
+      <TfQuestionList v-if="question" :question="question" :timer="Math.max(0, diff)" />
     </div>
     <div>
       <TfQuestionOption

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import NavHeader from '@/components/NavHeader.vue'
-import BreadList from '@/components/BreadList.vue'
+import NumberList from '@/components/NumberList.vue'
 import { DefaultApi, Configuration } from '../generated'
 import { ref, onMounted, watch, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
@@ -8,6 +8,7 @@ import QuestionOption from '@/components/QuestionOption.vue'
 import QuestionList from '@/components/QuestionList.vue'
 import { useTimerStore } from '@/stores/useTimerStore'
 import { useAnswerStatusStore } from '@/stores/useAnswerStatusStore'
+import { useCountStore } from '@/stores/useCountStore'
 import router from '@/router'
 
 const route = useRoute()
@@ -22,6 +23,7 @@ const Dialog2 = ref<boolean>(false)
 
 const timerstore = useTimerStore()
 const answerstatusstore = useAnswerStatusStore()
+const usecountstore = useCountStore()
 const { getDiff } = timerstore
 const { getStatus } = answerstatusstore
 
@@ -39,11 +41,6 @@ async function fetchQuestionData() {
     list.value = response.choices
 
     console.log('Question data:', response.id)
-
-    if (route.params.id === '5') {
-      Dialog2.value = true
-      timerstore.setFinishTime(timerstore.getPastTime) // 保存
-    }
   } catch (error) {
     console.error('Error fetching question data:', error)
     errorMessage.value = '問題データの取得に失敗しました'
@@ -63,7 +60,21 @@ onUnmounted(() => {
   if (intervalId.value) {
     clearInterval(intervalId.value)
   }
+  usecountstore.reset()
 })
+
+watch(
+  () => usecountstore.count,
+  () => {
+    if (usecountstore.count === 30) {
+      Dialog2.value = true
+      timerstore.setFinishTime(timerstore.getPastTime)
+    } else {
+      const nextQuestionId = getStatus(usecountstore.count)
+      router.replace(`/quize/${nextQuestionId.questionId}`)
+    }
+  }
+)
 
 // idが変更された時
 watch(
@@ -79,12 +90,14 @@ watch(
   (isTimeOver) => {
     if (isTimeOver) {
       Dialog.value = true
-      timerstore.setFinishTime(timerstore.getPastTime) // 保存
+      // 終わった時間を保存
+      timerstore.setFinishTime(timerstore.getPastTime)
     }
   }
 )
 
 // ダイアログが閉じられたら結果画面に遷移
+
 watch(
   () => Dialog.value,
   (isDialogClosed) => {
@@ -108,17 +121,11 @@ watch(
 
 <template>
   <NavHeader style="position: absolute; top: 0; width: 100%" />
-  <BreadList style="margin-top: 80px" />
+  <NumberList style="margin-top: 80px" />
   <main>
     <div>
-      <QuestionList v-if="question" :question="question" />
-      <QuestionOption
-        v-if="answer"
-        :answer="answer"
-        :list="list"
-        :id="Number(route.params.id)"
-        :timer="Math.max(0, diff)"
-      />
+      <QuestionList v-if="question" :question="question" :timer="Math.max(0, diff)" />
+      <QuestionOption v-if="answer" :answer="answer" :list="list" :id="Number(route.params.id)" />
     </div>
     <p v-if="errorMessage" style="color: #f6aa00; margin-top: 5px">{{ errorMessage }}</p>
 

@@ -72,7 +72,7 @@ export interface UserAnswerDetailResponseChild {
      * @type {boolean}
      * @memberof UserAnswerDetailResponseChild
      */
-    isCorrect: boolean;
+    isCorrect: boolean | null;
 }
 
 /**

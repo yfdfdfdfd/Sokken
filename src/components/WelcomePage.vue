@@ -1,20 +1,23 @@
 <script setup lang="ts">
-import { useAnswerStatusStore } from '@/stores/useAnswerStatusStore'
 import router from '../router'
 import { useTimerStore } from '@/stores/useTimerStore'
+import { useAnswerStatusStore } from '@/stores/useAnswerStatusStore'
+import { useCountStore } from '@/stores/useCountStore'
 import { ref } from 'vue'
 
 const answerStatusStore = useAnswerStatusStore()
 const timerStore = useTimerStore()
+const usecountstore = useCountStore()
 const useTimer = ref<number>(50)
-
+const { getStatus } = answerStatusStore
 const { initStatus } = answerStatusStore
+
 // ビュー遷移
 async function transition() {
-  initStatus(5)
-  // initStatus(30)
+  initStatus(30)
   timerStore.setTimer(useTimer.value)
-  router.replace('/quize/0')
+  const nextQuestionId = getStatus(usecountstore.count)
+  router.replace(`/quize/${nextQuestionId.questionId}`)
 }
 
 // 時間スライダーの更新
@@ -65,17 +68,6 @@ function updateTime(event: Event) {
           </div>
         </div>
       </div>
-
-      <!-- 設定項目: 正誤判定
-            <div class="settingItem">
-                <div class="settingLabel">正誤判定</div>
-                <div class="settingComponent">
-                    <label>
-                        <input type="checkbox" v-model="isJudgementEnabled">
-                        <span style="margin-left: 5px;">正誤判定を無効にする</span>
-                    </label>
-                </div>
-            </div> -->
     </div>
 
     <!-- 説明文 -->

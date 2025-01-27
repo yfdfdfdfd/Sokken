@@ -3,7 +3,6 @@ import { ref } from 'vue'
 import WelcomeItem from './WelcomeItem.vue'
 import DocumentationIcon from './icons/IconDocumentation.vue'
 import { DefaultApi, Configuration } from '../generated'
-import router from '../router'
 
 const name = ref('')
 const email = ref('')
@@ -13,15 +12,10 @@ const errorMessage = ref('')
 const dialogVisible = ref(false)
 
 async function createUser() {
-  console.log('createUser function called') // デバッグログ
+  console.log('createUser function called')
 
   if (password.value !== confirmPassword.value) {
     errorMessage.value = 'パスワードが一致しません'
-    return
-  }
-
-  if (password.value === '' || email.value === '' || name.value === '') {
-    errorMessage.value = '名前、メールアドレス、パスワードを入力してください'
     return
   }
 
@@ -36,21 +30,15 @@ async function createUser() {
         email: email.value
       }
     })
-    console.log('User created:', response) // デバッグログ
+    console.log('User created:', response)
     errorMessage.value = ''
     name.value = ''
     email.value = ''
     password.value = ''
     confirmPassword.value = ''
     dialogVisible.value = true
-
-    if (dialogVisible.value) {
-      setTimeout(() => {
-        router.replace('/')
-      }, 2500)
-    }
   } catch (error) {
-    console.error('Error creating user:', error) // デバッグログ
+    console.error('Error creating user:', error)
     errorMessage.value = 'アカウント作成に失敗しました'
   }
 }
@@ -61,12 +49,8 @@ async function createUser() {
     <template #icon>
       <DocumentationIcon />
     </template>
-    <template #heading>アカウント作成</template>
+    <template #heading>パスワードを忘れた</template>
     <template #default>
-      <div>
-        <label for="name">名前:</label>
-        <input type="text" id="name" v-model="name" placeholder="名前を入力" class="input-style" />
-      </div>
       <div>
         <label for="email">メールアドレス:</label>
         <input
@@ -74,18 +58,18 @@ async function createUser() {
           id="email"
           v-model="email"
           placeholder="メールアドレスを入力"
-          class="input-style"
+          style="padding: 8px; margin-top: 10px; width: 100%"
         />
       </div>
 
       <div>
-        <label for="password">パスワード:</label>
+        <label for="password">新規パスワード:</label>
         <input
           type="password"
           id="password"
           v-model="password"
-          placeholder="パスワードを入力"
-          class="input-style"
+          placeholder="新規パスワードを入力"
+          style="padding: 8px; margin-top: 10px; width: 100%"
         />
       </div>
       <div>
@@ -95,11 +79,25 @@ async function createUser() {
           id="confirmPassword"
           v-model="confirmPassword"
           placeholder="パスワードを再入力"
-          class="input-style"
+          style="padding: 8px; margin-top: 10px; width: 100%"
         />
       </div>
-      <button class="create-button" @click="createUser">アカウント作成</button>
-      <p v-if="errorMessage" style="color: #f6aa00">{{ errorMessage }}</p>
+      <button
+        @click="createUser"
+        style="
+          margin-top: 20px;
+          padding: 10px 20px;
+          width: 100%;
+          background-color: #4caf50;
+          color: white;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+        "
+      >
+        パスワードを更新
+      </button>
+      <p v-if="errorMessage" style="color: #ff4b00">{{ errorMessage }}</p>
 
       <!-- Dialog for success message -->
       <div
@@ -125,45 +123,22 @@ async function createUser() {
             text-align: center;
           "
         >
-          <v-dialog v-model="dialogVisible" max-width="500">
-            <v-card>
-              <v-card-text class="dialog-text">アカウント作成が完了しました</v-card-text>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="primary" @click="dialogVisible = false">閉じる</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
+          <p>パスワードの更新が完了しました</p>
+          <button
+            @click="dialogVisible = false"
+            style="
+              margin-top: 10px;
+              padding: 8px 16px;
+              background-color: #4caf50;
+              border: none;
+              border-radius: 5px;
+              cursor: pointer;
+            "
+          >
+            OK
+          </button>
         </div>
       </div>
     </template>
   </WelcomeItem>
 </template>
-
-<style scoped>
-.input-style {
-  padding: 8px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  width: 100%;
-  background: var(--color-background);
-  color: var(--color-text);
-  border: 1px solid #ccc;
-}
-
-.dialog-text {
-  text-align: center;
-  font-size: 20px;
-}
-
-.create-button {
-  margin-top: 20px;
-  padding: 10px 20px;
-  width: 100%;
-  background-color: #34a3d1;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-</style>
