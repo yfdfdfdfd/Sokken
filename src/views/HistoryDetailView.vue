@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import NavHeader from '@/components/NavHeader.vue'
-import HistoryDetailPage from '@/components/HistoryDetailPage.vue'
+import HistoryDetailPage from '@/components/HistoryDetail.vue'
 </script>
 
 <template>
