@@ -1,0 +1,125 @@
+<script setup lang="ts">
+import router from '../router'
+import { defineProps, reactive, ref, onMounted, defineEmits } from 'vue' 
+
+import { useAnswerStatusStore } from '@/stores/useAnswerStatusStore'
+
+const selectedOptions = reactive<{ [key: number]: string | undefined }>({})
+const answerStatusStore = useAnswerStatusStore()
+const { setStatus } = answerStatusStore
+
+// 問題が表示された時点の時刻を保管する
+const questionStartTime = ref<number>(0)
+
+// 親にイベントを送るため、emits を定義
+const emits = defineEmits(['answer-confirmed'])
+
+// 親コンポーネントから受け取るデータ
+// 初期化
+const props = defineProps<{
+  list: string[]
+  answer: string
+  id: number
+  timer: number
+}>()
+
+onMounted(() => {
+  // コンポーネントがマウントされた瞬間に、問題を表示した時刻を記録
+  questionStartTime.value = Date.now()
+})
+
+// 選択肢を選択する関数
+function selectOption(option: string) {
+  selectedOptions[props.id] = option
+  // 正解・不正解を判定
+  const isCorrect = (option === props.answer)
+  // 経過時間を計算（秒換算）
+  //const timeSpent = (Date.now() - questionStartTime.value) / 1000
+  // store に「正解/不正解」と「経過時間」をまとめて登録
+  // setStatus(props.id, {isCorrect, timeTaken: timeSpent })
+  //選択肢をクリックすると「answer-confirmed」イベントが発火。
+  emits('answer-confirmed', props.id, isCorrect)
+}
+
+
+// 次の問題に進む関数
+function nextQuestion() {
+  router.push(`/quize/${props.id + 1}`)
+}
+</script>
+
+<template>
+  <div class="question-container">
+    <p style="margin-bottom: 10px; text-align: right; border-radius: 10px">
+      残り時間: {{ props.timer }}秒
+    </p>
+    <p style="margin-left: 50px">問題番号: {{ props.id + 1 }}</p>
+    <ul>
+      <li v-for="(option, index) in props.list" :key="index">
+        <label>
+          <input
+            type="radio"
+            :value="option"
+            name="question"
+            @click="selectOption(option)"
+            :checked="option === selectedOptions[props.id]"
+          />
+          {{ option }}
+        </label>
+      </li>
+    </ul>
+    <button @click="nextQuestion">次の問題へ</button>
+  </div>
+</template>
+
+<style scoped>
+.question-container {
+  font-size: 24px;
+  max-height: 420px;
+  margin-right: 10px;
+}
+
+ul {
+  width: 100%;
+  list-style-type: none;
+  padding: 0;
+  margin-left: 50px;
+}
+
+li {
+  width: 100%;
+  margin: 10px 0;
+  font-size: 20px;
+}
+
+/* 次の問題に進むボタン */
+button {
+  padding: 5px 1px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 25%;
+  box-sizing: border-box;
+  display: block;
+  margin: 25px auto;
+  margin-right: 20px;
+  border: 1px solid #ccc;
+}
+
+button:hover {
+  background: var(--color-background-soft);
+}
+
+button:disabled {
+  background-color: auto;
+}
+
+.centered-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+</style>
+@/stores/useAnswerStatusStore_modify
