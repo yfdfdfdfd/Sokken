@@ -3,7 +3,7 @@ import router from '../router'
 
 // ビュー遷移
 async function transition() {
-  router.replace('/quizepractice/0')
+  router.replace('/quizepractice/1')
 }
 </script>
 

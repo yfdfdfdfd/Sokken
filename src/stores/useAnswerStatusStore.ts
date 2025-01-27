@@ -15,7 +15,8 @@ const serializer = {
 
 export const useAnswerStatusStore = defineStore('answerstatus', {
   state: () => ({
-    status: undefined as { isCorrect: boolean | null; questionId: number }[] | undefined
+    status: undefined as { isCorrect: boolean | null; questionId: number }[] | undefined,
+    selectedOptions: [] as string[]
   }),
   actions: {
     initStatus(length: number) {
@@ -45,6 +46,9 @@ export const useAnswerStatusStore = defineStore('answerstatus', {
       } else {
         throw new Error('status is not initialized')
       }
+    },
+    setSelectedOption(index: number, option: string) {
+      this.selectedOptions[index] = option
     }
   },
   persist: {
