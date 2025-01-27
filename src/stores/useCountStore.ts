@@ -11,6 +11,10 @@ export const useCountStore = defineStore('count', {
     },
     reset() {
       this.count = 0
+    },
+    //numberlist用
+    setquestionCount(count: number) {
+      this.count = count
     }
   },
   getters: {

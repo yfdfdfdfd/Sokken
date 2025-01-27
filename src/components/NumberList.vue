@@ -2,8 +2,10 @@
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
 import { useAnswerStatusStore } from '@/stores/useAnswerStatusStore'
+import { useCountStore } from '@/stores/useCountStore'
 
 const answerstatusstore = useAnswerStatusStore()
+const usecountstore = useCountStore()
 const { getStatus } = answerstatusstore
 
 export default {
@@ -11,8 +13,9 @@ export default {
     const router = useRouter()
     const numbers = ref<number[]>(Array.from({ length: 30 }, (_, i) => i))
 
-    function goToQuestion(questionId: number) {
-      const nextQuestionId = getStatus(questionId)
+    function goToQuestion(questionindex: number) {
+      const nextQuestionId = getStatus(questionindex)
+      usecountstore.setquestionCount(questionindex)
       router.push(`/quize/${nextQuestionId.questionId}`)
     }
 
