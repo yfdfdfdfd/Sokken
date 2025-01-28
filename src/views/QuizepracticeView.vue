@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import NavHeader from '@/components/NavHeader.vue'
+import NavHeader from '../components/NavHeader.vue'
 import { DefaultApi, Configuration } from '../generated'
 import { ref, onMounted, watch, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
-import TfQuestionOption from '@/components/TfQuestionOption.vue'
-import TfQuestionList from '@/components/TfQuestionList.vue'
-import router from '@/router'
+import TfQuestionOption from '../components/TfQuestionOption.vue'
+import TfQuestionList from '../components/TfQuestionList.vue'
+import router from '../router'
 
 const route = useRoute()
 const diff = ref<number>(0)
