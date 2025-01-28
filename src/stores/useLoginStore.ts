@@ -9,11 +9,8 @@ export const useLoginStore = defineStore('login', {
   // ゲッター
   getters: {
     isAuthenticated: (state) => state.user !== undefined,
-    getToken(state): string {
-      if (!state.user) {
-        throw new Error('User is not logged in')
-      }
-      return state.user.token
+    getToken(state): string | undefined {
+      return state.user?.token
     }
   },
 
@@ -26,9 +23,5 @@ export const useLoginStore = defineStore('login', {
     logout() {
       this.user = undefined
     }
-  },
-
-  persist: {
-    storage: sessionStorage
   }
 })

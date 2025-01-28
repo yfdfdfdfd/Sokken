@@ -3,37 +3,56 @@ import NavHeader from '@/components/NavHeader.vue'
 import { useTimerStore } from '@/stores/useTimerStore'
 import { useAnswerStatusStore } from '@/stores/useAnswerStatusStore'
 import { useLoginStore } from '@/stores/useLoginStore'
-import { Configuration, DefaultApi } from '@/generated'
 import { onMounted, ref } from 'vue'
+import axios from 'axios'
 
 const timerStore = useTimerStore()
 const answerStatusStore = useAnswerStatusStore()
 const { finishtime } = timerStore
 const { getStatus } = answerStatusStore
-const getToken = useLoginStore().getToken
+const loginStore = useLoginStore()
+const feedbackMessage = ref<string | undefined>(undefined)
 const errorMessage = ref<string | undefined>(undefined)
 
-async function postuserAnswer() {
-  try {
-    const config = new Configuration({
-      basePath: 'http://localhost:8000'
-    })
-    const response = await new DefaultApi(config).postResultResultsPost({
-      userAnswerCreate: {
-        token: getToken,
-        child: getStatus()
-      }
-    })
-    console.log('User created:', response)
-    errorMessage.value = ''
-  } catch (error) {
-    console.error('Error creating user:', error)
-    errorMessage.value = '結果の送信に失敗しました。'
+// トークンが正しく設定されているか確認
+console.log('Login Store:', loginStore)
+console.log('Token:', loginStore.getToken)
+
+const getToken = () => {
+  const token = loginStore.getToken
+  if (!token) {
+    throw new Error('Token is undefined')
   }
+  return token
 }
-onMounted(() => {
-  postuserAnswer()
-})
+
+onMounted(async () => {
+  try {
+    // ストアのステータス
+    const status = answerStatusStore.getStatus()  // ここで取得
+
+    const API_SERVER_URL = 'http://localhost:8000/generate-feedback';
+    console.log('status:', status);
+
+    // サーバーへのリクエスト
+    const response = await axios.post(API_SERVER_URL, { status });
+    console.log('Server response:', response.data);
+
+    const feedbackResults = response.data;
+
+    // レスポンスがオブジェクトの場合、配列に変換
+    const feedbacks = Array.isArray(feedbackResults)
+      ? feedbackResults
+      : Object.values(feedbackResults);
+
+    // 配列を結合してフィードバックメッセージを生成
+    feedbackMessage.value = feedbacks.join('\n');
+    console.log('Feedback message:', feedbackMessage.value);
+  } catch (error) {
+    console.error('Unexpected error:', error);
+    errorMessage.value = 'フィードバックの生成に失敗しました。';
+  }
+});
 </script>
 
 <template>
@@ -46,14 +65,28 @@ onMounted(() => {
         <span v-else>タイマーは設定されていません。</span>
       </p>
       <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
-      <div class="result">
+
+      <!-- <div class="result">
         <div v-for="(status, index) in getStatus()" :key="index">
           <div class="result-count">{{ index + 1 }}</div>
           <div class="result-item">
             {{ status.isCorrect != undefined ? (status.isCorrect == true ? '◯' : '✕') : '未回答' }}
           </div>
         </div>
+      </div> -->
+
+      <!-- ここで answerStatusStore.getStatus() を直接使う -->
+      <div class="result">
+        <div v-for="(item, index) in answerStatusStore.getStatus()" :key="index">
+          <div class="result-count">{{ index + 1 }}</div>
+          <div class="result-item">
+            {{ item.isCorrect !== undefined ? (item.isCorrect ? '◯' : '✕') : '未回答' }}
+          </div>
+        </div>
       </div>
+
+
+      <div v-if="feedbackMessage" class="feedback-message">{{ feedbackMessage }}</div>
     </div>
   </main>
 </template>
@@ -126,6 +159,12 @@ main {
   margin-top: 5px;
 }
 
+.feedback-message {
+  color: #34a3d1;
+  margin-top: 20px;
+  white-space: pre-wrap;
+}
+
 .result-count {
   text-align: center;
 }
@@ -133,4 +172,13 @@ main {
 .result-item {
   text-align: center;
 }
+
+.result {
+  display: flex;
+  margin-top: 20px;
+  flex-wrap: wrap;
+  justify-content: center; /* 横方向中央寄せ */
+  align-items: center;    /* 縦方向中央寄せ */
+}
 </style>
+@/stores/useAnswerStatusStore_modify

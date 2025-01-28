@@ -1,14 +1,21 @@
 <script setup lang="ts">
 import router from '../router'
-import { defineProps, reactive } from 'vue'
+import { defineProps, reactive, ref, onMounted, defineEmits } from 'vue' 
+
 import { useAnswerStatusStore } from '@/stores/useAnswerStatusStore'
 
 const selectedOptions = reactive<{ [key: number]: string | undefined }>({})
 const answerStatusStore = useAnswerStatusStore()
 const { setStatus } = answerStatusStore
 
-// 初期化
+// 問題が表示された時点の時刻を保管する
+const questionStartTime = ref<number>(0)
 
+// 親にイベントを送るため、emits を定義
+const emits = defineEmits(['answer-confirmed'])
+
+// 親コンポーネントから受け取るデータ
+// 初期化
 const props = defineProps<{
   list: string[]
   answer: string
@@ -16,15 +23,24 @@ const props = defineProps<{
   timer: number
 }>()
 
+onMounted(() => {
+  // コンポーネントがマウントされた瞬間に、問題を表示した時刻を記録
+  questionStartTime.value = Date.now()
+})
+
 // 選択肢を選択する関数
 function selectOption(option: string) {
   selectedOptions[props.id] = option
-  if (option === props.answer) {
-    setStatus(props.id, true)
-  } else {
-    setStatus(props.id, false)
-  }
+  // 正解・不正解を判定
+  const isCorrect = (option === props.answer)
+  // 経過時間を計算（秒換算）
+  //const timeSpent = (Date.now() - questionStartTime.value) / 1000
+  // store に「正解/不正解」と「経過時間」をまとめて登録
+  // setStatus(props.id, {isCorrect, timeTaken: timeSpent })
+  //選択肢をクリックすると「answer-confirmed」イベントが発火。
+  emits('answer-confirmed', props.id, isCorrect)
 }
+
 
 // 次の問題に進む関数
 function nextQuestion() {

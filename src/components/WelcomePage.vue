@@ -11,6 +11,7 @@ const useTimer = ref<number>(50)
 const { initStatus } = answerStatusStore
 // ビュー遷移
 async function transition() {
+  console.log("解答を開始するボタンがクリックされました"); 
   initStatus(5)
   // initStatus(30)
   timerStore.setTimer(useTimer.value)
@@ -220,3 +221,4 @@ function updateTime(event: Event) {
   color: #888;
 }
 </style>
+@/stores/useAnswerStatusStore_modify

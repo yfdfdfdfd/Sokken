@@ -25,6 +25,17 @@ const answerstatusstore = useAnswerStatusStore()
 const { getDiff } = timerstore
 const { getStatus } = answerstatusstore
 
+const questionStartTime = ref<number>(0)
+// 回答が確定したら呼び出すメソッド
+function onAnswerConfirmed(questionId: number, isCorrect: boolean) {
+  const endTime = Date.now()
+  const timeSpent = (endTime - questionStartTime.value) / 1000 // 秒換算
+  // storeに保存 (questionId, isCorrect, timeSpent)
+  answerstatusstore.setStatus( questionId - 1, { isCorrect, timeTaken: timeSpent } )
+  //answerstatusstore.setStatus( questionId, { isCorrect, timeTaken: timeSpent } )
+}
+
+
 async function fetchQuestionData() {
   try {
     const config = new Configuration({
@@ -50,7 +61,25 @@ async function fetchQuestionData() {
   }
 }
 
+// setStatus(questionId: number, payload: { isCorrect: boolean; timeTaken?: number }) {
+//   if (!this.status) {
+//     throw new Error('status is not initialized')
+//   }
+
+//   // 配列から questionId に一致する要素を探す
+//   const found = this.status.find(item => item.questionId === questionId)
+//   if (!found) {
+//     throw new Error(`No question found with questionId=${questionId}`)
+//   }
+
+//   found.isCorrect = payload.isCorrect
+//   if (payload.timeTaken !== undefined) {
+//     found.timeTaken = payload.timeTaken
+//   }
+// }
+
 onMounted(() => {
+  answerstatusstore.initStatus(10)
   fetchQuestionData()
   diff.value = getDiff()
   //一秒ごとにdiffを更新
@@ -89,7 +118,7 @@ watch(
   () => Dialog.value,
   (isDialogClosed) => {
     if (!isDialogClosed) {
-      getStatus
+      getStatus()
       router.replace('/result')
     }
   }
@@ -99,7 +128,7 @@ watch(
   () => Dialog2.value,
   (isDialogClosed) => {
     if (!isDialogClosed) {
-      getStatus
+      getStatus()
       router.replace('/result')
     }
   }
@@ -118,11 +147,12 @@ watch(
         :list="list"
         :id="Number(route.params.id)"
         :timer="Math.max(0, diff)"
+        @answer-confirmed="onAnswerConfirmed"
       />
     </div>
     <p v-if="errorMessage" style="color: #f6aa00; margin-top: 5px">{{ errorMessage }}</p>
 
-    <v-dialog v-model="Dialog" width="auto">
+      <v-dialog v-model="Dialog" max-width="500">
       <v-card max-width="500" style="text-align: center">
         <v-card-title class="centered-title"> 制限時間が終了しました </v-card-title>
         <v-card-text>
@@ -135,7 +165,7 @@ watch(
       </v-card>
     </v-dialog>
 
-    <v-dialog v-model="Dialog2" width="auto">
+    <v-dialog v-model="Dialog2" width="500">
       <v-card max-width="500" style="text-align: center">
         <v-card-title class="centered-title"> 問題が終了しました </v-card-title>
         <v-card-text>
